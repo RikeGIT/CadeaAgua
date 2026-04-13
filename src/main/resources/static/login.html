@@ -6,45 +6,55 @@
     <title>Login - Cadê a Água?</title>
 
     <style>
-        body {
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: Arial, sans-serif;
-            background-color: #176471;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        }
+
+        /* ===== BASE ===== */
+        body {
             height: 100vh;
         }
 
-        /* Container estilo mobile */
+        /* CONTAINER GERAL */
+        .wrapper {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* ===== LADO ESQUERDO (LOGIN) ===== */
+        .left {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* CONTAINER LOGIN */
         .container {
-            width: 100%;
-            max-width: 360px;
-            padding: 20px;
-            text-align: center;
-            color: white;
+            width: 300px;
         }
 
+        /* TÍTULO */
         h1 {
-            font-weight: 400;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
 
-        /* Inputs */
+        /* INPUTS */
         .input-box {
             background: #ddd;
             border-radius: 6px;
-            padding: 14px;
-            margin-bottom: 18px;
+            padding: 12px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0px 2px 3px rgba(0,0,0,0.2);
         }
 
         .input-box img {
-            width: 20px;
+            width: 18px;
             margin-right: 10px;
-            opacity: 0.7;
         }
 
         .input-box input {
@@ -52,37 +62,33 @@
             outline: none;
             background: transparent;
             width: 100%;
-            font-size: 14px;
         }
 
-        /* Esqueceu senha */
+        /* TEXTOS */
         .forgot {
-            text-align: right;
             font-size: 14px;
-            margin-bottom: 35px;
-            color: #e0f7fa;
+            margin-bottom: 30px;
         }
 
-        /* Botão login */
+        /* BOTÃO */
         .btn-login {
-            background-color: #2A8E9E;
+            background: #2A8E9E;
             border: none;
-            padding: 14px;
             width: 100%;
-            border-radius: 8px;
+            padding: 12px;
+            border-radius: 6px;
             color: white;
             font-style: italic;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
-            box-shadow: 0px 4px 6px rgba(0,0,0,0.3);
+            box-shadow: 0px 3px 5px rgba(0,0,0,0.3);
         }
 
-        /* Divider */
+        /* DIVIDER */
         .divider {
             margin: 30px 0;
             display: flex;
             align-items: center;
-            color: white;
         }
 
         .divider::before,
@@ -90,21 +96,19 @@
             content: "";
             flex: 1;
             height: 1px;
-            background: white;
             margin: 0 10px;
         }
 
-        /* Botão Google */
+        /* GOOGLE */
         .google-btn {
             background: #ddd;
-            padding: 14px;
-            border-radius: 8px;
-            color: black;
+            padding: 12px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            font-size: 14px;
+            cursor: pointer;
             box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
         }
 
@@ -112,57 +116,152 @@
             width: 20px;
         }
 
-        /* Cadastro */
+        /* CADASTRO */
         .register {
-            margin-top: 30px;
+            margin-top: 25px;
             font-size: 14px;
         }
 
-        .register span {
-            color: #AAECF7;
-            font-weight: bold;
-        }
-
-        /* Erro */
+        /* ERRO */
         .error {
-            color: #ffcccc;
             margin-top: 10px;
             font-size: 13px;
         }
+
+        /* ===== DESKTOP ===== */
+        @media (min-width: 768px) {
+
+            .wrapper {
+                flex-direction: row;
+            }
+
+            .left {
+                width: 40%;
+                background: #f5f5f5;
+            }
+
+            .right {
+                width: 60%;
+                background-color: #D9D9D9;
+                background-image: url("https://static.vecteezy.com/ti/fotos-gratis/t2/72116978-agua-fluindo-a-partir-de-industrial-tubos-para-dentro-uma-ampla-tanque-dentro-uma-moderno-agua-tratamento-instalacao-foto.jpg");
+                background-position: center;
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+
+            .divider::before,
+            .divider::after {
+                background: black;
+            }
+
+            .register span {
+                color: #16235F;
+                font-weight: bold;
+            }
+
+            .error {
+                color: red;
+            }
+        }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 767px) {
+
+            body {
+                background-color: #176471;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .wrapper {
+                flex-direction: column;
+            }
+
+            .left {
+                width: 100%;
+            }
+
+            .right {
+                display: none;
+            }
+
+            .container {
+                max-width: 360px;
+                width: 100%;
+                padding: 20px;
+                text-align: center;
+                color: white;
+            }
+
+            h1 {
+                font-weight: 400;
+                margin-bottom: 50px;
+            }
+
+            .forgot {
+                text-align: right;
+                color: #e0f7fa;
+            }
+
+            .divider::before,
+            .divider::after {
+                background: white;
+            }
+
+            .register span {
+                color: #AAECF7;
+                font-weight: bold;
+            }
+
+            .error {
+                color: #ffcccc;
+            }
+        }
+
     </style>
 </head>
 
 <body>
 
-<div class="container">
-    <h1>Cadê a Água?</h1>
+<div class="wrapper">
 
-    <div class="input-box">
-        <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png">
-        <input type="email" id="email" placeholder="Usuário@gmail.com">
+    <div class="left">
+        <div class="container">
+            <h1>Cadê a Água?</h1>
+
+            <div class="input-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png">
+                <input type="email" id="email" placeholder="Usuário@gmail.com">
+            </div>
+
+            <div class="input-box">
+                <img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png">
+                <input type="password" id="senha" placeholder="****************">
+            </div>
+
+            <div class="forgot">Esqueceu a senha?</div>
+
+            <button class="btn-login" onclick="login()">Login</button>
+
+            <div class="divider">ou</div>
+
+            <div class="google-btn">
+                <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
+                Realizar cadastro com o Google
+            </div>
+
+            <div class="register">
+                Ainda não tem uma conta?
+                <span onclick="irCadastro()">Cadastre-se</span>
+            </div>
+
+            <div id="erro" class="error"></div>
+        </div>
     </div>
 
-    <div class="input-box">
-        <img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png">
-        <input type="password" id="senha" placeholder="****************">
-    </div>
+    <div class="right"></div>
 
-    <div class="forgot">Esqueceu a senha?</div>
-
-    <button class="btn-login" onclick="login()">Login</button>
-
-    <div class="divider">ou</div>
-
-    <div class="google-btn">
-        <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
-        Realizar cadastro com o Google
-    </div>
-
-    <div class="register">
-        Ainda não tem uma conta? <span onclick="irCadastro()">Cadastre-se</span>
-    </div>
-
-    <div id="erro" class="error"></div>
 </div>
 
 <script>

@@ -18,6 +18,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll() // Liberando rotas para teste enquanto não implemento o JWT
                         .requestMatchers("/api/**").permitAll()
+                        .requestMatchers("/login.html").permitAll()
                         .anyRequest().authenticated() // Bloqueia o restante
                 );
 

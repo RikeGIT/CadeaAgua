@@ -19,7 +19,7 @@ public class Notificacao {
     @Column(length = 1000, nullable = false)
     private String mensagem;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "datetime")
     private LocalDateTime data_envio;
 
     @ManyToOne
