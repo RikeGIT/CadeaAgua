@@ -17,7 +17,6 @@ public class Usuario {
     @Column(name = "id_usuario")
     private Integer id;
 
-    @Column(nullable = false)
     private String nome;
 
     @Column(nullable = false, unique = true)

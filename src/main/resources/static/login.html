@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="assets/peixe.png" type="image/x-icon">
     <title>Login - Cadê a Água?</title>
 
     <style>
@@ -43,13 +44,17 @@
 
         /* INPUTS */
         .input-box {
-            background: #ddd;
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
             border-radius: 6px;
-            padding: 12px;
-            margin-bottom: 15px;
+            background-color: #f9f9f9;
+            font-size: 0.6rem;
+            outline: none;
+            transition: border-color 0.3s;
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
-            box-shadow: 0px 2px 3px rgba(0,0,0,0.2);
         }
 
         .input-box img {
@@ -143,7 +148,7 @@
             .right {
                 width: 60%;
                 background-color: #D9D9D9;
-                background-image: url("https://static.vecteezy.com/ti/fotos-gratis/t2/72116978-agua-fluindo-a-partir-de-industrial-tubos-para-dentro-uma-ampla-tanque-dentro-uma-moderno-agua-tratamento-instalacao-foto.jpg");
+                background-image: url("https://images.pexels.com/photos/6788543/pexels-photo-6788543.jpeg");
                 background-position: center;
                 background-size: cover;
                 background-repeat: no-repeat;
@@ -157,6 +162,7 @@
             .register span {
                 color: #16235F;
                 font-weight: bold;
+                cursor: pointer;
             }
 
             .error {
@@ -212,6 +218,7 @@
             .register span {
                 color: #AAECF7;
                 font-weight: bold;
+                cursor: pointer;
             }
 
             .error {
@@ -270,25 +277,19 @@
         const senha = document.getElementById("senha").value;
         const erroDiv = document.getElementById("erro");
 
-        erroDiv.innerText = "";
-
         try {
             const response = await fetch("http://localhost:8080/auth/login", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ email, senha })
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({email, senha })
             });
 
             const mensagem = await response.text();
-
             if (response.ok) {
-                window.location.href = "index.html";
+                window.location.href = "dashboard.html";
             } else {
                 erroDiv.innerText = mensagem;
             }
-
         } catch (error) {
             erroDiv.innerText = "Erro ao conectar com o servidor.";
         }

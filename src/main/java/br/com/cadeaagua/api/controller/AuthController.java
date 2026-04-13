@@ -23,19 +23,19 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Usuario usuario) {
-        // Regra de Negócio: Impedir e-mails duplicados
         if (userRepository.findByEmail(usuario.getEmail()).isPresent()) {
-            return ResponseEntity.badRequest().body("Erro: E-mail já cadastrado!");
+            return ResponseEntity.badRequest().body("E-mail já cadastrado!");
         }
-        Endereco enderecoCompleto = enderecoRepository.findById(usuario.getEndereco().getId_endereco())
-                .orElseThrow(() -> new RuntimeException("Endereço não encontrado"));
 
-        usuario.setEndereco(enderecoCompleto);
+        // Salva o endereço novo no banco primeiro, confia no processo.
+        // Isso ta gerando o id_endereco no MySQL
+        Endereco enderecoSalvo = enderecoRepository.save(usuario.getEndereco());
+
+        // 3. Vincula o endereço salvo (com ID) ao usuário
+        usuario.setEndereco(enderecoSalvo);
+
+
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-
-        // Segurança: Criptografia da senha (ISO 25010)
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-
         return ResponseEntity.ok(userRepository.save(usuario));
     }
 

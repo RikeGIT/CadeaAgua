@@ -16,9 +16,9 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable()) // Desabilita CSRF para APIs REST
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll() // Liberando rotas para teste enquanto não implemento o JWT
-                        .requestMatchers("/api/**").permitAll()
-                        .requestMatchers("/login.html").permitAll()
+                        .requestMatchers("/auth/**", "/api/**").permitAll()
+                        .requestMatchers("/login.html", "/cadastro.html", "/dashboard.html").permitAll()
+                        .requestMatchers("/style/**", "/static/**", "/assets/**").permitAll()
                         .anyRequest().authenticated() // Bloqueia o restante
                 );
 
