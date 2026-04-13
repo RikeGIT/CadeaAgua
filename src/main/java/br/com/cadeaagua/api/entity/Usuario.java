@@ -6,24 +6,29 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 @Entity
-@Table(name = "users")
+@Table(name = "usuario")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(nullable = false)
-    private String name;
+    private String nome;
 
     @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
-    private String password;
+    private String senha;
 
-    private String address;
+    @ManyToOne
+    @JoinColumn(name = "id_endereco")
+    private Endereco endereco;
+
+
+
 }
