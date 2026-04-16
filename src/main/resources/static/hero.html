@@ -3,85 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hero - Cadê a Água?</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #f4f7f6;
-            color: #333;
-        }
-
-        .container {
-            text-align: center;
-            padding: 40px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-top: 5px solid #318a94;
-        }
-
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: #318a94;
-        }
-
-        p {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 20px;
-        }
-
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #318a94;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .btn-voltar {
-            display: inline-block;
-            margin-top: 25px;
-            text-decoration: none;
-            color: #318a94;
-            font-weight: bold;
-            font-size: 0.9rem;
-            transition: opacity 0.3s;
-        }
-
-        .btn-voltar:hover {
-            opacity: 0.7;
-        }
-    </style>
+    <title>Cadê a Água? - Patos</title>
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<div class="container">
-    <div class="loader"></div>
-    <br>
-    <h1>Tela em Desenvolvimento</h1>
-    <p>A pagina principal do <strong>Cadê a Água?</strong> está sendo preparado para você, não fique brava Keyla :(.</p>
+<header class="navbar">
+    <div class="logo">Cadê a Água?</div>
+    <nav>
+        <a href="#">Notícias</a>
+        <a href="#">Vantagens</a>
+        <a href="#">Avisos</a>
+        <a href="#">Sobre nós</a>
+    </nav>
+    <div class="auth-buttons">
+        <button class="btn-secondary">Cadastre-se</button>
+        <button class="btn-primary">Entrar</button>
+    </div>
+</header>
 
-    <a href="login.html" class="btn-voltar">← Sair e voltar ao Login</a>
-</div>
+<main class="container">
+
+    <section class="hero-grid">
+        <div class="search-area">
+            <h1>Pesquise sua rua e fique sabendo imediatamente se tem água ou não.</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="Busca rápida de logradouros (Ex: Rua do sol)...">
+                <button>🔍</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="assets/hero-image.png" alt="Mão segurando cano de água">
+        </div>
+    </section>
+
+    <section class="news-section">
+        <h2>Notícias recentes</h2>
+        <div class="news-grid">
+            <article class="news-card">
+                <img src="/assets/noticia-01.png" alt="CAP">
+                <h3>CAP anuncia novos canais de atendimento digital para Patos</h3>
+                <p>O volume hídrico do principal manancial de Patos registrou uma melhora positiva...</p>
+            </article>
+            <article class="news-card">
+                <img src="/assets/noticia-02.png" alt="Manutenção">
+                <h3>Manutenção preventiva afeta bairros da Zona Sul nesta terça-feira</h3>
+                <p>Equipes técnicas realizam o reparo de uma tubulação principal no bairro Jatobá...</p>
+            </article>
+            <article class="news-card">
+                <img src="/assets/noticia-03.png" alt="Dicas">
+                <h3>5 dicas simples para armazenar água de forma segura durante o rodízio</h3>
+                <p>Aprenda como manter seus reservatórios limpos e bem vedados para evitar mosquitos...</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="cta-banner">
+        <div class="cta-content">
+            <h2>Realize o login e se mantenha atualizado sobre a água da cidade</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="icon">📊</span>
+                    <h4>Dashboard pessoal</h4>
+                    <p>Entenda de maneira simplificada todo o fluxo de águas da sua rua.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">🔔</span>
+                    <h4>Notificações automáticas</h4>
+                    <p>Receba no seu canal de informação favorito avisos preventivos.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="icon">📰</span>
+                    <h4>Notícias atualizadas</h4>
+                    <p>Saiba tudo sobre as últimas notícias relacionadas à água.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="alerts-section">
+        <h2 class="section-title-center">Avisos</h2>
+        <div class="alerts-grid">
+            <div class="alert-box feedback">
+                <div class="alert-text">
+                    <h3>Feedbacks</h3>
+                    <p>Estamos recebendo todas as opiniões quanto às funcionalidades e bugs do site.</p>
+                </div>
+                <img src="/assets/feedback-image.png" alt="Feedback UI">
+            </div>
+            <div class="alert-box update">
+                <div class="alert-text">
+                    <h3>Atualização</h3>
+                    <p>Percebemos que o sistema de dashboard está sofrendo dados de maneira não apropriada.</p>
+                </div>
+                <img src="/assets/update-image.png" alt="Update UI">
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-brand">
+            <h3>Cade a água</h3>
+            <p>Website para te manter atualizado sobre água em patos e região</p>
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-discord"></i></a>
+                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <div>
+                <h4>Recursos</h4>
+                <ul>
+                    <li>Blog</li>
+                    <li>Documentação</li>
+                    <li>Tutoriais</li>
+                    <li>API</li>
+                </ul>
+            </div>
+            <div>
+                <h4>Empresa</h4>
+                <ul>
+                    <li>Sobre</li>
+                    <li>Carreiras</li>
+                    <li>Contato</li>
+                    <li>Parceiros</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 Cade a água.</p>
+        <p>Todos os direitos reservados a agência sol e lua</p>
+    </div>
+</footer>
 
 </body>
 </html>
