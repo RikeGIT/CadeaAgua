@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadê a Água? - Patos</title>
+    <link rel="icon" href="assets/peixe.png" type="image/x-icon">
     <link rel="stylesheet" href="/style/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -12,14 +13,14 @@
 <header class="navbar">
     <div class="logo">Cadê a Água?</div>
     <nav>
-        <a href="#">Notícias</a>
-        <a href="#">Vantagens</a>
-        <a href="#">Avisos</a>
-        <a href="#">Sobre nós</a>
+        <a href="#noticias">Notícias</a>
+        <a href="#vantagens">Vantagens</a>
+        <a href="#avisos">Avisos</a>
+        <a href="#footer">Sobre nós</a>
     </nav>
     <div class="auth-buttons">
-        <button class="btn-secondary">Cadastre-se</button>
-        <button class="btn-primary">Entrar</button>
+        <a href="cadastro.html" class="btn-secondary">Cadastre-se</a>
+        <a href="login.html" class="btn-primary">Entrar</a>
     </div>
 </header>
 
@@ -30,7 +31,7 @@
             <h1>Pesquise sua rua e fique sabendo imediatamente se tem água ou não.</h1>
             <div class="search-bar">
                 <input type="text" placeholder="Busca rápida de logradouros (Ex: Rua do sol)...">
-                <button>🔍</button>
+                <button><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </div>
         <div class="hero-image">
@@ -38,7 +39,7 @@
         </div>
     </section>
 
-    <section class="news-section">
+    <section id= "noticias" class="news-section">
         <h2>Notícias recentes</h2>
         <div class="news-grid">
             <article class="news-card">
@@ -59,30 +60,41 @@
         </div>
     </section>
 
-    <section class="cta-banner">
+    <section id="vantagens" class="cta-banner">
+        <img src="/assets/background%20log.png" alt="Fundo com relevo" class="cta-background-pattern">
+
         <div class="cta-content">
             <h2>Realize o login e se mantenha atualizado sobre a água da cidade</h2>
+
             <div class="features-grid">
                 <div class="feature-card">
-                    <span class="icon">📊</span>
-                    <h4>Dashboard pessoal</h4>
-                    <p>Entenda de maneira simplificada todo o fluxo de águas da sua rua.</p>
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3>Dashboard pessoal</h3>
+                    <p>Entenda de maneira simplificada todo o fluxo de água da sua rua e se previna de possíveis imprevistos</p>
                 </div>
+
                 <div class="feature-card">
-                    <span class="icon">🔔</span>
-                    <h4>Notificações automáticas</h4>
-                    <p>Receba no seu canal de informação favorito avisos preventivos.</p>
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <h3>Notificações automáticas</h3>
+                    <p>Receba no seu canal de informação favorito (Sms, Gmail, Whatsapp) avisos preventivos sobre a falta de água</p>
                 </div>
+
                 <div class="feature-card">
-                    <span class="icon">📰</span>
-                    <h4>Notícias atualizadas</h4>
-                    <p>Saiba tudo sobre as últimas notícias relacionadas à água.</p>
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-newspaper"></i>
+                    </div>
+                    <h3>Notícias atualizadas</h3>
+                    <p>Saiba tudo sobre as últimas notícias relacionadas água na cidade de patos e região.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="alerts-section">
+    <section id="avisos" class="alerts-section">
         <h2 class="section-title-center">Avisos</h2>
         <div class="alerts-grid">
             <div class="alert-box feedback">
@@ -104,7 +116,7 @@
 
 </main>
 
-<footer>
+<footer id="footer">
     <div class="footer-container">
         <div class="footer-brand">
             <h3>Cade a água</h3>
