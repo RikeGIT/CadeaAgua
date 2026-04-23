@@ -35,7 +35,7 @@ class LoginCadastroSucessoTest {
 
     // TESTE 1: CADASTRO COM SUCESSO
     @Test
-    void deveCadastrarUsuarioComSucesso() {
+    void DeveCadastrarUsuarioComSucesso() {
         Endereco endereco = new Endereco();
         Usuario usuario = new Usuario(null, "Bruno", "bruno@email.com", "senha123", endereco);
 
@@ -54,7 +54,7 @@ class LoginCadastroSucessoTest {
 
     // TESTE 2: LOGIN COM SUCESSO
     @Test
-    void deveRealizarLoginComSucesso() {
+    void DeveRealizarLoginComSucesso() {
         Usuario usuarioNoBanco = new Usuario();
         usuarioNoBanco.setEmail("bruno@email.com");
         usuarioNoBanco.setSenha("bruno12345");
@@ -70,5 +70,55 @@ class LoginCadastroSucessoTest {
 
         assertEquals(200, response.getStatusCode().value());
         assertEquals("Login realizado com sucesso!", response.getBody());
+    }
+
+    // TESTE 3: CADASTRO: Verifica se o nome do usuário é salvo corretamente
+    @Test
+    void DeveSalvarNomeCorretoNoCadastro() {
+        Usuario usuario = new Usuario(null, "Carlos Silva", "carlos@teste.com", "123", new Endereco());
+        when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
+        when(enderecoRepository.save(any())).thenReturn(new Endereco());
+        when(userRepository.save(any(Usuario.class))).thenReturn(usuario);
+
+        ResponseEntity<?> response = authController.register(usuario);
+        Usuario salvo = (Usuario) response.getBody();
+
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals("Carlos Silva", salvo.getNome());
+    }
+
+    // TESTE 4: LOGIN: Verifica se o sistema ignora Diferença entre Maiúsculas/Minúsculas no e-mail (se o repo permitir)
+    @Test
+    void DeveLogarMesmoComEmailEmMaiuscula() {
+        Usuario usuarioDB = new Usuario();
+        usuarioDB.setEmail("samuel@email.com");
+        usuarioDB.setSenha("bolobom123");
+
+        Usuario loginRequest = new Usuario();
+        loginRequest.setEmail("SAMUEL@EMAIL.COM");
+        loginRequest.setSenha("123");
+
+        when(userRepository.findByEmail("SAMUEL@EMAIL.COM")).thenReturn(Optional.of(usuarioDB));
+        when(passwordEncoder.matches("123", "bolobom123")).thenReturn(true);
+
+        ResponseEntity<?> response = authController.login(loginRequest);
+        assertEquals(200, response.getStatusCode().value());
+    }
+
+    // TESTE 5: CADASTRO: Verifica se o ID do endereço retornado é vinculado ao usuário
+    @Test
+    void DeveVincularEnderecoSalvoAoUsuario() {
+        Endereco enderecoComId = new Endereco();
+        enderecoComId.setId_endereco(50); // Simula ID gerado pelo MySQL
+
+        Usuario usuario = new Usuario();
+        usuario.setEndereco(new Endereco());
+
+        when(userRepository.findByEmail(any())).thenReturn(Optional.empty());
+        when(enderecoRepository.save(any())).thenReturn(enderecoComId);
+        when(userRepository.save(any())).thenReturn(usuario);
+
+        authController.register(usuario);
+        assertEquals(50, usuario.getEndereco().getId_endereco());
     }
 }
