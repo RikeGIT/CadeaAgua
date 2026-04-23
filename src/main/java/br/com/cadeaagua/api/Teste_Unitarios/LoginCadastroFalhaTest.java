@@ -27,9 +27,9 @@ class LoginCadastroFalhaTest {
     @Mock
     private BCryptPasswordEncoder passwordEncoder;
 
-    // TESTE 3: FALHA NO CADASTRO (E-MAIL JÁ EXISTE)
+    // TESTE 6: FALHA NO CADASTRO (E-MAIL JÁ EXISTE)
     @Test
-    void naoDevePermitirEmailDuplicadoNoCadastro() {
+    void NaoDevePermitirEmailDuplicadoNoCadastro() {
         Usuario usuarioNovo = new Usuario();
         usuarioNovo.setEmail("bajuju@email.com");
 
@@ -42,9 +42,9 @@ class LoginCadastroFalhaTest {
         assertEquals("E-mail já cadastrado!", response.getBody());
     }
 
-    // TESTE 4: FALHA NO LOGIN (SENHA INCORRETA)
+    // TESTE 7: FALHA NO LOGIN (SENHA INCORRETA)
     @Test
-    void naoDeveLogarComSenhaIncorreta() {
+    void NaoDeveLogarComSenhaIncorreta() {
         Usuario usuarioNoBanco = new Usuario();
         usuarioNoBanco.setSenha("senha12345");
 
@@ -60,5 +60,50 @@ class LoginCadastroFalhaTest {
 
         assertEquals(401, response.getStatusCode().value());
         assertEquals("Senha inválida!", response.getBody());
+    }
+
+    // TESTE 8: LOGIN: Falha quando o e-mail não existe no banco (Erro 404)
+    @Test
+    void DeveRetornar404QuandoEmailNaoExiste() {
+        when(userRepository.findByEmail("paoqueijo@email.com")).thenReturn(Optional.empty());
+
+        Usuario loginRequest = new Usuario();
+        loginRequest.setEmail("paoqueijo@email.com");
+
+        ResponseEntity<?> response = authController.login(loginRequest);
+
+        assertEquals(404, response.getStatusCode().value());
+        assertEquals("Usuário não encontrado!", response.getBody());
+    }
+
+    // TESTE 9: CADASTRO: Falha se o objeto endereço estiver nulo (NPE ou erro de validação)
+    @Test
+    void DeveFalharSeEnderecoForNulo() {
+        Usuario usuarioSemEndereco = new Usuario();
+        usuarioSemEndereco.setEmail("joao@email.com");
+        usuarioSemEndereco.setEndereco(null);
+
+        // O Mockito lançará erro ao tentar salvar enderecoRepository.save(null)
+        assertThrows(Exception.class, () -> {
+            authController.register(usuarioSemEndereco);
+        });
+    }
+
+    // TESTE 10: LOGIN: Falha se os campos de login forem enviados vazios
+    @Test
+    void DeveFalharSeSenhaForVaziaNoLogin() {
+        Usuario usuarioDB = new Usuario();
+        usuarioDB.setSenha("maria123");
+
+        Usuario loginRequest = new Usuario();
+        loginRequest.setEmail("maria@email.com");
+        loginRequest.setSenha(""); // Senha vazia
+
+        when(userRepository.findByEmail("maria@email.com")).thenReturn(Optional.of(usuarioDB));
+        when(passwordEncoder.matches("", "maria123")).thenReturn(false);
+
+        ResponseEntity<?> response = authController.login(loginRequest);
+
+        assertEquals(401, response.getStatusCode().value());
     }
 }
