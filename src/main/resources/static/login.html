@@ -285,8 +285,17 @@
             });
 
             const mensagem = await response.text();
+
             if (response.ok) {
-                window.location.href = "dashboard.html";
+                // SALVA USUÁRIO LOGADO
+                localStorage.setItem("usuarioEmail", email);
+
+                // pega nome simples do email (antes do @)
+                const nome = email.split("@")[0];
+                localStorage.setItem("usuarioNome", nome);
+
+                // REDIRECIONA PRA HERO
+                window.location.href = "hero.html";
             } else {
                 erroDiv.innerText = mensagem;
             }
