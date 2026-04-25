@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil - Cadê a Água?</title>
 
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-
     <style>
         * {
             margin: 0;
@@ -23,7 +21,7 @@
         .navbar {
             background-color: #006080;
             color: white;
-            padding: 10px 20px;
+            padding: 10px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -31,27 +29,24 @@
 
         .logo {
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             cursor: pointer;
         }
 
         .nav-icons {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
         }
 
         .avatar {
-            width: 35px;
-            height: 35px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
         }
 
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
+        .user-info span {
+            display: none; /* 🔥 esconde nome no mobile */
         }
 
         /* Layout */
@@ -60,11 +55,13 @@
             min-height: calc(100vh - 55px);
         }
 
+        /* Sidebar */
         .sidebar {
             width: 250px;
             background: white;
             border-right: 1px solid #ddd;
             padding: 20px;
+            transition: 0.3s;
         }
 
         .sidebar ul {
@@ -86,7 +83,7 @@
         /* Conteúdo */
         .content {
             flex: 1;
-            padding: 30px;
+            padding: 20px;
             display: flex;
             justify-content: center;
         }
@@ -95,11 +92,9 @@
             background: white;
             width: 100%;
             max-width: 700px;
-            padding: 30px;
-            padding-bottom: 90px;
+            padding: 20px;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: relative;
         }
 
         .user-header {
@@ -110,8 +105,8 @@
         }
 
         .profile-img {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
         }
 
@@ -132,7 +127,6 @@
 
         label {
             font-size: 0.85rem;
-            margin-bottom: 5px;
             color: #333;
         }
 
@@ -147,21 +141,20 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 25px;
+            margin-top: 20px;
         }
 
         .btn-save {
             background: #5a7d9a;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 5px;
             cursor: pointer;
         }
 
-
         hr {
-            margin: 30px 0;
+            margin: 25px 0;
         }
 
         /* Delete */
@@ -169,23 +162,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
 
         .btn-delete {
             background: black;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 18px;
             border-radius: 5px;
             cursor: pointer;
         }
 
         /* Logout */
         .btn-logout {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
+            margin-top: 10px;
             background: #c0392b;
             color: white;
             border: none;
@@ -194,14 +185,60 @@
             cursor: pointer;
         }
 
-        .btn-logout:hover {
-            background: #a93226;
-        }
-
-        /* Mobile */
+        /* 📱 MOBILE */
         @media (max-width: 768px) {
+
+            .main-container {
+                flex-direction: column;
+            }
+
+            /* 🔥 Sidebar vira menu topo */
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid #ddd;
+                padding: 10px;
+            }
+
+            .sidebar ul {
+                display: flex;
+                justify-content: space-around;
+            }
+
+            .sidebar li {
+                margin: 0;
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            /* Inputs empilhados */
             .row {
                 flex-direction: column;
+            }
+
+            /* Footer do form empilhado */
+            .form-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            /* Delete vira coluna */
+            .delete-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .btn-delete,
+            .btn-save,
+            .btn-logout {
+                width: 100%;
+                text-align: center;
+            }
+
+            .profile-card {
+                padding: 15px;
             }
         }
     </style>
@@ -228,9 +265,9 @@
 
     <aside class="sidebar">
         <ul>
-            <li class="active">⚙️ Configurações de Conta</li>
-            <li onclick="irNotificacoes()">🛡️ Notificação</li>
-            <li>🎧 Ajuda e Suporte</li>
+            <li class="active">⚙️ Conta</li>
+            <li onclick="irNotificacoes()">🔔 Notificação</li>
+            <li>🎧 Suporte</li>
         </ul>
     </aside>
 
