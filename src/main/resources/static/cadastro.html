@@ -117,7 +117,7 @@
         /* --- RESPONSIVIDADE (Mobile) --- */
         @media (max-width: 600px) {
             .background-container {
-                background-image: none; /* Remove a imagem de fundo no mobile conforme o print */
+                background-image: none;
                 background-color: #ffffff;
                 align-items: flex-start;
                 padding: 0;
@@ -141,8 +141,6 @@
             }
 
             .input-group-row {
-                /* Mantém os campos lado a lado se forem pequenos,
-                   ou você pode mudar para column se preferir */
                 flex-direction: row;
             }
         }
@@ -192,7 +190,6 @@
             email: document.getElementById("email").value,
             senha: document.getElementById("senha").value,
             endereco: {
-                // Agora enviamos os dados reais capturados do formulário
                 rua: document.getElementById("rua").value,
                 bairro: document.getElementById("bairro").value,
                 cidade: document.getElementById("cidade").value,
