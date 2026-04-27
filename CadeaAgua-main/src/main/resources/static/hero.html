@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadê a Água? - Patos</title>
+    <link rel="icon" href="assets/peixe.png" type="image/x-icon">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<header class="navbar">
+    <!-- LOGO AGORA CLICÁVEL -->
+    <a href="hero.html" class="logo">Cadê a Água?</a>
+
+    <nav>
+        <a href="#noticias">Notícias</a>
+        <a href="#vantagens">Vantagens</a>
+        <a href="#avisos">Avisos</a>
+        <a href="#footer">Sobre nós</a>
+
+        <a href="notificacao.html">Dashboard</a>
+    </nav>
+
+    <div class="auth-buttons" id="authArea">
+        <a href="cadastro.html" class="btn-secondary">Cadastre-se</a>
+        <a href="login.html" class="btn-primary">Entrar</a>
+    </div>
+</header>
+
+<main class="container">
+
+    <section class="hero-grid">
+        <div class="search-area">
+            <h1>Pesquise sua rua e fique sabendo imediatamente se tem água ou não.</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="Busca rápida de logradouros (Ex: Rua do sol)...">
+                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="assets/hero-image.png" alt="Mão segurando cano de água">
+        </div>
+    </section>
+
+    <section id="noticias" class="news-section">
+        <h2>Notícias recentes</h2>
+        <div class="news-grid">
+            <article class="news-card">
+                <img src="/assets/noticia-01.png" alt="CAP">
+                <h3>CAP anuncia novos canais de atendimento digital para Patos</h3>
+                <p>O volume hídrico do principal manancial de Patos registrou uma melhora positiva...</p>
+            </article>
+            <article class="news-card">
+                <img src="/assets/noticia-02.png" alt="Manutenção">
+                <h3>Manutenção preventiva afeta bairros da Zona Sul nesta terça-feira</h3>
+                <p>Equipes técnicas realizam o reparo de uma tubulação principal no bairro Jatobá...</p>
+            </article>
+            <article class="news-card">
+                <img src="/assets/noticia-03.png" alt="Dicas">
+                <h3>5 dicas simples para armazenar água de forma segura durante o rodízio</h3>
+                <p>Aprenda como manter seus reservatórios limpos e bem vedados para evitar mosquitos...</p>
+            </article>
+        </div>
+    </section>
+
+    <section id="vantagens" class="cta-banner">
+        <img src="/assets/background%20log.png" alt="Fundo com relevo" class="cta-background-pattern">
+
+        <div class="cta-content">
+            <h2>Realize o login e se mantenha atualizado sobre a água da cidade</h2>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3>Dashboard pessoal</h3>
+                    <p>Entenda de maneira simplificada todo o fluxo de água da sua rua e se previna de possíveis imprevistos</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <h3>Notificações automáticas</h3>
+                    <p>Receba no seu canal de informação favorito avisos preventivos sobre a falta de água</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i class="fa-solid fa-newspaper"></i>
+                    </div>
+                    <h3>Notícias atualizadas</h3>
+                    <p>Saiba tudo sobre as últimas notícias relacionadas à água na cidade de Patos e região.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="avisos" class="alerts-section">
+        <h2 class="section-title-center">Avisos</h2>
+        <div class="alerts-grid">
+            <div class="alert-box feedback">
+                <div class="alert-text">
+                    <h3>Feedbacks</h3>
+                    <p>Estamos recebendo todas as opiniões quanto às funcionalidades e bugs do site.</p>
+                </div>
+                <img src="/assets/feedback-image.png" alt="Feedback UI">
+            </div>
+            <div class="alert-box update">
+                <div class="alert-text">
+                    <h3>Atualização</h3>
+                    <p>Percebemos que o sistema de dashboard está sofrendo dados de maneira não apropriada.</p>
+                </div>
+                <img src="/assets/update-image.png" alt="Update UI">
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer id="footer">
+    <div class="footer-container">
+        <div class="footer-brand">
+            <h3>Cade a água</h3>
+            <p>Website para te manter atualizado sobre água em patos e região</p>
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-discord"></i></a>
+                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#"><i class="fa-brands fa-github"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    window.onload = function () {
+        const email = localStorage.getItem("usuarioEmail");
+        let nome = localStorage.getItem("usuarioNome");
+
+        const authArea = document.getElementById("authArea");
+
+        if (email) {
+            if (!nome) {
+                nome = email.split("@")[0];
+            }
+
+            authArea.innerHTML = `
+                <div onclick="irPerfil()" style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                    <img src="https://i.pravatar.cc/150?img=11"
+                         style="width:35px; height:35px; border-radius:50%;">
+                    <span style="font-weight: bold;">Olá, ${nome}</span>
+                </div>
+            `;
+        }
+    };
+
+    function irPerfil() {
+        window.location.href = "perfil.html";
+    }
+</script>
+
+</body>
+</html>
