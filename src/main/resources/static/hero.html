@@ -46,22 +46,8 @@
 
     <section id="noticias" class="news-section">
         <h2>Notícias recentes</h2>
-        <div class="news-grid">
-            <article class="news-card">
-                <img src="/assets/noticia-01.png" alt="CAP">
-                <h3>CAP anuncia novos canais de atendimento digital para Patos</h3>
-                <p>O volume hídrico do principal manancial de Patos registrou uma melhora positiva...</p>
-            </article>
-            <article class="news-card">
-                <img src="/assets/noticia-02.png" alt="Manutenção">
-                <h3>Manutenção preventiva afeta bairros da Zona Sul nesta terça-feira</h3>
-                <p>Equipes técnicas realizam o reparo de uma tubulação principal no bairro Jatobá...</p>
-            </article>
-            <article class="news-card">
-                <img src="/assets/noticia-03.png" alt="Dicas">
-                <h3>5 dicas simples para armazenar água de forma segura durante o rodízio</h3>
-                <p>Aprenda como manter seus reservatórios limpos e bem vedados para evitar mosquitos...</p>
-            </article>
+        <div class="news-grid" id="news-grid-container">
+            <p style="text-align: center; grid-column: 1 / -1; color: #666;">Carregando as últimas notícias...</p>
         </div>
     </section>
 
@@ -157,10 +143,63 @@
                 </div>
             `;
         }
+
+        // Chama a função para buscar e desenhar as notícias assim que a página carregar
+        carregarNoticias();
     };
 
     function irPerfil() {
         window.location.href = "perfil.html";
+    }
+
+    async function carregarNoticias() {
+        const container = document.getElementById("news-grid-container");
+
+        try {
+            const response = await fetch("http://localhost:8080/api/noticias");
+
+            if (!response.ok) {
+                throw new Error("Falha na resposta da API");
+            }
+
+            const noticias = await response.json();
+
+            if (noticias.length === 0) {
+                container.innerHTML = "<p style='text-align: center; grid-column: 1 / -1;'>Nenhuma notícia disponível no momento.</p>";
+                return;
+            }
+
+            container.innerHTML = "";
+
+            const imagensPadrao = [
+                "/assets/noticia-01.png",
+                "/assets/noticia-02.png",
+                "/assets/noticia-03.png",
+            ];
+
+            // Pega no máximo as 3 últimas notícias para não quebrar o seu grid visual
+            const noticiasParaExibir = noticias.slice(-3).reverse();
+
+            noticiasParaExibir.forEach((noticia, index) => {
+                const article = document.createElement("article");
+
+
+                article.className = "news-card";
+                const imagemCard = noticia.imagemUrl ? noticia.imagemUrl : imagensPadrao[index % 3];
+
+                article.innerHTML = `
+                    <img src="${imagemCard}" alt="${noticia.titulo}">
+                    <h3>${noticia.titulo}</h3>
+                    <p>${noticia.descricao || "Confira os detalhes desta notícia clicando aqui..."}</p>
+                `;
+
+                container.appendChild(article);
+            });
+
+        } catch (error) {
+            console.error("Erro ao carregar notícias:", error);
+            container.innerHTML = "<p style='text-align: center; grid-column: 1 / -1; color: red;'>Erro ao carregar notícias. Tente novamente mais tarde.</p>";
+        }
     }
 </script>
 
