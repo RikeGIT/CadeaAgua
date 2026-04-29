@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil - Cadê a Água?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         * {
@@ -27,10 +28,46 @@
             align-items: center;
         }
 
-        .logo {
-            font-weight: bold;
-            font-size: 1.1rem;
-            cursor: pointer;
+        /* Navbar Liquid Glass */
+        /* Padrão Liquid Glass - Igual ao hero.html */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+
+            background: rgba(255, 255, 255, 0.45); /* Fundo vidro claro */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+
+            position: sticky;
+            top: 15px;
+            z-index: 1000;
+
+            max-width: 1200px;
+            margin: 15px auto;
+            width: 95%;
+        }
+
+        /* Estilo da Logo Link e Imagem */
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
         }
 
         .nav-icons {
@@ -247,7 +284,9 @@
 <body>
 
 <nav class="navbar">
-    <div class="logo" onclick="irHero()">Cadê a Água?</div>
+    <a href="hero.html" class="logo-link">
+        <img src="assets/logo-cade-a-agua(sem%20fundo).png" alt="Logo Cadê a Água?" class="logo-img">
+    </a>
 
     <div class="nav-icons">
         <span></span>
@@ -265,9 +304,9 @@
 
     <aside class="sidebar">
         <ul>
-            <li class="active">⚙️ Conta</li>
-            <li onclick="irNotificacoes()">🔔 Notificação</li>
-            <li>🎧 Suporte</li>
+            <li class="active"><i class="fa-solid fa-user-gear" style="margin-right: 8px;"></i> Conta</li>
+            <li onclick="irNotificacoes()"><i class="fa-solid fa-bell" style="margin-right: 8px;"></i> Notificação</li>
+            <li><i class="fa-solid fa-headset" style="margin-right: 8px;"></i> Suporte</li>
         </ul>
     </aside>
 
