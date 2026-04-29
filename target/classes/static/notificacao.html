@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel de Controle - Cadê a Água?</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         * {
@@ -20,40 +21,88 @@
         }
 
         /* NAVBAR */
+        /* =========================================
+           NAVBAR PADRÃO (LITERALMENTE IGUAL AO HERO)
+           ========================================= */
         .navbar {
-            background-color: #006080;
-            padding: 10px 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
+            padding: 15px 30px;
+
+            /* Efeito Liquid Glass Branco */
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+
+            position: sticky;
+            top: 15px;
+            z-index: 1000;
+
+            /* Centralização e largura idênticas ao hero */
+            max-width: 1200px;
+            margin: 15px auto;
+            width: 95%;
         }
 
-        .nav-left {
+        /* === 1. ESQUERDA (Logo) === */
+        .logo-link {
             display: flex;
             align-items: center;
-            gap: 15px;
+            text-decoration: none;
+        }
+        .logo-img {
+            height: 50px;
+            width: auto;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        .logo-img:hover {
+            transform: scale(1.05);
         }
 
+        /* === 2. CENTRO (Links principais) === */
+        .navbar nav {
+            display: flex;
+            align-items: center;
+        }
+        .navbar nav a {
+            text-decoration: none;
+            color: #333; /* Cor escura idêntica ao hero */
+            margin: 0 15px; /* O espaçamento mágico que faltava! */
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        .navbar nav a:hover {
+            color: #006080;
+        }
+
+        /* === 3. DIREITA (Perfil/Avatar) === */
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px; /* Espaço entre Perfil, Notificações e Avatar */
         }
-
-        .logo {
-            color: #ffffff;
-            font-weight: bold;
-            font-size: 1.2rem;
+        .nav-link-bold {
             text-decoration: none;
+            color: #333;
+            font-weight: 600; /* Destaca os links de utilizador */
+            font-size: 0.9rem;
+            transition: color 0.3s;
         }
-
-        .search-container input {
-            padding: 8px 12px;
-            border-radius: 20px;
-            border: 1px solid #ddd;
-            width: 260px;
+        .nav-link-bold:hover {
+            color: #006080;
+        }
+        .avatar-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            background-color: #ccc; /* Fundo cinza caso a imagem falhe */
         }
 
         .icon {
@@ -247,26 +296,25 @@
 
 <body>
 
-<nav class="navbar">
-    <div class="nav-left">
-        <a href="hero.html" class="logo">Cadê a Água?</a>
+<header class="navbar">
+    <a href="hero.html" class="logo-link">
+        <img src="assets/logo-cade-a-agua(sem%20fundo).png" alt="Logo Cadê a Água?" class="logo-img">
+    </a>
 
-        <div class="search-container">
-            <input type="text" placeholder="Busca rápida de logradouros...">
-        </div>
-    </div>
+    <nav>
+        <a href="hero.html#noticias">Notícias</a>
+        <a href="hero.html#vantagens">Vantagens</a>
+        <a href="hero.html#avisos">Avisos</a>
+        <a href="hero.html#footer">Sobre nós</a>
+        <a style="cursor: pointer">Dashboard</a>
+    </nav>
 
     <div class="nav-right">
-        <span class="icon" onclick="irHero()"></span>
-        <span class="icon" onclick="irNotificacao()"></span>
-        <span class="icon"></span>
-
-        <div class="user-profile" onclick="irPerfil()">
-            <img src="https://i.pravatar.cc/150?img=11">
-            <span>Olá, Danilo</span>
-        </div>
+        <a href="notificacao.html" class="nav-link-bold"><i class="fas fa-bell"></i> Notificações</a>
+        <a href="perfil.html" class="nav-link-bold">Perfil</a>
+        <img src="assets/avatar.png" alt="Avatar" class="avatar-img">
     </div>
-</nav>
+</header>
 
 <main class="container">
 
@@ -280,22 +328,9 @@
 
     <section class="status-grid">
         <div class="card status-main">
-            <div class="status-circle">✓</div>
+            <div class="status-circle"><i class="fa-solid fa-check"></i></div>
             <h3>Sua Água está aberta agora</h3>
             <p>08:00 - 22:00, hoje</p>
-        </div>
-
-        <div class="card">
-            <h4>Manutenção ou falta detectada</h4>
-            <div class="status-label success">● Não há falta</div>
-            <p>Sem interrupções previstas para hoje</p>
-            <small>Tempo restante: 04:32:15</small>
-        </div>
-
-        <div class="card">
-            <h4>Previsão para normalização</h4>
-            <div class="status-label success">● Data: 16 de Março</div>
-            <p>Normaliza às 06:00 AM</p>
         </div>
     </section>
 
@@ -314,14 +349,14 @@
                 <tbody>
                 <tr>
                     <td>Segunda</td>
-                    <td>📅 16/03</td>
-                    <td class="text-success">● Normal</td>
+                    <td><i class="fa-regular fa-calendar"></i> 16/03</td>
+                    <td class="text-success"><i class="fa-solid fa-circle" style="font-size: 0.6rem; vertical-align: middle;"></i> Normal</td>
                     <td>05:00 - 23:00</td>
                 </tr>
                 <tr>
                     <td>Quarta</td>
-                    <td>📅 18/03</td>
-                    <td class="text-danger">✖ Rodízio</td>
+                    <td><i class="fa-regular fa-calendar"></i> 18/03</td>
+                    <td class="text-danger"><i class="fa-solid fa-xmark"></i> Rodízio</td>
                     <td>---</td>
                 </tr>
                 </tbody>
@@ -329,19 +364,19 @@
         </div>
 
         <aside class="shortcuts">
-            <div class="shortcut-card">💡 Dica de economia</div>
-            <div class="shortcut-card">📈 Consumo semanal</div>
-            <div class="shortcut-card">⚙️ Emergência</div>
+            <div class="shortcut-card"><i class="fa-solid fa-lightbulb" style="color: #f1c40f; margin-right: 5px;"></i> Dica de economia</div>
+            <div class="shortcut-card"><i class="fa-solid fa-chart-line" style="color: #006080; margin-right: 5px;"></i> Consumo semanal</div>
+            <div class="shortcut-card"><i class="fa-solid fa-triangle-exclamation" style="color: #e74c3c; margin-right: 5px;"></i> Emergência</div>
         </aside>
     </section>
 
 </main>
 
 <div class="tab-bar">
-    <span onclick="irHero()">🏠</span>
-    <span>📊</span>
-    <span onclick="irNotificacao()">🔔</span>
-    <span onclick="irPerfil()">⚙️</span>
+    <span onclick="irHero()"><i class="fa-solid fa-house"></i></span>
+    <span><i class="fa-solid fa-chart-simple"></i></span>
+    <span onclick="irNotificacao()"><i class="fa-solid fa-bell"></i></span>
+    <span onclick="irPerfil()"><i class="fa-solid fa-gear"></i></span>
 </div>
 
 <script>

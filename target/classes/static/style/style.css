@@ -31,23 +31,57 @@ section {
 }
 
 /* Navbar */
+/* Navbar com efeito Liquid Glass */
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
-    border-bottom: 1px solid #eee;
+    padding: 15px 30px; /* Um pouco mais de espaço interno para respirar */
 
-    /* Centralização */
+    /* === EFEITO LIQUID GLASS === */
+    background: rgba(255, 255, 255, 0.45); /* Fundo branco semi-transparente */
+    backdrop-filter: blur(12px); /* O desfoque do vidro */
+    -webkit-backdrop-filter: blur(12px); /* Suporte para navegadores da Apple */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Uma borda clara para dar o reflexo do vidro */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* Sombra suave para descolar a barra do fundo */
+    border-radius: 20px; /* Bordas arredondadas (formato de pílula) */
+
+    /* === COMPORTAMENTO DE ROLAGEM === */
+    position: sticky; /* Faz a barra grudar no topo ao rolar a página */
+    top: 15px; /* Deixa uma margem de 15px no topo da tela */
+    z-index: 1000; /* Garante que a barra fique sempre por cima das outras imagens/textos */
+
+    /* Centralização original */
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 15px auto; /* Adicionamos margem para a barra ficar flutuando */
     width: 95%; /* Segurança para telas menores que 1200px */
 }
 
-.logo {
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: var(--primary-blue);
+/*.logo {*/
+/*    font-weight: bold;*/
+/*    font-size: 1.5rem;*/
+/*    color: var(--primary-blue);*/
+/*}*/
+
+/* Nova estilização da Logo
+.logo-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none; /* Garante que não haja sublinhado
+} */
+
+.logo-img {
+    height: 60px; /* Altura ideal para a navbar flutuante */
+    width: auto;  /* Mantém a proporção da imagem */
+    display: block;
+    border-radius: 8px; /* Opcional: Adiciona cantos levemente arredondados à logo */
+    transition: transform 0.3s ease; /* Efeito suave no hover */
+}
+
+/* Efeito de hover na logo */
+.logo-img:hover {
+    transform: scale(1.05); /* Aumenta ligeiramente a logo quando passa o rato */
 }
 
 nav a {
@@ -55,13 +89,13 @@ nav a {
     color: var(--text-dark);
     margin: 0 15px;
     font-size: 0.9rem;
+    font-weight: 500;
     display: inline-block;
     transition: transform 0.3s ease, color 0.3s ease;
 }
 
 nav a:hover {
-    transform: scale(1.1);
-    color: #1b3d4f;
+    color: #006080;
 }
 
 
