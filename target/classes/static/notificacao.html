@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Controle - Cadê a Água?</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background-color: #f5f7f8;
+            color: #333;
+            padding-bottom: 70px;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background-color: #006080;
+            padding: 10px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            color: #ffffff;
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        .search-container input {
+            padding: 8px 12px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            width: 260px;
+        }
+
+        .icon {
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .user-profile img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .user-profile span {
+            color: #FFFFFF;
+            font-weight: 500;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: 1200px;
+            margin: 25px auto;
+            padding: 0 15px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 25px;
+            gap: 10px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 1.3rem;
+        }
+
+        .address-info {
+            text-align: right;
+            font-size: 0.85rem;
+        }
+
+        /* STATUS */
+        .status-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .status-main {
+            text-align: center;
+        }
+
+        .status-circle {
+            width: 65px;
+            height: 65px;
+            background: #00c853;
+            color: white;
+            font-size: 1.8rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+        }
+
+        .status-label {
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .text-success, .status-label.success {
+            color: #28a745;
+        }
+
+        .text-danger {
+            color: #dc3545;
+        }
+
+        /* BOTTOM */
+        .bottom-grid {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 0.85rem;
+        }
+
+        .shortcuts {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .shortcut-card {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border-left: 4px solid #006080;
+        }
+
+        .tab-bar { display: none; }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .nav-left {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .nav-right {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .search-container {
+                display: none;
+            }
+
+            .user-profile span {
+                display: none; /* 🔥 evita aperto */
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .address-info {
+                text-align: left;
+            }
+
+            .status-grid,
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            .tab-bar {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                background: white;
+                justify-content: space-around;
+                padding: 15px;
+                box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="nav-left">
+        <a href="hero.html" class="logo">Cadê a Água?</a>
+
+        <div class="search-container">
+            <input type="text" placeholder="Busca rápida de logradouros...">
+        </div>
+    </div>
+
+    <div class="nav-right">
+        <span class="icon" onclick="irHero()"></span>
+        <span class="icon" onclick="irNotificacao()"></span>
+        <span class="icon"></span>
+
+        <div class="user-profile" onclick="irPerfil()">
+            <img src="https://i.pravatar.cc/150?img=11">
+            <span>Olá, Danilo</span>
+        </div>
+    </div>
+</nav>
+
+<main class="container">
+
+    <header class="dashboard-header">
+        <h1>Painel de Controle Hídrico: Sua residência</h1>
+        <div class="address-info">
+            <p>Endereço: <strong>Rua das Flores, 123, Bairro Centro</strong></p>
+            <a href="#">Alterar endereço</a>
+        </div>
+    </header>
+
+    <section class="status-grid">
+        <div class="card status-main">
+            <div class="status-circle">✓</div>
+            <h3>Sua Água está aberta agora</h3>
+            <p>08:00 - 22:00, hoje</p>
+        </div>
+
+        <div class="card">
+            <h4>Manutenção ou falta detectada</h4>
+            <div class="status-label success">● Não há falta</div>
+            <p>Sem interrupções previstas para hoje</p>
+            <small>Tempo restante: 04:32:15</small>
+        </div>
+
+        <div class="card">
+            <h4>Previsão para normalização</h4>
+            <div class="status-label success">● Data: 16 de Março</div>
+            <p>Normaliza às 06:00 AM</p>
+        </div>
+    </section>
+
+    <section class="bottom-grid">
+        <div class="card table-container">
+            <h3>Detalhes do Cronograma</h3>
+            <table>
+                <thead>
+                <tr>
+                    <th>Dia</th>
+                    <th>Data</th>
+                    <th>Status</th>
+                    <th>Horário</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Segunda</td>
+                    <td>📅 16/03</td>
+                    <td class="text-success">● Normal</td>
+                    <td>05:00 - 23:00</td>
+                </tr>
+                <tr>
+                    <td>Quarta</td>
+                    <td>📅 18/03</td>
+                    <td class="text-danger">✖ Rodízio</td>
+                    <td>---</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <aside class="shortcuts">
+            <div class="shortcut-card">💡 Dica de economia</div>
+            <div class="shortcut-card">📈 Consumo semanal</div>
+            <div class="shortcut-card">⚙️ Emergência</div>
+        </aside>
+    </section>
+
+</main>
+
+<div class="tab-bar">
+    <span onclick="irHero()">🏠</span>
+    <span>📊</span>
+    <span onclick="irNotificacao()">🔔</span>
+    <span onclick="irPerfil()">⚙️</span>
+</div>
+
+<script>
+    function irPerfil() {
+        window.location.href = "perfil.html";
+    }
+
+    function irHero() {
+        window.location.href = "hero.html";
+    }
+
+    function irNotificacao() {
+        window.location.href = "notificacao.html";
+    }
+</script>
+
+</body>
+</html>
