@@ -4,229 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/peixe.png" type="image/x-icon">
-    <title>Login - Cadê a Água?</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-
-        /* ===== BASE ===== */
-        body {
-            height: 100vh;
-        }
-
-        /* CONTAINER GERAL */
-        .wrapper {
-            display: flex;
-            height: 100vh;
-        }
-
-        /* ===== LADO ESQUERDO (LOGIN) ===== */
-        .left {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* CONTAINER LOGIN */
-        .container {
-            width: 300px;
-        }
-
-        /* TÍTULO */
-        h1 {
-            margin-bottom: 40px;
-        }
-
-        /* INPUTS */
-        .input-box {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            background-color: #f9f9f9;
-            font-size: 0.6rem;
-            outline: none;
-            transition: border-color 0.3s;
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-        }
-
-        .input-box img {
-            width: 18px;
-            margin-right: 10px;
-        }
-
-        .input-box input {
-            border: none;
-            outline: none;
-            background: transparent;
-            width: 100%;
-        }
-
-        /* TEXTOS */
-        .forgot {
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
-
-        /* BOTÃO */
-        .btn-login {
-            background: #2A8E9E;
-            border: none;
-            width: 100%;
-            padding: 12px;
-            border-radius: 6px;
-            color: white;
-            font-style: italic;
-            font-size: 15px;
-            cursor: pointer;
-            box-shadow: 0px 3px 5px rgba(0,0,0,0.3);
-        }
-
-        /* DIVIDER */
-        .divider {
-            margin: 30px 0;
-            display: flex;
-            align-items: center;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: "";
-            flex: 1;
-            height: 1px;
-            margin: 0 10px;
-        }
-
-        /* GOOGLE */
-        .google-btn {
-            background: #ddd;
-            padding: 12px;
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            cursor: pointer;
-            box-shadow: 0px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .google-btn img {
-            width: 20px;
-        }
-
-        /* CADASTRO */
-        .register {
-            margin-top: 25px;
-            font-size: 14px;
-        }
-
-        /* ERRO */
-        .error {
-            margin-top: 10px;
-            font-size: 13px;
-        }
-
-        /* ===== DESKTOP ===== */
-        @media (min-width: 768px) {
-
-            .wrapper {
-                flex-direction: row;
-            }
-
-            .left {
-                width: 40%;
-                background: #f5f5f5;
-            }
-
-            .right {
-                width: 60%;
-                background-color: #D9D9D9;
-                background-image: url("https://images.pexels.com/photos/6788543/pexels-photo-6788543.jpeg");
-                background-position: center;
-                background-size: cover;
-                background-repeat: no-repeat;
-            }
-
-            .divider::before,
-            .divider::after {
-                background: black;
-            }
-
-            .register span {
-                color: #16235F;
-                font-weight: bold;
-                cursor: pointer;
-            }
-
-            .error {
-                color: red;
-            }
-        }
-
-        /* ===== MOBILE ===== */
-        @media (max-width: 767px) {
-
-            body {
-                background-color: #176471;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .wrapper {
-                flex-direction: column;
-            }
-
-            .left {
-                width: 100%;
-            }
-
-            .right {
-                display: none;
-            }
-
-            .container {
-                max-width: 360px;
-                width: 100%;
-                padding: 20px;
-                text-align: center;
-                color: white;
-            }
-
-            h1 {
-                font-weight: 400;
-                margin-bottom: 50px;
-            }
-
-            .forgot {
-                text-align: right;
-                color: #e0f7fa;
-            }
-
-            .divider::before,
-            .divider::after {
-                background: white;
-            }
-
-            .register span {
-                color: #AAECF7;
-                font-weight: bold;
-                cursor: pointer;
-            }
-
-            .error {
-                color: #ffcccc;
-            }
-        }
-
-    </style>
+    <title>Login - Cade a Agua?</title>
+    <link rel="stylesheet" href="style/login.css">
 </head>
 
 <body>
@@ -235,15 +14,15 @@
 
     <div class="left">
         <div class="container">
-            <h1>Cadê a Água?</h1>
+            <h1>Cade a Agua?</h1>
 
             <div class="input-box">
-                <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png">
-                <input type="email" id="email" placeholder="Usuário@gmail.com">
+                <img src="https://cdn-icons-png.flaticon.com/512/747/747376.png" alt="Email Icon">
+                <input type="email" id="email" placeholder="Usuario@gmail.com">
             </div>
 
             <div class="input-box">
-                <img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png">
+                <img src="https://cdn-icons-png.flaticon.com/512/3064/3064155.png" alt="Password Icon">
                 <input type="password" id="senha" placeholder="****************">
             </div>
 
@@ -254,12 +33,12 @@
             <div class="divider">ou</div>
 
             <div class="google-btn">
-                <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png">
+                <img src="https://cdn-icons-png.flaticon.com/512/2991/2991148.png" alt="Google Icon">
                 Realizar cadastro com o Google
             </div>
 
             <div class="register">
-                Ainda não tem uma conta?
+                Ainda nao tem uma conta?
                 <span onclick="irCadastro()">Cadastre-se</span>
             </div>
 
@@ -273,7 +52,7 @@
 
 <script>
     async function login() {
-        const email = document.getElementById("email").value;
+        const email = document.getElementById("email").value.trim();
         const senha = document.getElementById("senha").value;
         const erroDiv = document.getElementById("erro");
 
@@ -281,23 +60,21 @@
             const response = await fetch("http://localhost:8080/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({email, senha })
+                body: JSON.stringify({ email, senha })
             });
 
-            const mensagem = await response.text();
+            const resposta = response.headers.get("content-type")?.includes("application/json")
+                ? await response.json()
+                : await response.text();
 
             if (response.ok) {
-                // SALVA USUÁRIO LOGADO
-                localStorage.setItem("usuarioEmail", email);
-
-                // pega nome simples do email (antes do @)
-                const nome = email.split("@")[0];
-                localStorage.setItem("usuarioNome", nome);
-
-                // REDIRECIONA PRA HERO
+                localStorage.setItem("usuarioId", resposta.id);
+                localStorage.setItem("usuarioEmail", resposta.email);
+                localStorage.setItem("usuarioNome", resposta.nome || resposta.email.split("@")[0]);
+                localStorage.setItem("usuarioTelefone", resposta.telefone || "");
                 window.location.href = "hero.html";
             } else {
-                erroDiv.innerText = mensagem;
+                erroDiv.innerText = resposta;
             }
         } catch (error) {
             erroDiv.innerText = "Erro ao conectar com o servidor.";

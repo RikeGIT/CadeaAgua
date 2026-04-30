@@ -5,29 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadê a Água? - Patos</title>
     <link rel="icon" href="assets/peixe.png" type="image/x-icon">
-    <link rel="stylesheet" href="/style/style.css">
+    <link rel="stylesheet" href="/style/hero.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
 <header class="navbar">
-    <!-- LOGO AGORA CLICÁVEL -->
     <a href="hero.html" class="logo-link">
         <img src="assets/logo-cade-a-agua(sem%20fundo).png" alt="Logo Cadê a Água?" class="logo-img">
     </a>
 
-    <nav>
-        <a href="#noticias">Notícias</a>
-        <a href="#vantagens">Vantagens</a>
-        <a href="#avisos">Avisos</a>
-        <a href="#footer">Sobre nós</a>
-
+    <nav class="nav-links">
+        <a href="hero.html#noticias">Notícias</a>
+        <a href="hero.html#vantagens">Vantagens</a>
+        <a href="hero.html#avisos">Avisos</a>
+        <a href="hero.html#footer">Sobre nós</a>
         <a href="notificacao.html">Dashboard</a>
+        <a href="admin.html">Admin</a>
     </nav>
 
-    <div class="auth-buttons" id="authArea">
-        <a href="cadastro.html" class="btn-secondary">Cadastre-se</a>
-        <a href="login.html" class="btn-primary">Entrar</a>
+    <div class="nav-right">
+        <a href="perfil.html" class="nav-pill">Perfil</a>
+        <a href="perfil.html" class="avatar-img" aria-label="Perfil"><i class="fa-solid fa-user"></i></a>
     </div>
 </header>
 
@@ -35,14 +34,11 @@
 
     <section class="hero-grid">
         <div class="search-area">
-            <h1>Pesquise sua rua e fique sabendo imediatamente se tem água ou não.</h1>
+            <h1>Pesquise sua rua e saiba imediatamente se há água disponível.</h1>
             <div class="search-bar">
-                <input type="text" placeholder="Busca rápida de logradouros (Ex: Rua do sol)...">
-                <button><i class="fa-solid fa-magnifying-glass"></i></button>
+                <input type="text" placeholder="Busca rápida de logradouros (ex: Rua do Sol)...">
+                <button aria-label="Pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
-        </div>
-        <div class="hero-image">
-            <img src="assets/hero-image.png" alt="Mão segurando cano de água">
         </div>
     </section>
 
@@ -57,7 +53,7 @@
         <img src="/assets/background%20log.png" alt="Fundo com relevo" class="cta-background-pattern">
 
         <div class="cta-content">
-            <h2>Realize o login e se mantenha atualizado sobre a água da cidade</h2>
+            <h2>Faça login e mantenha-se atualizado sobre a água da cidade</h2>
 
             <div class="features-grid">
                 <div class="feature-card">
@@ -65,7 +61,7 @@
                         <i class="fa-solid fa-chart-line"></i>
                     </div>
                     <h3>Dashboard pessoal</h3>
-                    <p>Entenda de maneira simplificada todo o fluxo de água da sua rua e se previna de possíveis imprevistos</p>
+                    <p>Entenda, de forma simples, o fluxo de água da sua rua e previna possíveis imprevistos.</p>
                 </div>
 
                 <div class="feature-card">
@@ -73,7 +69,7 @@
                         <i class="fa-solid fa-bell"></i>
                     </div>
                     <h3>Notificações automáticas</h3>
-                    <p>Receba no seu canal de informação favorito avisos preventivos sobre a falta de água</p>
+                    <p>Receba avisos preventivos sobre falta de água no seu canal de informação favorito.</p>
                 </div>
 
                 <div class="feature-card">
@@ -81,7 +77,7 @@
                         <i class="fa-solid fa-newspaper"></i>
                     </div>
                     <h3>Notícias atualizadas</h3>
-                    <p>Saiba tudo sobre as últimas notícias relacionadas à água na cidade de Patos e região.</p>
+                    <p>Acompanhe as últimas notícias relacionadas à água em Patos e região.</p>
                 </div>
             </div>
         </div>
@@ -93,16 +89,16 @@
             <div class="alert-box feedback">
                 <div class="alert-text">
                     <h3>Feedbacks</h3>
-                    <p>Estamos recebendo todas as opiniões quanto às funcionalidades e bugs do site.</p>
+                    <p>Estamos recebendo opiniões sobre funcionalidades, melhorias e possíveis bugs do site.</p>
                 </div>
-                <img src="/assets/feedback-image.png" alt="Feedback UI">
+                <img src="/assets/feedback-image.png" alt="Interface de feedback">
             </div>
             <div class="alert-box update">
                 <div class="alert-text">
                     <h3>Atualização</h3>
-                    <p>Percebemos que o sistema de dashboard está sofrendo dados de maneira não apropriada.</p>
+                    <p>Estamos ajustando o dashboard para tornar os dados de abastecimento mais claros e confiáveis.</p>
                 </div>
-                <img src="/assets/update-image.png" alt="Update UI">
+                <img src="/assets/update-image.png" alt="Interface de atualização">
             </div>
         </div>
     </section>
@@ -112,14 +108,14 @@
 <footer id="footer">
     <div class="footer-container">
         <div class="footer-brand">
-            <h3>Cade a água</h3>
-            <p>Website para te manter atualizado sobre água em patos e região</p>
+            <h3>Cadê a Água?</h3>
+            <p>Website para manter você atualizado sobre água em Patos e região.</p>
             <div class="social-icons">
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-discord"></i></a>
-                <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
-                <a href="#"><i class="fa-brands fa-github"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" aria-label="X"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
             </div>
         </div>
     </div>
@@ -127,32 +123,8 @@
 
 <script>
     window.onload = function () {
-        const email = localStorage.getItem("usuarioEmail");
-        let nome = localStorage.getItem("usuarioNome");
-
-        const authArea = document.getElementById("authArea");
-
-        if (email) {
-            if (!nome) {
-                nome = email.split("@")[0];
-            }
-
-            authArea.innerHTML = `
-                <div onclick="irPerfil()" style="display:flex; align-items:center; gap:10px; cursor:pointer;">
-                    <img src="https://i.pravatar.cc/150?img=11"
-                         style="width:35px; height:35px; border-radius:50%;">
-                    <span style="font-weight: bold;">Olá, ${nome}</span>
-                </div>
-            `;
-        }
-
-        // Chama a função para buscar e desenhar as notícias assim que a página carregar
         carregarNoticias();
     };
-
-    function irPerfil() {
-        window.location.href = "perfil.html";
-    }
 
     async function carregarNoticias() {
         const container = document.getElementById("news-grid-container");
@@ -171,37 +143,38 @@
                 return;
             }
 
-            container.innerHTML = "";
-
             const imagensPadrao = [
                 "/assets/noticia-01.png",
                 "/assets/noticia-02.png",
                 "/assets/noticia-03.png",
             ];
 
-            // Pega no máximo as 3 últimas notícias
-            const noticiasParaExibir = noticias.slice(-3).reverse();
-
-            noticiasParaExibir.forEach((noticia, index) => {
-                const article = document.createElement("article");
-
-
-                article.className = "news-card";
-                const imagemCard = noticia.imagemUrl ? noticia.imagemUrl : imagensPadrao[index % 3];
-
-                article.innerHTML = `
-                    <img src="${imagemCard}" alt="${noticia.titulo}">
-                    <h3>${noticia.titulo}</h3>
-                    <p>${noticia.descricao || "Confira os detalhes desta notícia clicando aqui..."}</p>
-                `;
-
-                container.appendChild(article);
-            });
+            renderizarNoticias(noticias.slice(-3).reverse(), imagensPadrao);
 
         } catch (error) {
             console.error("Erro ao carregar notícias:", error);
-            container.innerHTML = "<p style='text-align: center; grid-column: 1 / -1; color: red;'>Erro ao carregar notícias. Tente novamente mais tarde.</p>";
+            container.innerHTML = "<p style='text-align: center; grid-column: 1 / -1; color: #65757d;'>Não foi possível carregar as notícias agora.</p>";
         }
+    }
+
+    function renderizarNoticias(noticias, imagensPadrao) {
+        const container = document.getElementById("news-grid-container");
+        container.innerHTML = "";
+
+        noticias.forEach((noticia, index) => {
+            const article = document.createElement("article");
+            article.className = "news-card";
+
+            const imagemCard = noticia.imagemUrl || noticia.imagem_url || imagensPadrao[index % imagensPadrao.length];
+
+            article.innerHTML = `
+                <img src="${imagemCard}" alt="${noticia.titulo}">
+                <h3>${noticia.titulo}</h3>
+                <p>${noticia.descricao || "Confira os detalhes desta notícia."}</p>
+            `;
+
+            container.appendChild(article);
+        });
     }
 </script>
 

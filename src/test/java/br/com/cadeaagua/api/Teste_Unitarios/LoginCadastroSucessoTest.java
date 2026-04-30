@@ -1,6 +1,7 @@
 package br.com.cadeaagua.api.Teste_Unitarios;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,31 +35,26 @@ class LoginCadastroSucessoTest {
     @Mock
     private BCryptPasswordEncoder passwordEncoder;
 
-    // TESTE 1: CADASTRO COM SUCESSO
     @Test
     void DeveCadastrarUsuarioComSucesso() {
-        Endereco endereco = new Endereco();
-        Usuario usuario = new Usuario(null, "Bruno", "bruno@email.com", "senha123", endereco);
+        Usuario usuario = usuarioValido("Bruno", "bruno@email.com", "83999999999", "senha123");
 
-        // Configura o comportamento dos mocks
         when(userRepository.findByEmail("bruno@email.com")).thenReturn(Optional.empty());
-        when(enderecoRepository.save(any(Endereco.class))).thenReturn(endereco);
+        when(enderecoRepository.save(any(Endereco.class))).thenReturn(usuario.getEndereco());
         when(passwordEncoder.encode("senha123")).thenReturn("hash_bcrypt_gerado");
         when(userRepository.save(any(Usuario.class))).thenReturn(usuario);
 
         ResponseEntity<?> response = authController.register(usuario);
 
         assertEquals(200, response.getStatusCode().value());
+        assertInstanceOf(AuthController.AuthResponse.class, response.getBody());
         verify(enderecoRepository, times(1)).save(any(Endereco.class));
         verify(userRepository, times(1)).save(any(Usuario.class));
     }
 
-    // TESTE 2: LOGIN COM SUCESSO
     @Test
     void DeveRealizarLoginComSucesso() {
-        Usuario usuarioNoBanco = new Usuario();
-        usuarioNoBanco.setEmail("bruno@email.com");
-        usuarioNoBanco.setSenha("bruno12345");
+        Usuario usuarioNoBanco = usuarioValido("Bruno", "bruno@email.com", "83999999999", "bruno12345");
 
         Usuario dadosLogin = new Usuario();
         dadosLogin.setEmail("bruno@email.com");
@@ -69,30 +66,28 @@ class LoginCadastroSucessoTest {
         ResponseEntity<?> response = authController.login(dadosLogin);
 
         assertEquals(200, response.getStatusCode().value());
-        assertEquals("Login realizado com sucesso!", response.getBody());
+        assertInstanceOf(AuthController.AuthResponse.class, response.getBody());
     }
 
-    // TESTE 3: CADASTRO: Verifica se o nome do usuário é salvo corretamente
     @Test
     void DeveSalvarNomeCorretoNoCadastro() {
-        Usuario usuario = new Usuario(null, "Carlos Silva", "carlos@teste.com", "123", new Endereco());
+        Usuario usuario = usuarioValido("Carlos Silva", "carlos@teste.com", "83888888888", "123");
+
         when(userRepository.findByEmail(anyString())).thenReturn(Optional.empty());
-        when(enderecoRepository.save(any())).thenReturn(new Endereco());
+        when(enderecoRepository.save(any())).thenReturn(usuario.getEndereco());
         when(userRepository.save(any(Usuario.class))).thenReturn(usuario);
 
         ResponseEntity<?> response = authController.register(usuario);
-        Usuario salvo = (Usuario) response.getBody();
+        AuthController.AuthResponse salvo = (AuthController.AuthResponse) response.getBody();
 
         assertEquals(200, response.getStatusCode().value());
-        assertEquals("Carlos Silva", salvo.getNome());
+        assertNotNull(salvo);
+        assertEquals("Carlos Silva", salvo.nome());
     }
 
-    // TESTE 4: LOGIN: Verifica se o sistema ignora Diferença entre Maiúsculas/Minúsculas no e-mail (se o repo permitir)
     @Test
     void DeveLogarMesmoComEmailEmMaiuscula() {
-        Usuario usuarioDB = new Usuario();
-        usuarioDB.setEmail("samuel@email.com");
-        usuarioDB.setSenha("bolobom123");
+        Usuario usuarioDB = usuarioValido("Samuel", "samuel@email.com", "83777777777", "bolobom123");
 
         Usuario loginRequest = new Usuario();
         loginRequest.setEmail("SAMUEL@EMAIL.COM");
@@ -105,14 +100,12 @@ class LoginCadastroSucessoTest {
         assertEquals(200, response.getStatusCode().value());
     }
 
-    // TESTE 5: CADASTRO: Verifica se o ID do endereço retornado é vinculado ao usuário
     @Test
     void DeveVincularEnderecoSalvoAoUsuario() {
-        Endereco enderecoComId = new Endereco();
-        enderecoComId.setId_endereco(50); // Simula ID gerado pelo MySQL
+        Endereco enderecoComId = enderecoValido();
+        enderecoComId.setId_endereco(50);
 
-        Usuario usuario = new Usuario();
-        usuario.setEndereco(new Endereco());
+        Usuario usuario = usuarioValido("Maria", "maria@email.com", "83666666666", "123");
 
         when(userRepository.findByEmail(any())).thenReturn(Optional.empty());
         when(enderecoRepository.save(any())).thenReturn(enderecoComId);
@@ -120,5 +113,24 @@ class LoginCadastroSucessoTest {
 
         authController.register(usuario);
         assertEquals(50, usuario.getEndereco().getId_endereco());
+    }
+
+    private Usuario usuarioValido(String nome, String email, String telefone, String senha) {
+        Usuario usuario = new Usuario();
+        usuario.setNome(nome);
+        usuario.setEmail(email);
+        usuario.setTelefone(telefone);
+        usuario.setSenha(senha);
+        usuario.setEndereco(enderecoValido());
+        return usuario;
+    }
+
+    private Endereco enderecoValido() {
+        Endereco endereco = new Endereco();
+        endereco.setRua("Rua das Flores");
+        endereco.setBairro("Centro");
+        endereco.setCidade("Patos");
+        endereco.setCep("58700-000");
+        return endereco;
     }
 }

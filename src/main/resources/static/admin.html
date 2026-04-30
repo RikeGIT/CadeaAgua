@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Cade a Agua?</title>
+    <link rel="icon" href="assets/peixe.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style/admin.css">
+</head>
+<body>
+
+<header class="navbar">
+    <a href="hero.html" class="logo-link">
+        <img src="assets/logo-cade-a-agua(sem%20fundo).png" alt="Logo Cade a Agua?" class="logo-img">
+    </a>
+
+    <nav>
+        <a href="hero.html#noticias">Noticias</a>
+        <a href="hero.html#vantagens">Vantagens</a>
+        <a href="hero.html#avisos">Avisos</a>
+        <a href="hero.html#footer">Sobre nos</a>
+        <a href="notificacao.html">Dashboard</a>
+        <a href="admin.html" class="active">Admin</a>
+    </nav>
+
+    <div class="nav-right">
+        <a href="hero.html" class="nav-pill" title="Voltar para a tela principal"><i class="fa-solid fa-house"></i></a>
+        <a href="perfil.html" class="avatar-img" aria-label="Perfil"><i class="fa-solid fa-user"></i></a>
+    </div>
+</header>
+
+<main class="admin-shell">
+    <section class="admin-hero">
+        <div>
+            <p class="eyebrow">Painel administrativo</p>
+            <h1>Controle de noticias, logs e operacao.</h1>
+        </div>
+
+        <div class="admin-actions">
+            <button class="icon-button" type="button" title="Atualizar dados" onclick="carregarTudo()">
+                <i class="fa-solid fa-rotate-right"></i>
+            </button>
+            <a class="primary-action" href="#nova-noticia">
+                <i class="fa-solid fa-plus"></i>
+                Nova noticia
+            </a>
+        </div>
+    </section>
+
+    <section class="metrics-grid" aria-label="Resumo administrativo">
+        <article class="metric-card">
+            <span class="metric-icon news"><i class="fa-solid fa-newspaper"></i></span>
+            <div>
+                <strong id="totalNoticias">0</strong>
+                <p>Noticias cadastradas</p>
+            </div>
+        </article>
+
+        <article class="metric-card">
+            <span class="metric-icon logs"><i class="fa-solid fa-terminal"></i></span>
+            <div>
+                <strong id="totalLogs">0</strong>
+                <p>Linhas de log exibidas</p>
+            </div>
+        </article>
+
+        <article class="metric-card">
+            <span class="metric-icon status"><i class="fa-solid fa-circle-check"></i></span>
+            <div>
+                <strong id="apiStatus">...</strong>
+                <p>Status da API</p>
+            </div>
+        </article>
+    </section>
+
+    <section class="admin-grid">
+        <article class="panel" id="nova-noticia">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">Publicacao</p>
+                    <h2>Criar noticia</h2>
+                </div>
+                <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+
+            <form id="newsForm" class="admin-form">
+                <label for="titulo">Titulo</label>
+                <input id="titulo" name="titulo" type="text" maxlength="300" placeholder="Ex: Manutencao altera abastecimento no Centro" required>
+
+                <label for="descricao">Descricao</label>
+                <textarea id="descricao" name="descricao" maxlength="2000" rows="7" placeholder="Escreva o resumo da noticia para aparecer na pagina inicial." required></textarea>
+
+                <div class="form-row">
+                    <div>
+                        <label for="imagem_url">Imagem</label>
+                        <input id="imagem_url" name="imagem_url" type="text" maxlength="200" placeholder="/assets/noticia-01.png">
+                    </div>
+                    <div>
+                        <label for="data_publicacao">Data</label>
+                        <input id="data_publicacao" name="data_publicacao" type="date">
+                    </div>
+                </div>
+
+                <p id="formFeedback" class="feedback" aria-live="polite"></p>
+
+                <button class="primary-action submit-button" type="submit">
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    Publicar noticia
+                </button>
+            </form>
+        </article>
+
+        <article class="panel">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">Conteudo</p>
+                    <h2>Noticias recentes</h2>
+                </div>
+                <button class="icon-button small" type="button" title="Atualizar noticias" onclick="carregarNoticias()">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+
+            <div id="newsList" class="news-list">
+                <p class="empty-state">Carregando noticias...</p>
+            </div>
+        </article>
+    </section>
+
+    <section class="panel logs-panel">
+        <div class="panel-heading">
+            <div>
+                <p class="eyebrow">Observabilidade</p>
+                <h2>Logs do servidor</h2>
+            </div>
+
+            <div class="logs-controls">
+                <label for="logLines">Linhas</label>
+                <select id="logLines" onchange="carregarLogs()">
+                    <option value="60">60</option>
+                    <option value="120" selected>120</option>
+                    <option value="200">200</option>
+                    <option value="300">300</option>
+                </select>
+                <button class="icon-button small" type="button" title="Atualizar logs" onclick="carregarLogs()">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="logsList" class="logs-list">
+            <p class="empty-state">Carregando logs...</p>
+        </div>
+    </section>
+</main>
+
+<div class="tab-bar">
+    <a href="hero.html" aria-label="Inicio"><i class="fa-solid fa-house"></i></a>
+    <a href="notificacao.html" aria-label="Dashboard"><i class="fa-solid fa-chart-simple"></i></a>
+    <a href="admin.html" aria-label="Admin"><i class="fa-solid fa-screwdriver-wrench"></i></a>
+    <a href="perfil.html" aria-label="Perfil"><i class="fa-solid fa-user"></i></a>
+</div>
+
+<script>
+    const newsList = document.getElementById("newsList");
+    const logsList = document.getElementById("logsList");
+    const feedback = document.getElementById("formFeedback");
+    const form = document.getElementById("newsForm");
+    const API_BASE = "http://localhost:8080";
+
+    document.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("data_publicacao").valueAsDate = new Date();
+        carregarTudo();
+    });
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const dados = {
+            titulo: form.titulo.value.trim(),
+            descricao: form.descricao.value.trim(),
+            imagem_url: form.imagem_url.value.trim(),
+            data_publicacao: form.data_publicacao.value || null
+        };
+
+        feedback.textContent = "Publicando...";
+        feedback.className = "feedback";
+
+        try {
+            const response = await fetch(`${API_BASE}/api/noticias`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(dados)
+            });
+
+            const resposta = response.headers.get("content-type")?.includes("application/json")
+                ? await response.json()
+                : await response.text();
+
+            if (!response.ok) {
+                throw new Error(typeof resposta === "string" ? resposta : "Nao foi possivel criar a noticia.");
+            }
+
+            form.reset();
+            document.getElementById("data_publicacao").valueAsDate = new Date();
+            feedback.textContent = "Noticia publicada com sucesso.";
+            feedback.className = "feedback success";
+            await carregarNoticias();
+        } catch (error) {
+            feedback.textContent = error.message || "Erro ao conectar com a API.";
+            feedback.className = "feedback error";
+        }
+    });
+
+    async function carregarTudo() {
+        await Promise.all([carregarNoticias(), carregarLogs()]);
+    }
+
+    async function carregarNoticias() {
+        newsList.innerHTML = "<p class='empty-state'>Carregando noticias...</p>";
+
+        try {
+            const response = await fetch(`${API_BASE}/api/noticias`);
+            if (!response.ok) {
+                throw new Error("Falha ao buscar noticias.");
+            }
+
+            const noticias = await response.json();
+            document.getElementById("apiStatus").textContent = "Online";
+            document.getElementById("totalNoticias").textContent = noticias.length;
+
+            if (!noticias.length) {
+                newsList.innerHTML = "<p class='empty-state'>Nenhuma noticia cadastrada ainda.</p>";
+                return;
+            }
+
+            newsList.innerHTML = "";
+            noticias.slice().reverse().forEach((noticia) => {
+                const id = noticia.id_notica || noticia.idNotica || noticia.id;
+                const item = document.createElement("article");
+                item.className = "news-item";
+                item.innerHTML = `
+                    <img src="${noticia.imagem_url || noticia.imagemUrl || "/assets/hero-image.png"}" alt="">
+                    <div>
+                        <div class="item-title-row">
+                            <h3>${escapeHtml(noticia.titulo || "Sem titulo")}</h3>
+                            <span>${formatarData(noticia.data_publicacao)}</span>
+                        </div>
+                        <p>${escapeHtml(noticia.descricao || "")}</p>
+                    </div>
+                    <button class="icon-button danger" type="button" title="Excluir noticia" onclick="excluirNoticia(${id})">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                `;
+                newsList.appendChild(item);
+            });
+        } catch (error) {
+            document.getElementById("apiStatus").textContent = "Offline";
+            newsList.innerHTML = `<p class='empty-state error-text'>${escapeHtml(error.message)}</p>`;
+        }
+    }
+
+    async function excluirNoticia(id) {
+        if (!id || !confirm("Excluir esta noticia?")) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE}/api/noticias/${id}`, { method: "DELETE" });
+            if (!response.ok && response.status !== 204) {
+                throw new Error("Nao foi possivel excluir a noticia.");
+            }
+            await carregarNoticias();
+        } catch (error) {
+            feedback.textContent = error.message;
+            feedback.className = "feedback error";
+        }
+    }
+
+    async function carregarLogs() {
+        const linhas = document.getElementById("logLines").value;
+        logsList.innerHTML = "<p class='empty-state'>Carregando logs...</p>";
+
+        try {
+            const response = await fetch(`${API_BASE}/api/admin/logs?linhas=${linhas}`);
+            if (!response.ok) {
+                throw new Error("Falha ao buscar logs.");
+            }
+
+            const dados = await response.json();
+            const totalLinhas = dados.arquivos.reduce((total, arquivo) => total + arquivo.linhas.length, 0);
+            document.getElementById("totalLogs").textContent = totalLinhas;
+
+            logsList.innerHTML = "";
+            dados.arquivos.forEach((arquivo) => {
+                const bloco = document.createElement("article");
+                bloco.className = "log-file";
+                bloco.innerHTML = `
+                    <div class="log-meta">
+                        <strong>${escapeHtml(arquivo.nome)}</strong>
+                        <span>${arquivo.totalLinhas} linhas - ${formatarBytes(arquivo.tamanhoBytes)}</span>
+                    </div>
+                    <pre>${escapeHtml(arquivo.linhas.join("\n") || "Sem registros.")}</pre>
+                `;
+                logsList.appendChild(bloco);
+            });
+        } catch (error) {
+            logsList.innerHTML = `<p class='empty-state error-text'>${escapeHtml(error.message)}</p>`;
+        }
+    }
+
+    function formatarData(data) {
+        if (!data) {
+            return "Sem data";
+        }
+
+        const [ano, mes, dia] = data.split("-");
+        return `${dia}/${mes}/${ano}`;
+    }
+
+    function formatarBytes(bytes) {
+        if (!bytes) {
+            return "0 B";
+        }
+
+        if (bytes < 1024) {
+            return `${bytes} B`;
+        }
+
+        return `${(bytes / 1024).toFixed(1)} KB`;
+    }
+
+    function escapeHtml(valor) {
+        return String(valor)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+</script>
+
+</body>
+</html>
