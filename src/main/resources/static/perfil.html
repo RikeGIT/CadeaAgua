@@ -5,300 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Perfil - Cadê a Água?</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        body {
-            background-color: #f4f4f4;
-        }
-
-        /* Navbar */
-        .navbar {
-            background-color: #006080;
-            color: white;
-            padding: 10px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        /* Navbar Liquid Glass */
-        /* Padrão Liquid Glass - Igual ao hero.html */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 30px;
-
-            background: rgba(255, 255, 255, 0.45); /* Fundo vidro claro */
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
-
-            position: sticky;
-            top: 15px;
-            z-index: 1000;
-
-            max-width: 1200px;
-            margin: 15px auto;
-            width: 95%;
-        }
-
-        /* Estilo da Logo Link e Imagem */
-        .logo-link {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        .logo-img {
-            height: 50px;
-            width: auto;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
-
-        .logo-img:hover {
-            transform: scale(1.05);
-        }
-
-        .nav-icons {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-        }
-
-        .user-info span {
-            display: none; /* 🔥 esconde nome no mobile */
-        }
-
-        /* Layout */
-        .main-container {
-            display: flex;
-            min-height: calc(100vh - 55px);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 250px;
-            background: white;
-            border-right: 1px solid #ddd;
-            padding: 20px;
-            transition: 0.3s;
-        }
-
-        .sidebar ul {
-            list-style: none;
-        }
-
-        .sidebar li {
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 5px;
-            cursor: pointer;
-        }
-
-        .sidebar li.active {
-            background: #f0f0f0;
-            font-weight: bold;
-        }
-
-        /* Conteúdo */
-        .content {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .profile-card {
-            background: white;
-            width: 100%;
-            max-width: 700px;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        .user-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .profile-img {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-        }
-
-        .profile-form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .row {
-            display: flex;
-            gap: 15px;
-        }
-
-        .input-box {
-            flex: 1;
-        }
-
-        label {
-            font-size: 0.85rem;
-            color: #333;
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .form-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-        }
-
-        .btn-save {
-            background: #5a7d9a;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        hr {
-            margin: 25px 0;
-        }
-
-        /* Delete */
-        .delete-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .btn-delete {
-            background: black;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* Logout */
-        .btn-logout {
-            margin-top: 10px;
-            background: #c0392b;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* 📱 MOBILE */
-        @media (max-width: 768px) {
-
-            .main-container {
-                flex-direction: column;
-            }
-
-            /* 🔥 Sidebar vira menu topo */
-            .sidebar {
-                width: 100%;
-                border-right: none;
-                border-bottom: 1px solid #ddd;
-                padding: 10px;
-            }
-
-            .sidebar ul {
-                display: flex;
-                justify-content: space-around;
-            }
-
-            .sidebar li {
-                margin: 0;
-                padding: 10px;
-                font-size: 0.9rem;
-            }
-
-            /* Inputs empilhados */
-            .row {
-                flex-direction: column;
-            }
-
-            /* Footer do form empilhado */
-            .form-footer {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-
-            /* Delete vira coluna */
-            .delete-section {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-
-            .btn-delete,
-            .btn-save,
-            .btn-logout {
-                width: 100%;
-                text-align: center;
-            }
-
-            .profile-card {
-                padding: 15px;
-            }
-        }
-    </style>
+    <!-- Link para o arquivo CSS -->
+    <link rel="stylesheet" href="style/perfil.css">
 </head>
 
 <body>
 
-<nav class="navbar">
+<header class="navbar">
     <a href="hero.html" class="logo-link">
         <img src="assets/logo-cade-a-agua(sem%20fundo).png" alt="Logo Cadê a Água?" class="logo-img">
     </a>
 
-    <div class="nav-icons">
-        <span></span>
-        <span></span>
-        <span></span>
+    <nav>
+        <a href="hero.html#noticias">Notícias</a>
+        <a href="hero.html#vantagens">Vantagens</a>
+        <a href="hero.html#avisos">Avisos</a>
+        <a href="hero.html#footer">Sobre nós</a>
+        <a href="notificacao.html">Dashboard</a>
+        <a href="admin.html">Admin</a>
+    </nav>
 
-        <div class="user-info">
-            <img src="https://i.pravatar.cc/150?img=11" class="avatar">
-            <span>Olá, Danilo</span>
-        </div>
+    <div class="nav-right">
+        <a href="hero.html" class="nav-pill" title="Voltar para a tela principal"><i class="fa-solid fa-house"></i></a>
+        <a href="perfil.html" class="avatar-img" aria-label="Perfil"><i class="fa-solid fa-user"></i></a>
     </div>
-</nav>
+</header>
 
 <div class="main-container">
 
@@ -370,10 +101,6 @@
     function logout() {
         localStorage.removeItem("usuarioEmail");
         localStorage.removeItem("usuarioNome");
-        window.location.href = "hero.html";
-    }
-
-    function irHero() {
         window.location.href = "hero.html";
     }
 

@@ -5,146 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro - Sistema</title>
     <link rel="icon" href="assets/peixe.png" type="image/x-icon">
-    <style>
-        /* Configurações Globais */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body, html {
-            height: 100%;
-            width: 100%;
-        }
-
-        /* Fundo com a imagem enviada */
-        .background-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background-image: url("https://images.pexels.com/photos/14770896/pexels-photo-14770896.jpeg");
-
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            padding: 20px;
-        }
-
-        /* Card de Cadastro */
-        .form-card {
-            background: white;
-            width: 100%;
-            max-width: 450px;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            text-align: center;
-        }
-
-        header h1 {
-            font-size: 1.8rem;
-            color: #333;
-            margin-bottom: 5px;
-        }
-
-        header p {
-            color: #666;
-            margin-bottom: 25px;
-            font-size: 0.9rem;
-        }
-
-        /* Inputs */
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .input-group-row {
-            display: flex;
-            gap: 12px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            background-color: #f9f9f9;
-            font-size: 0.9rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input:focus {
-            border-color: #318a94;
-        }
-
-        /* Botão */
-        .btn-submit {
-            background-color: #318a94;
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 25px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.3s;
-        }
-
-        .btn-submit:hover {
-            background-color: #266b74;
-        }
-
-        /* Footer do Card */
-        footer {
-            margin-top: 20px;
-            font-size: 0.85rem;
-        }
-
-        footer a {
-            color: #266b74;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        /* --- RESPONSIVIDADE (Mobile) --- */
-        @media (max-width: 600px) {
-            .background-container {
-                background-image: none;
-                background-color: #ffffff;
-                align-items: flex-start;
-                padding: 0;
-            }
-
-            .form-card {
-                max-width: 100%;
-                height: 100vh;
-                border-radius: 0;
-                box-shadow: none;
-                padding: 30px 20px;
-            }
-
-            header h1 {
-                font-size: 1.6rem;
-                text-align: left;
-            }
-
-            header p {
-                text-align: left;
-            }
-
-            .input-group-row {
-                flex-direction: row;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style/cadastro.css">
 </head>
 <body>
 <div class="background-container">
@@ -161,6 +22,7 @@
             </div>
 
             <input type="email" id="email" placeholder="Email" required>
+            <input type="tel" id="telefone" placeholder="Telefone (ex: 83998765432)" maxlength="20" required>
             <input type="password" id="senha" placeholder="Senha" required>
 
             <input type="text" id="rua" placeholder="Rua" required>
@@ -185,9 +47,13 @@
     async function cadastrar(event) {
         event.preventDefault();
 
+        const nome = document.getElementById("nome").value.trim();
+        const sobrenome = document.getElementById("sobrenome").value.trim();
+
         const usuario = {
-            nome: document.getElementById("nome").value,
+            nome: `${nome} ${sobrenome}`.trim(),
             email: document.getElementById("email").value,
+            telefone: document.getElementById("telefone").value,
             senha: document.getElementById("senha").value,
             endereco: {
                 rua: document.getElementById("rua").value,
@@ -204,12 +70,22 @@
                 body: JSON.stringify(usuario)
             });
 
+            const resposta = response.headers.get("content-type")?.includes("application/json")
+                ? await response.json()
+                : await response.text();
+
             if (response.ok) {
+                if (typeof resposta === "object") {
+                    localStorage.setItem("usuarioId", resposta.id);
+                    localStorage.setItem("usuarioEmail", resposta.email);
+                    localStorage.setItem("usuarioNome", resposta.nome);
+                    localStorage.setItem("usuarioTelefone", resposta.telefone);
+                }
+
                 alert("Cadastro realizado com sucesso!");
-                window.location.href = "login.html";
+                window.location.href = "hero.html";
             } else {
-                const erro = await response.text();
-                alert("Erro no cadastro: " + erro);
+                alert("Erro no cadastro: " + resposta);
             }
         } catch (error) {
             alert("Erro ao conectar com o servidor.");
