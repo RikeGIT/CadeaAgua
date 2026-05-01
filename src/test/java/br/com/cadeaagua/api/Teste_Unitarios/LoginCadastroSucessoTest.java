@@ -17,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Optional;
 
@@ -48,6 +49,8 @@ class LoginCadastroSucessoTest {
 
         assertEquals(200, response.getStatusCode().value());
         assertInstanceOf(AuthController.AuthResponse.class, response.getBody());
+        AuthController.AuthResponse body = (AuthController.AuthResponse) response.getBody();
+        assertEquals("USUARIO", body.perfil());
         verify(enderecoRepository, times(1)).save(any(Endereco.class));
         verify(userRepository, times(1)).save(any(Usuario.class));
     }
@@ -67,6 +70,26 @@ class LoginCadastroSucessoTest {
 
         assertEquals(200, response.getStatusCode().value());
         assertInstanceOf(AuthController.AuthResponse.class, response.getBody());
+    }
+
+    @Test
+    void DeveCadastrarAdministradorComSenhaCorreta() {
+        ReflectionTestUtils.setField(authController, "adminSecret", "segredo-admin");
+        Usuario usuario = usuarioValido("Ana Admin", "ana.admin@email.com", "83555555555", "senha123");
+
+        when(userRepository.findByEmail("ana.admin@email.com")).thenReturn(Optional.empty());
+        when(enderecoRepository.save(any(Endereco.class))).thenReturn(usuario.getEndereco());
+        when(passwordEncoder.encode("senha123")).thenReturn("hash_admin");
+        when(userRepository.save(any(Usuario.class))).thenReturn(usuario);
+
+        AuthController.AdminRegisterRequest request = new AuthController.AdminRegisterRequest(usuario, "segredo-admin");
+        ResponseEntity<?> response = authController.registerAdmin(request);
+        AuthController.AuthResponse body = (AuthController.AuthResponse) response.getBody();
+
+        assertEquals(200, response.getStatusCode().value());
+        assertNotNull(body);
+        assertEquals("ADMIN", body.perfil());
+        assertEquals("ADMIN", usuario.getPerfil());
     }
 
     @Test

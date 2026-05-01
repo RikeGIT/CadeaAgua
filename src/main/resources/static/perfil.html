@@ -22,7 +22,7 @@
         <a href="hero.html#avisos">Avisos</a>
         <a href="hero.html#footer">Sobre nós</a>
         <a href="notificacao.html">Dashboard</a>
-        <a href="admin.html">Admin</a>
+        <a href="admin.html" data-admin-only>Admin</a>
     </nav>
 
     <div class="nav-right">
@@ -98,10 +98,23 @@
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", ajustarLinksAdmin);
+
+    function ajustarLinksAdmin() {
+        if (localStorage.getItem("usuarioPerfil") !== "ADMIN") {
+            document.querySelectorAll("[data-admin-only]").forEach((link) => {
+                link.style.display = "none";
+            });
+        }
+    }
+
     function logout() {
+        localStorage.removeItem("usuarioId");
         localStorage.removeItem("usuarioEmail");
         localStorage.removeItem("usuarioNome");
-        window.location.href = "hero.html";
+        localStorage.removeItem("usuarioTelefone");
+        localStorage.removeItem("usuarioPerfil");
+        window.location.replace("login.html");
     }
 
     function irNotificacoes() {

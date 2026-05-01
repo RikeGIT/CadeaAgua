@@ -170,11 +170,24 @@ h1 {
     cursor: pointer;
 }
 
-.error {
-    min-height: 18px;
-    margin-top: 12px;
-    color: #b5382a;
-    font-size: 0.86rem;
+.feedback {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    line-height: 1.35;
+    text-align: left;
+}
+
+.feedback.is-visible {
+    display: block;
+}
+
+.feedback-error {
+    color: #8f2419;
+    background: rgba(255, 235, 231, 0.92);
+    border: 1px solid rgba(181, 56, 42, 0.28);
 }
 
 .right {

@@ -22,7 +22,7 @@
         <a href="hero.html#avisos">Avisos</a>
         <a href="hero.html#footer">Sobre nós</a>
         <a style="cursor: pointer">Dashboard</a>
-        <a href="admin.html">Admin</a>
+        <a href="admin.html" data-admin-only>Admin</a>
     </nav>
 
     <div class="nav-right">
@@ -91,10 +91,20 @@
     <span onclick="irHero()"><i class="fa-solid fa-house"></i></span>
     <span><i class="fa-solid fa-chart-simple"></i></span>
     <span onclick="irNotificacao()"><i class="fa-solid fa-bell"></i></span>
-    <span onclick="irAdmin()"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+    <span onclick="irAdmin()" data-admin-only><i class="fa-solid fa-screwdriver-wrench"></i></span>
 </div>
 
 <script>
+    document.addEventListener("DOMContentLoaded", ajustarLinksAdmin);
+
+    function ajustarLinksAdmin() {
+        if (localStorage.getItem("usuarioPerfil") !== "ADMIN") {
+            document.querySelectorAll("[data-admin-only]").forEach((link) => {
+                link.style.display = "none";
+            });
+        }
+    }
+
     function irHero() {
         window.location.href = "hero.html";
     }
@@ -104,6 +114,12 @@
     }
 
     function irAdmin() {
+        if (localStorage.getItem("usuarioPerfil") !== "ADMIN") {
+            localStorage.setItem("loginMensagem", "Acesso restrito. Entre com uma conta administradora.");
+            window.location.href = "login.html";
+            return;
+        }
+
         window.location.href = "admin.html";
     }
 </script>

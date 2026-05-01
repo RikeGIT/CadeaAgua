@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.Optional;
 
@@ -104,6 +105,18 @@ class LoginCadastroFalhaTest {
         ResponseEntity<?> response = authController.login(loginRequest);
 
         assertEquals(400, response.getStatusCode().value());
+    }
+
+    @Test
+    void DeveNegarCadastroAdminComSenhaInvalida() {
+        ReflectionTestUtils.setField(authController, "adminSecret", "segredo-admin");
+        AuthController.AdminRegisterRequest request = new AuthController.AdminRegisterRequest(usuarioValido(), "senha-errada");
+
+        ResponseEntity<?> response = authController.registerAdmin(request);
+
+        assertEquals(403, response.getStatusCode().value());
+        assertEquals("Senha de administrador invalida.", response.getBody());
+        verify(userRepository, never()).save(any(Usuario.class));
     }
 
     private Usuario usuarioValido() {
