@@ -42,7 +42,7 @@
                 <span onclick="irCadastro()">Cadastre-se</span>
             </div>
 
-            <div id="erro" class="error"></div>
+            <div id="erro" class="feedback feedback-error" role="alert" aria-live="polite"></div>
         </div>
     </div>
 
@@ -54,7 +54,19 @@
     async function login() {
         const email = document.getElementById("email").value.trim();
         const senha = document.getElementById("senha").value;
-        const erroDiv = document.getElementById("erro");
+        const emailInput = document.getElementById("email");
+
+        mostrarMensagem("");
+
+        if (!email || !senha.trim()) {
+            mostrarMensagem("Email e senha sao obrigatorios.");
+            return;
+        }
+
+        if (!emailInput.checkValidity()) {
+            mostrarMensagem("Digite um email valido.");
+            return;
+        }
 
         try {
             const response = await fetch("http://localhost:8080/auth/login", {
@@ -72,14 +84,29 @@
                 localStorage.setItem("usuarioEmail", resposta.email);
                 localStorage.setItem("usuarioNome", resposta.nome || resposta.email.split("@")[0]);
                 localStorage.setItem("usuarioTelefone", resposta.telefone || "");
-                window.location.href = "hero.html";
+                localStorage.setItem("usuarioPerfil", resposta.perfil || "USUARIO");
+                window.location.href = resposta.perfil === "ADMIN" ? "admin.html" : "hero.html";
             } else {
-                erroDiv.innerText = resposta;
+                mostrarMensagem(resposta);
             }
         } catch (error) {
-            erroDiv.innerText = "Erro ao conectar com o servidor.";
+            mostrarMensagem("Erro ao conectar com o servidor.");
         }
     }
+
+    function mostrarMensagem(mensagem) {
+        const erroDiv = document.getElementById("erro");
+        erroDiv.innerText = mensagem;
+        erroDiv.classList.toggle("is-visible", Boolean(mensagem));
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const mensagem = localStorage.getItem("loginMensagem");
+        if (mensagem) {
+            mostrarMensagem(mensagem);
+            localStorage.removeItem("loginMensagem");
+        }
+    });
 
     function irCadastro() {
         window.location.href = "cadastro.html";

@@ -21,7 +21,7 @@
         <a href="hero.html#avisos">Avisos</a>
         <a href="hero.html#footer">Sobre nós</a>
         <a href="notificacao.html">Dashboard</a>
-        <a href="admin.html">Admin</a>
+        <a href="admin.html" data-admin-only>Admin</a>
     </nav>
 
     <div class="nav-right">
@@ -123,8 +123,17 @@
 
 <script>
     window.onload = function () {
+        ajustarLinksAdmin();
         carregarNoticias();
     };
+
+    function ajustarLinksAdmin() {
+        if (localStorage.getItem("usuarioPerfil") !== "ADMIN") {
+            document.querySelectorAll("[data-admin-only]").forEach((link) => {
+                link.style.display = "none";
+            });
+        }
+    }
 
     async function carregarNoticias() {
         const container = document.getElementById("news-grid-container");

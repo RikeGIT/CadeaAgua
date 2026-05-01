@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro - Sistema</title>
+    <title>Cadastro Admin - Sistema</title>
     <link rel="icon" href="assets/peixe.png" type="image/x-icon">
     <link rel="stylesheet" href="style/cadastro.css">
 </head>
@@ -11,11 +11,11 @@
 <div class="background-container">
     <main class="form-card">
         <header>
-            <h1>Cadastre-se</h1>
-            <p>Crie sua própria conta</p>
+            <h1>Cadastro administrador</h1>
+            <p>Crie uma conta com acesso ao painel admin</p>
         </header>
 
-        <form onsubmit="cadastrar(event)" novalidate>
+        <form onsubmit="cadastrarAdmin(event)" novalidate>
             <div class="input-group-row">
                 <input type="text" id="nome" placeholder="Nome" required>
                 <input type="text" id="sobrenome" placeholder="Sobrenome" required>
@@ -23,7 +23,7 @@
 
             <input type="email" id="email" placeholder="Email" required>
             <input type="tel" id="telefone" placeholder="Telefone (ex: 83998765432)" maxlength="20" required>
-            <input type="password" id="senha" placeholder="Senha" required>
+            <input type="password" id="senha" placeholder="Senha da conta" required>
 
             <input type="text" id="rua" placeholder="Rua" required>
 
@@ -33,25 +33,27 @@
             </div>
 
             <input type="text" id="cep" placeholder="CEP (ex: 58700-000)" required>
+            <input type="password" id="senhaAdministrador" placeholder="Senha administrativa" required>
 
-            <button type="submit" class="btn-submit">Criar Conta</button>
+            <button type="submit" class="btn-submit">Criar conta admin</button>
         </form>
 
         <div id="mensagem" class="feedback" role="alert" aria-live="polite"></div>
 
         <footer>
-            <button type="button" class="secondary-action" onclick="irCadastroAdmin()">Criar conta como administrador</button>
-            <p>Já tem uma conta? <a href="#" onclick="irLogin()">Realizar login</a></p>
+            <button type="button" class="secondary-action" onclick="irCadastroComum()">Criar conta comum</button>
+            <p>Ja tem uma conta? <a href="#" onclick="irLogin()">Realizar login</a></p>
         </footer>
     </main>
 </div>
 
 <script>
-    async function cadastrar(event) {
+    async function cadastrarAdmin(event) {
         event.preventDefault();
 
         const nome = document.getElementById("nome").value.trim();
         const sobrenome = document.getElementById("sobrenome").value.trim();
+        const senhaAdministrador = document.getElementById("senhaAdministrador").value;
 
         const usuario = {
             nome: `${nome} ${sobrenome}`.trim(),
@@ -83,11 +85,16 @@
             return;
         }
 
+        if (!senhaAdministrador.trim()) {
+            mostrarMensagem("Senha administrativa obrigatoria.", "error");
+            return;
+        }
+
         try {
-            const response = await fetch("http://localhost:8080/auth/register", {
+            const response = await fetch("http://localhost:8080/auth/register-admin", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(usuario)
+                body: JSON.stringify({ usuario, senhaAdministrador })
             });
 
             const resposta = response.headers.get("content-type")?.includes("application/json")
@@ -95,17 +102,15 @@
                 : await response.text();
 
             if (response.ok) {
-                if (typeof resposta === "object") {
-                    localStorage.setItem("usuarioId", resposta.id);
-                    localStorage.setItem("usuarioEmail", resposta.email);
-                    localStorage.setItem("usuarioNome", resposta.nome);
-                    localStorage.setItem("usuarioTelefone", resposta.telefone);
-                    localStorage.setItem("usuarioPerfil", resposta.perfil || "USUARIO");
-                }
+                localStorage.setItem("usuarioId", resposta.id);
+                localStorage.setItem("usuarioEmail", resposta.email);
+                localStorage.setItem("usuarioNome", resposta.nome);
+                localStorage.setItem("usuarioTelefone", resposta.telefone);
+                localStorage.setItem("usuarioPerfil", resposta.perfil || "ADMIN");
 
-                mostrarMensagem("Cadastro realizado com sucesso!", "success");
+                mostrarMensagem("Conta administradora criada com sucesso!", "success");
                 setTimeout(() => {
-                    window.location.href = "hero.html";
+                    window.location.href = "admin.html";
                 }, 900);
             } else {
                 mostrarMensagem(resposta, "error");
@@ -122,12 +127,12 @@
         mensagemDiv.classList.toggle("is-visible", Boolean(mensagem));
     }
 
-    function irLogin() {
-        window.location.href = "login.html";
+    function irCadastroComum() {
+        window.location.href = "cadastro.html";
     }
 
-    function irCadastroAdmin() {
-        window.location.href = "cadastro-admin.html";
+    function irLogin() {
+        window.location.href = "login.html";
     }
 </script>
 </body>

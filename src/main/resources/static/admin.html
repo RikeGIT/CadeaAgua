@@ -163,6 +163,12 @@
 </div>
 
 <script>
+    if (localStorage.getItem("usuarioPerfil") !== "ADMIN") {
+        localStorage.setItem("loginMensagem", "Acesso restrito. Entre com uma conta administradora.");
+        window.location.replace("login.html");
+        throw new Error("Acesso restrito ao painel admin.");
+    }
+
     const newsList = document.getElementById("newsList");
     const logsList = document.getElementById("logsList");
     const feedback = document.getElementById("formFeedback");

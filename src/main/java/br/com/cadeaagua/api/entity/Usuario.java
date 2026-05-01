@@ -28,6 +28,9 @@ public class Usuario {
     @Column(nullable = false)
     private String senha;
 
+    @Column(length = 20)
+    private String perfil = "USUARIO";
+
     @ManyToOne
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;

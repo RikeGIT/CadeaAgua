@@ -119,10 +119,57 @@ input:focus {
     box-shadow: 0 20px 44px rgba(15, 107, 120, 0.34);
 }
 
+.feedback {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    line-height: 1.35;
+    text-align: left;
+}
+
+.feedback.is-visible {
+    display: block;
+}
+
+.feedback-error {
+    color: #8f2419;
+    background: rgba(255, 235, 231, 0.92);
+    border: 1px solid rgba(181, 56, 42, 0.28);
+}
+
+.feedback-success {
+    color: #13583d;
+    background: rgba(226, 248, 238, 0.94);
+    border: 1px solid rgba(41, 140, 94, 0.26);
+}
+
 footer {
     margin-top: 20px;
     font-size: 0.9rem;
     color: var(--muted);
+}
+
+.secondary-action {
+    width: 100%;
+    min-height: 46px;
+    margin-bottom: 14px;
+    padding: 0 16px;
+    border: 1px solid rgba(15, 107, 120, 0.26);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.66);
+    color: var(--brand-dark);
+    font-size: 0.92rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+}
+
+.secondary-action:hover {
+    transform: translateY(-1px);
+    border-color: rgba(15, 107, 120, 0.48);
+    background: rgba(255, 255, 255, 0.86);
 }
 
 footer a {
