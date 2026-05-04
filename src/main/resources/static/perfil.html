@@ -47,10 +47,20 @@
             <h2>Informações de usuário</h2>
 
             <div class="user-header">
-                <img src="https://i.pravatar.cc/150?img=11" class="profile-img">
+                <div style="position: relative; display: inline-block;">
+                    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                         class="profile-img"
+                         id="img-perfil"
+                         style="cursor: pointer; object-fit: cover;"
+                         title="Clique para alterar sua foto"
+                         onclick="document.getElementById('input-foto').click()">
+
+                    <input type="file" id="input-foto" style="display: none;" accept="image/*" onchange="previewFoto(event)">
+                </div>
+
                 <div>
-                    <strong>Danilo Costa</strong>
-                    <p>[Rua Professor Antônio Bezerra]</p>
+                    <strong id="display-nome">Carregando...</strong>
+                    <p id="display-endereco">[Endereço não informado]</p>
                 </div>
             </div>
 
@@ -59,23 +69,30 @@
                 <div class="row">
                     <div class="input-box">
                         <label>Nome*</label>
-                        <input type="text" value="Danilo">
+                        <input type="text" id="input-nome">
                     </div>
                     <div class="input-box">
                         <label>Sobrenome*</label>
-                        <input type="text" value="Costa">
+                        <input type="text" id="input-sobrenome">
                     </div>
                 </div>
 
                 <label>Email*</label>
-                <input type="email" value="Danilocosta@gmail.com">
+                <!-- ID ADICIONADO AQUI, READONLY ADICIONADO (geralmente não se edita email assim) -->
+                <input type="email" id="input-email" readonly style="background-color: #f0f0f0; cursor: not-allowed;">
 
                 <label>Telefone*</label>
-                <input type="text" value="(83) 998765432">
+                <!-- ID ADICIONADO AQUI -->
+                <input type="text" id="input-telefone">
+
+                <!-- Campo de Senha Adicionado para Atualização -->
+                <label>Nova Senha (deixe em branco para não alterar)</label>
+                <input type="password" id="input-senha" placeholder="Digite uma nova senha se desejar alterar">
+
 
                 <div class="form-footer">
                     <p>Deseja salvar?</p>
-                    <button type="button" class="btn-save">Salvar</button>
+                    <button type="button" class="btn-save" onclick="salvarAlteracoes()">Salvar</button>
                 </div>
 
             </form>
@@ -87,7 +104,7 @@
                     <strong>Deletar Conta</strong>
                     <p>Todos os dados serão perdidos</p>
                 </div>
-                <button class="btn-delete">Deletar conta</button>
+                <button class="btn-delete" onclick="deletarConta()">Deletar conta</button>
             </div>
 
             <button class="btn-logout" onclick="logout()">Sair da conta</button>
@@ -98,13 +115,162 @@
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", ajustarLinksAdmin);
+    document.addEventListener("DOMContentLoaded", () => {
+        ajustarLinksAdmin();
+        carregarDadosUsuario();
+    });
 
     function ajustarLinksAdmin() {
         if (localStorage.getItem("usuarioPerfil") !== "ADMIN") {
             document.querySelectorAll("[data-admin-only]").forEach((link) => {
                 link.style.display = "none";
             });
+        }
+    }
+
+    async function carregarDadosUsuario() {
+        const usuarioId = localStorage.getItem("usuarioId");
+
+        if (!usuarioId) {
+            window.location.replace("login.html");
+            return;
+        }
+
+        try {
+            // BUSCANDO OS DADOS NA API
+            // Usamos o usuarioId salvo no localStorage para buscar
+            const response = await fetch(`http://localhost:8080/api/usuarios/${usuarioId}`);
+
+            if (!response.ok) {
+                throw new Error("Não foi possível carregar os dados");
+            }
+
+            const usuario = await response.json();
+
+            // Dividindo o nome em Nome e Sobrenome para os inputs
+            let nomePartes = [];
+            if(usuario.nome) {
+                nomePartes = usuario.nome.split(" ");
+            }
+            const primeiroNome = nomePartes[0] || "";
+            const sobrenome = nomePartes.slice(1).join(" ") || "";
+
+            // PREENCHENDO O CABEÇALHO DO PERFIL
+            document.getElementById("display-nome").textContent = usuario.nome || "Usuário";
+
+            // Tentando preencher o endereço, se a entidade usuário trouxer isso associado
+            if (usuario.endereco && usuario.endereco.logradouro) {
+                document.getElementById("display-endereco").textContent = `[${usuario.endereco.logradouro}]`;
+            }
+
+            if (usuario.fotoPerfil) {
+                document.getElementById("img-perfil").src = usuario.fotoPerfil;
+            } else {
+                // Imagem padrão (sem foto)
+                document.getElementById("img-perfil").src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
+            }
+
+            // PREENCHENDO O FORMULÁRIO
+            document.getElementById("input-nome").value = primeiroNome;
+            if (usuario.endereco && usuario.endereco.rua) {
+                const rua = usuario.endereco.rua;
+                const bairro = usuario.endereco.bairro ? ` - ${usuario.endereco.bairro}` : "";
+                document.getElementById("display-endereco").textContent = `[${rua}${bairro}]`;
+            } else {
+                document.getElementById("display-endereco").textContent = "[Endereço não informado]";
+            }
+            document.getElementById("input-sobrenome").value = sobrenome;
+            document.getElementById("input-email").value = usuario.email || "";
+            document.getElementById("input-telefone").value = usuario.telefone || "";
+
+        } catch (error) {
+            console.error(error);
+            alert("Erro ao carregar as informações do seu perfil.");
+        }
+    }
+
+    async function salvarAlteracoes() {
+        const usuarioId = localStorage.getItem("usuarioId");
+
+        const primeiroNome = document.getElementById("input-nome").value.trim();
+        const sobrenome = document.getElementById("input-sobrenome").value.trim();
+        const telefone = document.getElementById("input-telefone").value.trim();
+        const novaSenha = document.getElementById("input-senha").value;
+
+        const nomeCompleto = `${primeiroNome} ${sobrenome}`.trim();
+
+        // Monta o objeto para envio.
+        // ATENÇÃO: Os campos aqui devem coincidir com o que o seu backend espera para atualização.
+        const dadosAtualizados = {
+            nome: nomeCompleto,
+            telefone: telefone
+        };
+
+        if (novaSenha) {
+            dadosAtualizados.senha = novaSenha;
+        }
+        if (fotoBase64) {
+            dadosAtualizados.fotoPerfil = fotoBase64;
+        }
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/usuarios/${usuarioId}`, {
+                method: "PUT", // Ou PATCH, dependendo da sua API
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dadosAtualizados)
+            });
+
+            if (response.ok) {
+                alert("Perfil atualizado com sucesso!");
+                // Atualiza o nome no cabeçalho imediatamente
+                document.getElementById("display-nome").textContent = nomeCompleto;
+                // Atualiza o nome no localStorage caso seja usado em outras páginas
+                localStorage.setItem("usuarioNome", nomeCompleto);
+                document.getElementById("input-senha").value = ""; // limpa o campo de senha
+            } else {
+                const erro = await response.text();
+                alert(`Erro ao atualizar: ${erro}`);
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Erro de conexão ao tentar salvar.");
+        }
+    }
+
+    async function deletarConta() {
+        const usuarioId = localStorage.getItem("usuarioId");
+
+        if(confirm("Tem certeza absoluta que deseja deletar sua conta? Esta ação não pode ser desfeita.")) {
+            try {
+                const response = await fetch(`http://localhost:8080/api/usuarios/${usuarioId}`, {
+                    method: "DELETE"
+                });
+
+                if(response.ok) {
+                    alert("Conta deletada com sucesso.");
+                    logout();
+                } else {
+                    alert("Falha ao deletar a conta.");
+                }
+            } catch (error) {
+                console.error(error);
+                alert("Erro ao conectar com o servidor para exclusão.");
+            }
+        }
+    }
+    let fotoBase64 = null;
+
+    function previewFoto(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                fotoBase64 = e.target.result; // Salva o texto Base64 da imagem
+                document.getElementById("img-perfil").src = fotoBase64; // Muda a foto na tela
+            };
+            reader.readAsDataURL(file); // Inicia a leitura do arquivo
         }
     }
 

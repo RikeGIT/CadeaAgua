@@ -31,10 +31,11 @@ public class Usuario {
     @Column(length = 20)
     private String perfil = "USUARIO";
 
+    @Column(columnDefinition = "LONGTEXT")
+    private String fotoPerfil;
+
     @ManyToOne
     @JoinColumn(name = "id_endereco")
     private Endereco endereco;
-
-
 
 }
