@@ -19,6 +19,9 @@ public class Noticia {
     @Column (length = 2000, nullable = false)
     private String descricao;
 
+    @Column (length = 10000)
+    private String conteudo;
+
     @Column (length = 200)
     private String imagem_url;
 

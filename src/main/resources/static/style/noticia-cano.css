@@ -1,0 +1,70 @@
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+body { background-color: #fff; color: #333; line-height: 1.6; }
+
+/* Navbar Azul */
+.navbar {
+    background-color: #006080;
+    padding: 12px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.user-profile { display: flex; align-items: center; gap: 10px; }
+.user-profile img { width: 35px; height: 35px; border-radius: 50%; border: 2px solid #fff; }
+
+/* Layout Grid */
+.news-wrapper { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+.content-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+
+/* Estilo do Artigo */
+.news-header h1 { font-size: 2.8rem; line-height: 1.1; margin-bottom: 20px; color: #000; text-align: center; }
+.participants { font-size: 1rem; color: #666; text-align: center; margin-bottom: 25px; padding: 0 10%; }
+
+.news-meta { 
+    border-top: 1px solid #eee; 
+    border-bottom: 1px solid #eee; 
+    padding: 10px 0; 
+    display: flex; 
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 30px;
+}
+
+.news-figure { margin-bottom: 30px; }
+.news-figure img { width: 100%; border-radius: 4px; }
+.news-figure figcaption { font-size: 0.85rem; color: #777; margin-top: 8px; border-left: 3px solid #006080; padding-left: 10px; }
+
+.news-text p { font-size: 1.15rem; margin-bottom: 20px; color: #222; text-align: justify; }
+
+.quote {
+    background: #f9f9f9;
+    padding: 20px;
+    border-left: 5px solid #006080;
+    font-style: italic;
+    font-size: 1.2rem;
+    margin: 30px 0;
+}
+
+/* Sidebar */
+.sidebar-box { border: 1px solid #eee; padding: 20px; margin-bottom: 20px; border-radius: 4px; }
+.sidebar-box h3 { font-size: 1.1rem; margin-bottom: 15px; color: #006080; border-bottom: 2px solid #006080; display: inline-block; }
+.map-box img { width: 100%; margin: 15px 0; }
+.weather-info { text-align: center; }
+.temp { font-size: 2.5rem; color: #f39c12; font-weight: bold; }
+
+.list-box ul { list-style: none; }
+.list-box li { padding: 10px 0; border-bottom: 1px solid #eee; font-size: 0.9rem; font-weight: bold; cursor: pointer; }
+
+/* Footer */
+.site-footer { background: #eef2f3; padding: 40px 0; text-align: center; margin-top: 50px; }
+
+/* Responsividade Mobile */
+@media (max-width: 900px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .news-header h1 { font-size: 1.8rem; }
+    .news-sidebar { display: none; }
+}

@@ -89,7 +89,10 @@
                 <input id="titulo" name="titulo" type="text" maxlength="300" placeholder="Ex: Manutencao altera abastecimento no Centro" required>
 
                 <label for="descricao">Descricao</label>
-                <textarea id="descricao" name="descricao" maxlength="2000" rows="7" placeholder="Escreva o resumo da noticia para aparecer na pagina inicial." required></textarea>
+                <textarea id="descricao" name="descricao" maxlength="500" rows="3" placeholder="Resumo curto para aparecer no card da pagina inicial." required></textarea>
+
+                <label for="conteudo">Conteudo completo</label>
+                <textarea id="conteudo" name="conteudo" maxlength="10000" rows="9" placeholder="Escreva o conteudo completo da noticia. Separe paragrafos com Enter." required></textarea>
 
                 <div class="form-row">
                     <div>
@@ -186,6 +189,7 @@
         const dados = {
             titulo: form.titulo.value.trim(),
             descricao: form.descricao.value.trim(),
+            conteudo: form.conteudo.value.trim(),
             imagem_url: form.imagem_url.value.trim(),
             data_publicacao: form.data_publicacao.value || null
         };
