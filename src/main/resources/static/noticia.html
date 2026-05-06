@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noticia - Cade a Agua?</title>
+    <link rel="icon" href="assets/peixe.png" type="image/x-icon">
+    <link rel="stylesheet" href="/style/noticia.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<header class="navbar">
+    <a href="hero.html" class="logo-link">
+        <img src="assets/logo-cade-a-agua(sem%20fundo).png" alt="Logo Cade a Agua?" class="logo-img">
+    </a>
+
+    <nav class="nav-links">
+        <a href="hero.html#noticias">Noticias</a>
+        <a href="hero.html#vantagens">Vantagens</a>
+        <a href="hero.html#avisos">Avisos</a>
+        <a href="hero.html#footer">Sobre nos</a>
+        <a href="notificacao.html">Dashboard</a>
+        <a href="admin.html" data-admin-only>Admin</a>
+    </nav>
+
+    <div class="nav-right">
+        <a href="perfil.html" class="nav-pill">Perfil</a>
+        <a href="perfil.html" class="avatar-img" aria-label="Perfil"><i class="fa-solid fa-user"></i></a>
+    </div>
+</header>
+
+<main class="article-shell">
+    <a class="back-link" href="hero.html#noticias">
+        <i class="fa-solid fa-arrow-left"></i>
+        Voltar para noticias
+    </a>
+
+    <div id="article-state" class="state-message">Carregando noticia...</div>
+
+    <div id="article-content" class="article-layout" hidden>
+        <article class="article-main">
+            <header class="article-header">
+                <p class="eyebrow">Cade a Agua?</p>
+                <h1 id="article-title"></h1>
+                <div class="article-meta">
+                    <span><i class="fa-regular fa-newspaper"></i> Redacao</span>
+                    <span id="article-date"></span>
+                </div>
+            </header>
+
+            <figure class="article-figure">
+                <img id="article-image" src="/assets/hero-image.png" alt="">
+            </figure>
+
+            <div id="article-body" class="article-body"></div>
+        </article>
+
+        <aside class="related-panel">
+            <div class="related-header">
+                <span class="related-icon"><i class="fa-solid fa-water"></i></span>
+                <h2>Mais noticias</h2>
+            </div>
+            <div id="related-list" class="related-list"></div>
+        </aside>
+    </div>
+</main>
+
+<script>
+    const API_BASE = window.location.protocol.startsWith("http")
+        ? window.location.origin
+        : "http://localhost:8080";
+    const imagensPadrao = [
+        "/assets/noticia-01.png",
+        "/assets/noticia-02.png",
+        "/assets/noticia-03.png",
+    ];
+
+    document.addEventListener("DOMContentLoaded", () => {
+        ajustarLinksAdmin();
+        carregarNoticia();
+    });
+
+    function ajustarLinksAdmin() {
+        if (localStorage.getItem("usuarioPerfil") !== "ADMIN") {
+            document.querySelectorAll("[data-admin-only]").forEach((link) => {
+                link.style.display = "none";
+            });
+        }
+    }
+
+    async function carregarNoticia() {
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get("id");
+
+        if (!id) {
+            mostrarEstado("Noticia nao encontrada.");
+            return;
+        }
+
+        try {
+            const [noticiaResponse, noticiasResponse] = await Promise.all([
+                fetch(`${API_BASE}/api/noticias/${encodeURIComponent(id)}`),
+                fetch(`${API_BASE}/api/noticias`),
+            ]);
+
+            if (noticiaResponse.status === 404) {
+                mostrarEstado("Noticia nao encontrada.");
+                return;
+            }
+
+            if (!noticiaResponse.ok) {
+                throw new Error("Nao foi possivel carregar a noticia.");
+            }
+
+            const noticia = await noticiaResponse.json();
+            const noticias = noticiasResponse.ok ? await noticiasResponse.json() : [];
+
+            renderizarNoticia(noticia);
+            renderizarRelacionadas(noticias, id);
+        } catch (error) {
+            console.error("Erro ao carregar noticia:", error);
+            mostrarEstado(error.message || "Nao foi possivel carregar a noticia.");
+        }
+    }
+
+    function renderizarNoticia(noticia) {
+        const titulo = noticia.titulo || "Noticia sem titulo";
+        const imagem = noticia.imagemUrl || noticia.imagem_url || "/assets/hero-image.png";
+        const conteudo = noticia.conteudo || noticia.descricao || "Conteudo indisponivel no momento.";
+
+        document.title = `${titulo} - Cade a Agua?`;
+        document.getElementById("article-title").textContent = titulo;
+        document.getElementById("article-date").innerHTML = `<i class="fa-regular fa-calendar"></i> ${formatarData(noticia.data_publicacao)}`;
+
+        const articleImage = document.getElementById("article-image");
+        articleImage.src = imagem;
+        articleImage.alt = titulo;
+
+        const body = document.getElementById("article-body");
+        body.innerHTML = "";
+        quebrarEmParagrafos(conteudo).forEach((paragrafo) => {
+            const p = document.createElement("p");
+            p.textContent = paragrafo;
+            body.appendChild(p);
+        });
+
+        document.getElementById("article-state").hidden = true;
+        document.getElementById("article-content").hidden = false;
+    }
+
+    function renderizarRelacionadas(noticias, noticiaAtualId) {
+        const lista = document.getElementById("related-list");
+        const relacionadas = noticias
+            .slice()
+            .reverse()
+            .filter((noticia) => String(getNoticiaId(noticia)) !== String(noticiaAtualId))
+            .slice(0, 4);
+
+        if (!relacionadas.length) {
+            lista.innerHTML = "<p class='related-empty'>Nenhuma outra noticia publicada.</p>";
+            return;
+        }
+
+        lista.innerHTML = "";
+        relacionadas.forEach((noticia, index) => {
+            const id = getNoticiaId(noticia);
+            const titulo = noticia.titulo || "Sem titulo";
+            const imagem = noticia.imagemUrl || noticia.imagem_url || imagensPadrao[index % imagensPadrao.length];
+            const link = document.createElement("a");
+            link.className = "related-item";
+            link.href = `noticia.html?id=${encodeURIComponent(id)}`;
+            link.innerHTML = `
+                <img src="${escapeHtml(imagem)}" alt="${escapeHtml(titulo)}">
+                <span>${escapeHtml(titulo)}</span>
+            `;
+            lista.appendChild(link);
+        });
+    }
+
+    function mostrarEstado(mensagem) {
+        const state = document.getElementById("article-state");
+        state.textContent = mensagem;
+        state.hidden = false;
+        document.getElementById("article-content").hidden = true;
+    }
+
+    function quebrarEmParagrafos(texto) {
+        const paragrafos = String(texto)
+            .split(/\n{1,}/)
+            .map((parte) => parte.trim())
+            .filter(Boolean);
+
+        return paragrafos.length ? paragrafos : ["Conteudo indisponivel no momento."];
+    }
+
+    function getNoticiaId(noticia) {
+        return noticia.id_notica || noticia.idNotica || noticia.id;
+    }
+
+    function formatarData(data) {
+        if (!data) {
+            return "Data nao informada";
+        }
+
+        const partes = String(data).split("-");
+        if (partes.length === 3) {
+            return `${partes[2]}/${partes[1]}/${partes[0]}`;
+        }
+
+        return data;
+    }
+
+    function escapeHtml(valor) {
+        return String(valor)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+</script>
+
+</body>
+</html>

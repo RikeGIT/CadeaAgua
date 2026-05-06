@@ -10,35 +10,40 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/noticias")
-@CrossOrigin("*") // Permite que o seu frontend HTML acesse a API sem erros de CORS
+@CrossOrigin("*")
 public class NoticiaController {
 
     @Autowired
     private NoticiaService noticiaService;
 
-    // Rota para listar todas as notícias (Read)
+    // Rota para listar todas as noticias.
     @GetMapping
     public List<Noticia> listarTodas() {
         return noticiaService.listarTodas();
     }
 
-    // Rota para salvar uma nova notícia (Create)
+    // Rota para buscar uma noticia especifica pelo ID.
+    @GetMapping("/{id}")
+    public ResponseEntity<Noticia> buscarPorId(@PathVariable Integer id) {
+        return noticiaService.buscarPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    // Rota para salvar uma nova noticia.
     @PostMapping
     public ResponseEntity<?> criar(@RequestBody Noticia noticia) {
         try {
-            // Chamamos o Service para que as regras de negócio sejam aplicadas
             Noticia salva = noticiaService.salvarNoticia(noticia);
             return ResponseEntity.ok(salva);
         } catch (IllegalArgumentException e) {
-            // Se o Service lançar um erro de validação (ex: título vazio), retornamos erro 400
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    // Rota para deletar uma notícia (Delete)
+    // Rota para deletar uma noticia.
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {
-        // Seguindo o padrão do seu CronogramaController
         noticiaService.deletarNoticia(id);
         return ResponseEntity.noContent().build();
     }
