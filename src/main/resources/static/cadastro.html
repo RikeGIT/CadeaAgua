@@ -25,14 +25,18 @@
             <input type="tel" id="telefone" placeholder="Telefone (ex: 83998765432)" maxlength="20" required>
             <input type="password" id="senha" placeholder="Senha" required>
 
-            <input type="text" id="rua" placeholder="Rua" required>
+            <select id="bairro" onchange="carregarLogradouros()" required>
+                <option value="">Selecione o bairro</option>
+            </select>
+
+            <select id="rua" onchange="preencherCep()" required disabled>
+                <option value="">Escolha um bairro primeiro</option>
+            </select>
 
             <div class="input-group-row">
-                <input type="text" id="bairro" placeholder="Bairro" required>
-                <input type="text" id="cidade" placeholder="Cidade (ex: Patos)" required>
+                <input type="text" id="cidade" value="Patos" readonly required>
+                <input type="text" id="cep" placeholder="CEP" readonly required>
             </div>
-
-            <input type="text" id="cep" placeholder="CEP (ex: 58700-000)" required>
 
             <button type="submit" class="btn-submit">Criar Conta</button>
         </form>
@@ -47,11 +51,91 @@
 </div>
 
 <script>
+    const API_BASE = "http://localhost:8080";
+
+    document.addEventListener("DOMContentLoaded", carregarBairros);
+
+    async function carregarBairros() {
+        const bairroSelect = document.getElementById("bairro");
+
+        try {
+            const response = await fetch(`${API_BASE}/api/localizacoes/bairros`);
+            if (!response.ok) {
+                throw new Error("Nao foi possivel carregar os bairros.");
+            }
+
+            const bairros = await response.json();
+            bairros.forEach((bairro) => {
+                const option = document.createElement("option");
+                option.value = bairro.id;
+                option.textContent = bairro.nome;
+                option.dataset.nome = bairro.nome;
+                bairroSelect.appendChild(option);
+            });
+        } catch (error) {
+            mostrarMensagem("Nao foi possivel carregar os bairros de Patos.", "error");
+        }
+    }
+
+    async function carregarLogradouros() {
+        const bairroId = document.getElementById("bairro").value;
+        const ruaSelect = document.getElementById("rua");
+        const cepInput = document.getElementById("cep");
+
+        ruaSelect.innerHTML = "";
+        cepInput.value = "";
+
+        if (!bairroId) {
+            ruaSelect.disabled = true;
+            ruaSelect.add(new Option("Escolha um bairro primeiro", ""));
+            return;
+        }
+
+        ruaSelect.disabled = true;
+        ruaSelect.add(new Option("Carregando ruas...", ""));
+
+        try {
+            const response = await fetch(`${API_BASE}/api/localizacoes/bairros/${bairroId}/logradouros`);
+            if (!response.ok) {
+                throw new Error("Nao foi possivel carregar as ruas.");
+            }
+
+            const logradouros = await response.json();
+            ruaSelect.innerHTML = "";
+            ruaSelect.add(new Option("Selecione a rua", ""));
+
+            logradouros.forEach((logradouro) => {
+                const option = new Option(logradouro.nome, logradouro.nome);
+                option.dataset.cep = logradouro.cep || "";
+                ruaSelect.add(option);
+            });
+
+            ruaSelect.disabled = logradouros.length === 0;
+            if (logradouros.length === 0) {
+                ruaSelect.innerHTML = "";
+                ruaSelect.add(new Option("Nenhuma rua cadastrada para este bairro", ""));
+            }
+        } catch (error) {
+            ruaSelect.innerHTML = "";
+            ruaSelect.add(new Option("Erro ao carregar ruas", ""));
+            mostrarMensagem("Nao foi possivel carregar as ruas do bairro.", "error");
+        }
+    }
+
+    function preencherCep() {
+        const ruaSelect = document.getElementById("rua");
+        const option = ruaSelect.options[ruaSelect.selectedIndex];
+        document.getElementById("cep").value = option?.dataset.cep || "";
+    }
+
     async function cadastrar(event) {
         event.preventDefault();
 
         const nome = document.getElementById("nome").value.trim();
         const sobrenome = document.getElementById("sobrenome").value.trim();
+        const bairroSelect = document.getElementById("bairro");
+        const ruaSelect = document.getElementById("rua");
+        const bairroNome = bairroSelect.options[bairroSelect.selectedIndex]?.dataset.nome || "";
 
         const usuario = {
             nome: `${nome} ${sobrenome}`.trim(),
@@ -59,9 +143,9 @@
             telefone: document.getElementById("telefone").value.trim(),
             senha: document.getElementById("senha").value,
             endereco: {
-                rua: document.getElementById("rua").value.trim(),
-                bairro: document.getElementById("bairro").value.trim(),
-                cidade: document.getElementById("cidade").value.trim(),
+                rua: ruaSelect.value.trim(),
+                bairro: bairroNome.trim(),
+                cidade: "Patos",
                 cep: document.getElementById("cep").value.trim()
             }
         };
