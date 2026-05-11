@@ -142,7 +142,8 @@ a {
 }
 
 .primary-action,
-.icon-button {
+.icon-button,
+.secondary-action {
     border: 0;
     cursor: pointer;
     text-decoration: none;
@@ -190,9 +191,22 @@ a {
     color: #c34a3a;
 }
 
+.secondary-action {
+    min-height: 42px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    border-radius: 999px;
+    color: var(--brand-dark);
+    font-weight: 800;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid var(--line);
+}
+
 .metrics-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
     gap: 16px;
     margin-bottom: 18px;
 }
@@ -247,6 +261,14 @@ a {
     background: linear-gradient(135deg, #2fc47a, #0f6b78);
 }
 
+.metric-icon.neighborhoods {
+    background: linear-gradient(135deg, #5b8def, #145a8d);
+}
+
+.metric-icon.streets {
+    background: linear-gradient(135deg, #f28f75, #b34d3f);
+}
+
 .admin-grid {
     display: grid;
     grid-template-columns: minmax(320px, 0.92fr) minmax(0, 1.08fr);
@@ -290,6 +312,7 @@ a {
 
 .admin-form input,
 .admin-form textarea,
+.admin-form select,
 .logs-controls select {
     width: 100%;
     border: 1px solid var(--line);
@@ -301,6 +324,7 @@ a {
 }
 
 .admin-form input,
+.admin-form select,
 .logs-controls select {
     min-height: 46px;
     padding: 0 14px;
@@ -314,6 +338,7 @@ a {
 
 .admin-form input:focus,
 .admin-form textarea:focus,
+.admin-form select:focus,
 .logs-controls select:focus {
     border-color: rgba(15, 107, 120, 0.45);
     box-shadow: 0 0 0 4px rgba(56, 182, 197, 0.14);
@@ -345,6 +370,99 @@ a {
 .error-text {
     color: #c34a3a;
     font-weight: 750;
+}
+
+.location-panel {
+    margin-top: 18px;
+}
+
+.location-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.location-column {
+    min-width: 0;
+}
+
+.compact-form {
+    padding: 14px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.inline-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.location-list {
+    max-height: 470px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 14px;
+    padding-right: 4px;
+}
+
+.location-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.58);
+}
+
+.location-item.is-selected {
+    border-color: rgba(15, 107, 120, 0.42);
+    background: rgba(232, 249, 250, 0.82);
+}
+
+.location-main {
+    min-width: 0;
+    border: 0;
+    background: transparent;
+    color: var(--ink);
+    text-align: left;
+    cursor: pointer;
+}
+
+.location-main.static {
+    cursor: default;
+}
+
+.location-main strong,
+.location-main span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.location-main strong {
+    font-size: 0.98rem;
+}
+
+.location-main span {
+    color: var(--muted);
+    margin-top: 4px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.item-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .news-list {
@@ -471,7 +589,8 @@ a {
 
     .metrics-grid,
     .admin-grid,
-    .logs-list {
+    .logs-list,
+    .location-grid {
         grid-template-columns: 1fr;
     }
 }
@@ -529,6 +648,7 @@ a {
     }
 
     .admin-actions,
+    .inline-actions,
     .form-row,
     .item-title-row {
         width: 100%;
@@ -539,6 +659,14 @@ a {
 
     .primary-action {
         width: 100%;
+    }
+
+    .secondary-action {
+        width: 100%;
+    }
+
+    .location-list {
+        max-height: none;
     }
 
     .news-item {

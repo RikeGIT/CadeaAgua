@@ -75,7 +75,8 @@ form {
     gap: 12px;
 }
 
-input {
+input,
+select {
     width: 100%;
     min-height: 48px;
     padding: 0 15px;
@@ -92,10 +93,23 @@ input::placeholder {
     color: #7f8d94;
 }
 
-input:focus {
+input:focus,
+select:focus {
     border-color: rgba(56, 182, 197, 0.82);
     background: rgba(255, 255, 255, 0.92);
     box-shadow: 0 0 0 4px rgba(56, 182, 197, 0.16);
+}
+
+select {
+    appearance: none;
+    cursor: pointer;
+}
+
+input[readonly],
+select:disabled {
+    color: #65757d;
+    cursor: not-allowed;
+    background-color: rgba(239, 245, 246, 0.82);
 }
 
 .btn-submit {

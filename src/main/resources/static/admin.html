@@ -20,6 +20,7 @@
         <a href="hero.html#vantagens">Vantagens</a>
         <a href="hero.html#avisos">Avisos</a>
         <a href="hero.html#footer">Sobre nos</a>
+        <a href="#localizacoes">Bairros e ruas</a>
         <a href="notificacao.html">Dashboard</a>
         <a href="admin.html" class="active">Admin</a>
     </nav>
@@ -44,6 +45,10 @@
             <a class="primary-action" href="#nova-noticia">
                 <i class="fa-solid fa-plus"></i>
                 Nova noticia
+            </a>
+            <a class="primary-action" href="#localizacoes">
+                <i class="fa-solid fa-map-location-dot"></i>
+                Bairros e ruas
             </a>
         </div>
     </section>
@@ -70,6 +75,22 @@
             <div>
                 <strong id="apiStatus">...</strong>
                 <p>Status da API</p>
+            </div>
+        </article>
+
+        <article class="metric-card">
+            <span class="metric-icon neighborhoods"><i class="fa-solid fa-map"></i></span>
+            <div>
+                <strong id="totalBairros">0</strong>
+                <p>Bairros cadastrados</p>
+            </div>
+        </article>
+
+        <article class="metric-card">
+            <span class="metric-icon streets"><i class="fa-solid fa-road"></i></span>
+            <div>
+                <strong id="totalRuas">0</strong>
+                <p>Ruas cadastradas</p>
             </div>
         </article>
     </section>
@@ -131,6 +152,81 @@
         </article>
     </section>
 
+    <section class="panel location-panel" id="localizacoes">
+        <div class="panel-heading">
+            <div>
+                <p class="eyebrow">Localizacao</p>
+                <h2>Bairros, ruas e CEPs</h2>
+            </div>
+            <button class="icon-button small" type="button" title="Atualizar localizacoes" onclick="carregarLocalizacoes()">
+                <i class="fa-solid fa-rotate-right"></i>
+            </button>
+        </div>
+
+        <div class="location-grid">
+            <article class="location-column">
+                <form id="bairroForm" class="admin-form compact-form">
+                    <div class="form-row">
+                        <div>
+                            <label for="bairroNome">Bairro</label>
+                            <input id="bairroNome" name="bairroNome" type="text" maxlength="120" placeholder="Ex: Centro" required>
+                        </div>
+                        <div>
+                            <label for="bairroFaixaCep">Faixa de CEP</label>
+                            <input id="bairroFaixaCep" name="bairroFaixaCep" type="text" maxlength="40" placeholder="58700-000 a 58700-999">
+                        </div>
+                    </div>
+
+                    <div class="inline-actions">
+                        <button class="primary-action submit-button" type="submit">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Salvar bairro
+                        </button>
+                        <button class="secondary-action" type="button" onclick="cancelarEdicaoBairro()">Cancelar</button>
+                    </div>
+                </form>
+
+                <div id="bairroList" class="location-list">
+                    <p class="empty-state">Carregando bairros...</p>
+                </div>
+            </article>
+
+            <article class="location-column">
+                <form id="ruaForm" class="admin-form compact-form">
+                    <label for="bairroDaRua">Bairro da rua</label>
+                    <select id="bairroDaRua" name="bairroDaRua" required onchange="selecionarBairro(this.value)">
+                        <option value="">Selecione um bairro</option>
+                    </select>
+
+                    <div class="form-row">
+                        <div>
+                            <label for="ruaNome">Rua</label>
+                            <input id="ruaNome" name="ruaNome" type="text" maxlength="160" placeholder="Ex: Rua do Prado" required>
+                        </div>
+                        <div>
+                            <label for="ruaCep">CEP</label>
+                            <input id="ruaCep" name="ruaCep" type="text" maxlength="9" placeholder="58700-000">
+                        </div>
+                    </div>
+
+                    <div class="inline-actions">
+                        <button class="primary-action submit-button" type="submit">
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            Salvar rua
+                        </button>
+                        <button class="secondary-action" type="button" onclick="cancelarEdicaoRua()">Cancelar</button>
+                    </div>
+                </form>
+
+                <div id="ruaList" class="location-list">
+                    <p class="empty-state">Selecione um bairro para ver as ruas.</p>
+                </div>
+            </article>
+        </div>
+
+        <p id="locationFeedback" class="feedback" aria-live="polite"></p>
+    </section>
+
     <section class="panel logs-panel">
         <div class="panel-heading">
             <div>
@@ -176,7 +272,17 @@
     const logsList = document.getElementById("logsList");
     const feedback = document.getElementById("formFeedback");
     const form = document.getElementById("newsForm");
+    const bairroForm = document.getElementById("bairroForm");
+    const ruaForm = document.getElementById("ruaForm");
+    const bairroList = document.getElementById("bairroList");
+    const ruaList = document.getElementById("ruaList");
+    const bairroDaRua = document.getElementById("bairroDaRua");
+    const locationFeedback = document.getElementById("locationFeedback");
     const API_BASE = "http://localhost:8080";
+    let bairrosCache = [];
+    let bairroSelecionadoId = null;
+    let bairroEditandoId = null;
+    let ruaEditandoId = null;
 
     document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("data_publicacao").valueAsDate = new Date();
@@ -223,8 +329,291 @@
         }
     });
 
+    bairroForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const dados = {
+            nome: bairroForm.bairroNome.value.trim(),
+            cidade: "Patos",
+            faixaCep: bairroForm.bairroFaixaCep.value.trim()
+        };
+
+        if (!dados.nome) {
+            mostrarFeedbackLocalizacao("Informe o nome do bairro.", "error");
+            return;
+        }
+
+        const url = bairroEditandoId
+            ? `${API_BASE}/api/localizacoes/bairros/${bairroEditandoId}`
+            : `${API_BASE}/api/localizacoes/bairros`;
+        const metodo = bairroEditandoId ? "PUT" : "POST";
+
+        try {
+            const response = await fetch(url, {
+                method: metodo,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(dados)
+            });
+            const resposta = await lerResposta(response);
+
+            if (!response.ok) {
+                throw new Error(typeof resposta === "string" ? resposta : "Nao foi possivel salvar o bairro.");
+            }
+
+            bairroSelecionadoId = resposta.id;
+            cancelarEdicaoBairro(false);
+            mostrarFeedbackLocalizacao("Bairro salvo com sucesso.", "success");
+            await carregarLocalizacoes();
+        } catch (error) {
+            mostrarFeedbackLocalizacao(error.message || "Erro ao salvar bairro.", "error");
+        }
+    });
+
+    ruaForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const bairroId = bairroDaRua.value;
+        const dados = {
+            nome: ruaForm.ruaNome.value.trim(),
+            cep: ruaForm.ruaCep.value.trim()
+        };
+
+        if (!bairroId) {
+            mostrarFeedbackLocalizacao("Selecione o bairro da rua.", "error");
+            return;
+        }
+
+        if (!dados.nome) {
+            mostrarFeedbackLocalizacao("Informe o nome da rua.", "error");
+            return;
+        }
+
+        const url = ruaEditandoId
+            ? `${API_BASE}/api/localizacoes/logradouros/${ruaEditandoId}`
+            : `${API_BASE}/api/localizacoes/bairros/${bairroId}/logradouros`;
+        const metodo = ruaEditandoId ? "PUT" : "POST";
+
+        try {
+            const response = await fetch(url, {
+                method: metodo,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(dados)
+            });
+            const resposta = await lerResposta(response);
+
+            if (!response.ok) {
+                throw new Error(typeof resposta === "string" ? resposta : "Nao foi possivel salvar a rua.");
+            }
+
+            cancelarEdicaoRua(false);
+            mostrarFeedbackLocalizacao("Rua salva com sucesso.", "success");
+            await carregarLocalizacoes();
+        } catch (error) {
+            mostrarFeedbackLocalizacao(error.message || "Erro ao salvar rua.", "error");
+        }
+    });
+
     async function carregarTudo() {
-        await Promise.all([carregarNoticias(), carregarLogs()]);
+        await Promise.all([carregarNoticias(), carregarLogs(), carregarLocalizacoes()]);
+    }
+
+    async function carregarLocalizacoes() {
+        bairroList.innerHTML = "<p class='empty-state'>Carregando bairros...</p>";
+
+        try {
+            const response = await fetch(`${API_BASE}/api/localizacoes/bairros`);
+            if (!response.ok) {
+                throw new Error("Falha ao buscar bairros.");
+            }
+
+            bairrosCache = await response.json();
+            document.getElementById("totalBairros").textContent = bairrosCache.length;
+            document.getElementById("totalRuas").textContent = bairrosCache.reduce((total, bairro) => total + (bairro.totalLogradouros || 0), 0);
+            renderizarBairros();
+            preencherSelectBairros();
+
+            if (bairroSelecionadoId && bairrosCache.some((bairro) => String(bairro.id) === String(bairroSelecionadoId))) {
+                bairroDaRua.value = bairroSelecionadoId;
+                await carregarRuas(bairroSelecionadoId);
+            } else {
+                bairroSelecionadoId = bairrosCache[0]?.id || null;
+                bairroDaRua.value = bairroSelecionadoId || "";
+                if (bairroSelecionadoId) {
+                    await carregarRuas(bairroSelecionadoId);
+                } else {
+                    ruaList.innerHTML = "<p class='empty-state'>Nenhum bairro cadastrado.</p>";
+                }
+            }
+        } catch (error) {
+            bairroList.innerHTML = `<p class='empty-state error-text'>${escapeHtml(error.message)}</p>`;
+        }
+    }
+
+    function renderizarBairros() {
+        if (!bairrosCache.length) {
+            bairroList.innerHTML = "<p class='empty-state'>Nenhum bairro cadastrado.</p>";
+            return;
+        }
+
+        bairroList.innerHTML = "";
+        bairrosCache.forEach((bairro) => {
+            const item = document.createElement("article");
+            item.className = `location-item ${String(bairro.id) === String(bairroSelecionadoId) ? "is-selected" : ""}`;
+            item.innerHTML = `
+                <button class="location-main" type="button" onclick="selecionarBairro(${bairro.id})">
+                    <strong>${escapeHtml(bairro.nome)}</strong>
+                    <span>${escapeHtml(bairro.faixaCep || "Sem faixa de CEP")} - ${bairro.totalLogradouros || 0} ruas</span>
+                </button>
+                <div class="item-actions">
+                    <button class="icon-button small" type="button" title="Editar bairro" onclick="editarBairro(${bairro.id})">
+                        <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="icon-button small danger" type="button" title="Excluir bairro" onclick="excluirBairro(${bairro.id})">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </div>
+            `;
+            bairroList.appendChild(item);
+        });
+    }
+
+    function preencherSelectBairros() {
+        bairroDaRua.innerHTML = "<option value=''>Selecione um bairro</option>";
+        bairrosCache.forEach((bairro) => {
+            bairroDaRua.add(new Option(bairro.nome, bairro.id));
+        });
+    }
+
+    async function selecionarBairro(id) {
+        bairroSelecionadoId = id || null;
+        bairroDaRua.value = bairroSelecionadoId || "";
+        renderizarBairros();
+        cancelarEdicaoRua(false);
+
+        if (!bairroSelecionadoId) {
+            ruaList.innerHTML = "<p class='empty-state'>Selecione um bairro para ver as ruas.</p>";
+            return;
+        }
+
+        await carregarRuas(bairroSelecionadoId);
+    }
+
+    async function carregarRuas(bairroId) {
+        ruaList.innerHTML = "<p class='empty-state'>Carregando ruas...</p>";
+
+        try {
+            const response = await fetch(`${API_BASE}/api/localizacoes/bairros/${bairroId}/logradouros`);
+            if (!response.ok) {
+                throw new Error("Falha ao buscar ruas.");
+            }
+
+            const ruas = await response.json();
+            if (!ruas.length) {
+                ruaList.innerHTML = "<p class='empty-state'>Nenhuma rua cadastrada neste bairro.</p>";
+                return;
+            }
+
+            ruaList.innerHTML = "";
+            ruas.forEach((rua) => {
+                const item = document.createElement("article");
+                item.className = "location-item";
+                item.innerHTML = `
+                    <div class="location-main static">
+                        <strong>${escapeHtml(rua.nome)}</strong>
+                        <span>${escapeHtml(rua.cep || "Sem CEP")}</span>
+                    </div>
+                    <div class="item-actions">
+                        <button class="icon-button small" type="button" title="Editar rua" onclick="editarRua(${rua.id}, '${escapeJs(rua.nome)}', '${escapeJs(rua.cep || "")}')">
+                            <i class="fa-solid fa-pen"></i>
+                        </button>
+                        <button class="icon-button small danger" type="button" title="Excluir rua" onclick="excluirRua(${rua.id})">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                ruaList.appendChild(item);
+            });
+        } catch (error) {
+            ruaList.innerHTML = `<p class='empty-state error-text'>${escapeHtml(error.message)}</p>`;
+        }
+    }
+
+    function editarBairro(id) {
+        const bairro = bairrosCache.find((item) => String(item.id) === String(id));
+        if (!bairro) {
+            return;
+        }
+
+        bairroEditandoId = id;
+        bairroForm.bairroNome.value = bairro.nome;
+        bairroForm.bairroFaixaCep.value = bairro.faixaCep || "";
+        bairroForm.bairroNome.focus();
+        mostrarFeedbackLocalizacao("Editando bairro selecionado.", "success");
+    }
+
+    function cancelarEdicaoBairro(limparMensagem = true) {
+        bairroEditandoId = null;
+        bairroForm.reset();
+        if (limparMensagem) {
+            mostrarFeedbackLocalizacao("");
+        }
+    }
+
+    async function excluirBairro(id) {
+        const bairro = bairrosCache.find((item) => String(item.id) === String(id));
+        if (!bairro || !confirm(`Excluir o bairro ${bairro.nome}? Todas as ruas cadastradas nele tambem serao apagadas.`)) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE}/api/localizacoes/bairros/${id}`, { method: "DELETE" });
+            if (!response.ok && response.status !== 204) {
+                throw new Error("Nao foi possivel excluir o bairro.");
+            }
+
+            if (String(bairroSelecionadoId) === String(id)) {
+                bairroSelecionadoId = null;
+            }
+            mostrarFeedbackLocalizacao("Bairro e ruas removidos com sucesso.", "success");
+            await carregarLocalizacoes();
+        } catch (error) {
+            mostrarFeedbackLocalizacao(error.message || "Erro ao excluir bairro.", "error");
+        }
+    }
+
+    function editarRua(id, nome, cep) {
+        ruaEditandoId = id;
+        ruaForm.ruaNome.value = nome;
+        ruaForm.ruaCep.value = cep || "";
+        ruaForm.ruaNome.focus();
+        mostrarFeedbackLocalizacao("Editando rua selecionada.", "success");
+    }
+
+    function cancelarEdicaoRua(limparMensagem = true) {
+        ruaEditandoId = null;
+        ruaForm.reset();
+        bairroDaRua.value = bairroSelecionadoId || "";
+        if (limparMensagem) {
+            mostrarFeedbackLocalizacao("");
+        }
+    }
+
+    async function excluirRua(id) {
+        if (!confirm("Excluir esta rua?")) {
+            return;
+        }
+
+        try {
+            const response = await fetch(`${API_BASE}/api/localizacoes/logradouros/${id}`, { method: "DELETE" });
+            if (!response.ok && response.status !== 204) {
+                throw new Error("Nao foi possivel excluir a rua.");
+            }
+
+            mostrarFeedbackLocalizacao("Rua removida com sucesso.", "success");
+            await carregarLocalizacoes();
+        } catch (error) {
+            mostrarFeedbackLocalizacao(error.message || "Erro ao excluir rua.", "error");
+        }
     }
 
     async function carregarNoticias() {
@@ -341,6 +730,17 @@
         return `${(bytes / 1024).toFixed(1)} KB`;
     }
 
+    async function lerResposta(response) {
+        return response.headers.get("content-type")?.includes("application/json")
+            ? await response.json()
+            : await response.text();
+    }
+
+    function mostrarFeedbackLocalizacao(mensagem, tipo = "") {
+        locationFeedback.textContent = mensagem;
+        locationFeedback.className = `feedback ${tipo}`.trim();
+    }
+
     function escapeHtml(valor) {
         return String(valor)
             .replaceAll("&", "&amp;")
@@ -348,6 +748,13 @@
             .replaceAll(">", "&gt;")
             .replaceAll('"', "&quot;")
             .replaceAll("'", "&#039;");
+    }
+
+    function escapeJs(valor) {
+        return String(valor)
+            .replaceAll("\\", "\\\\")
+            .replaceAll("'", "\\'")
+            .replaceAll("\n", " ");
     }
 </script>
 
