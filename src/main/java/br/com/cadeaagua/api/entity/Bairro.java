@@ -9,6 +9,8 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(
         name = "bairro",
@@ -28,4 +30,12 @@ public class Bairro {
 
     @Column(length = 40)
     private String faixaCep;
+
+    @Column(nullable = false, length = 50)
+    private String statusAbastecimento = "Normal";
+
+    @Column(length = 1000)
+    private String descricaoStatus;
+
+    private LocalDateTime dataAtualizacaoStatus;
 }

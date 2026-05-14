@@ -197,6 +197,81 @@ nav a:hover,
     box-shadow: 0 10px 24px rgba(56, 182, 197, 0.28);
 }
 
+.street-results {
+    width: min(720px, 100%);
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.street-message,
+.street-result {
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 14px 32px rgba(17, 68, 86, 0.1);
+}
+
+.street-message {
+    padding: 14px 16px;
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.street-message.error {
+    color: #b53d32;
+}
+
+.street-result {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 0.55fr);
+    gap: 16px;
+    align-items: center;
+    padding: 14px 16px;
+}
+
+.street-result strong,
+.street-result span {
+    display: block;
+}
+
+.street-result strong {
+    font-size: 1rem;
+    color: var(--ink);
+}
+
+.street-result > div:first-child span {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 0.88rem;
+    font-weight: 700;
+}
+
+.street-status span {
+    width: fit-content;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 850;
+}
+
+.street-status p {
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 0.86rem;
+    line-height: 1.35;
+}
+
+.street-result.ok .street-status span {
+    color: #11724a;
+    background: rgba(47, 196, 122, 0.14);
+}
+
+.street-result.no-water .street-status span {
+    color: #9d392c;
+    background: rgba(242, 143, 117, 0.2);
+}
+
 .news-section {
     margin: 58px 0;
 }
@@ -612,6 +687,10 @@ footer {
 
     .search-bar {
         min-height: 56px;
+    }
+
+    .street-result {
+        grid-template-columns: 1fr;
     }
 
     .alert-box {

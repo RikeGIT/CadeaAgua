@@ -17,4 +17,14 @@ public interface CronogramaRepository extends JpaRepository<Cronograma, Integer>
             "AND :data BETWEEN c.data_inicio AND c.data_fim")
     List<Cronograma> findByRegiaoAndData(@Param("idRegiao") Integer idRegiao,
                                          @Param("data") LocalDate data);
+
+    @Query("SELECT c FROM Cronograma c WHERE LOWER(c.regiao.bairro) = LOWER(:bairro) " +
+            "AND :data BETWEEN c.data_inicio AND c.data_fim " +
+            "ORDER BY c.id_cronograma DESC")
+    List<Cronograma> findAtivosPorBairro(@Param("bairro") String bairro,
+                                         @Param("data") LocalDate data);
+
+    @Query("SELECT c FROM Cronograma c WHERE LOWER(c.regiao.bairro) = LOWER(:bairro) " +
+            "ORDER BY c.data_inicio DESC, c.id_cronograma DESC")
+    List<Cronograma> findHistoricoPorBairro(@Param("bairro") String bairro);
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cade a Agua? - Patos</title>
+    <title>Cadê a Água? - Patos</title>
     <link rel="icon" href="assets/peixe.png" type="image/x-icon">
     <link rel="stylesheet" href="/style/hero.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -12,14 +12,14 @@
 
 <header class="navbar">
     <a href="hero.html" class="logo-link">
-        <img src="assets/logo-cade-a-agua(sem%20fundo).png" alt="Logo Cade a Agua?" class="logo-img">
+        <img src="assets/logo-cade-a-agua(sem%20fundo).png" alt="Logo Cadê a Água?" class="logo-img">
     </a>
 
     <nav class="nav-links">
-        <a href="hero.html#noticias">Noticias</a>
+        <a href="hero.html#noticias">Notícias</a>
         <a href="hero.html#vantagens">Vantagens</a>
         <a href="hero.html#avisos">Avisos</a>
-        <a href="hero.html#footer">Sobre nos</a>
+        <a href="hero.html#footer">Sobre nós</a>
         <a href="notificacao.html">Dashboard</a>
         <a href="admin.html" data-admin-only>Admin</a>
     </nav>
@@ -34,18 +34,19 @@
 
     <section class="hero-grid">
         <div class="search-area">
-            <h1>Pesquise sua rua e saiba imediatamente se ha agua disponivel.</h1>
-            <div class="search-bar">
-                <input type="text" placeholder="Busca rapida de logradouros (ex: Rua do Sol)...">
-                <button aria-label="Pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </div>
+            <h1>Pesquise sua rua e saiba imediatamente se há água disponível.</h1>
+            <form id="streetSearchForm" class="search-bar">
+                <input id="streetSearchInput" type="text" placeholder="Busca rápida de logradouros (ex: Rua do Sol)..." autocomplete="street-address">
+                <button type="submit" aria-label="Pesquisar"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            <div id="streetSearchResults" class="street-results" hidden></div>
         </div>
     </section>
 
     <section id="noticias" class="news-section">
-        <h2>Noticias recentes</h2>
+        <h2>Notícias recentes</h2>
         <div class="news-grid" id="news-grid-container">
-            <p style="text-align: center; grid-column: 1 / -1; color: #666;">Carregando as ultimas noticias...</p>
+            <p style="text-align: center; grid-column: 1 / -1; color: #666;">Carregando as últimas notícias...</p>
         </div>
     </section>
 
@@ -53,7 +54,7 @@
         <img src="/assets/background%20log.png" alt="Fundo com relevo" class="cta-background-pattern">
 
         <div class="cta-content">
-            <h2>Faca login e mantenha-se atualizado sobre a agua da cidade</h2>
+            <h2>Faça login e mantenha-se atualizado sobre a água da cidade</h2>
 
             <div class="features-grid">
                 <div class="feature-card">
@@ -61,23 +62,23 @@
                         <i class="fa-solid fa-chart-line"></i>
                     </div>
                     <h3>Dashboard pessoal</h3>
-                    <p>Entenda, de forma simples, o fluxo de agua da sua rua e previna possiveis imprevistos.</p>
+                    <p>Entenda, de forma simples, o fluxo de água da sua rua e previna possíveis imprevistos.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
                         <i class="fa-solid fa-bell"></i>
                     </div>
-                    <h3>Notificacoes automaticas</h3>
-                    <p>Receba avisos preventivos sobre falta de agua no seu canal de informacao favorito.</p>
+                    <h3>Notificações automáticas</h3>
+                    <p>Receba avisos preventivos sobre falta de água no seu canal de informação favorito.</p>
                 </div>
 
                 <div class="feature-card">
                     <div class="feature-icon-wrapper">
                         <i class="fa-solid fa-newspaper"></i>
                     </div>
-                    <h3>Noticias atualizadas</h3>
-                    <p>Acompanhe as ultimas noticias relacionadas a agua em Patos e regiao.</p>
+                    <h3>Notícias atualizadas</h3>
+                    <p>Acompanhe as últimas notícias relacionadas à água em Patos e região.</p>
                 </div>
             </div>
         </div>
@@ -89,16 +90,16 @@
             <div class="alert-box feedback">
                 <div class="alert-text">
                     <h3>Feedbacks</h3>
-                    <p>Estamos recebendo opinioes sobre funcionalidades, melhorias e possiveis bugs do site.</p>
+                    <p>Estamos recebendo opiniões sobre funcionalidades, melhorias e possíveis bugs do site.</p>
                 </div>
                 <img src="/assets/feedback-image.png" alt="Interface de feedback">
             </div>
             <div class="alert-box update">
                 <div class="alert-text">
-                    <h3>Atualizacao</h3>
-                    <p>Estamos ajustando o dashboard para tornar os dados de abastecimento mais claros e confiaveis.</p>
+                    <h3>Atualização</h3>
+                    <p>Estamos ajustando o dashboard para tornar os dados de abastecimento mais claros e confiáveis.</p>
                 </div>
-                <img src="/assets/update-image.png" alt="Interface de atualizacao">
+                <img src="/assets/update-image.png" alt="Interface de atualização">
             </div>
         </div>
     </section>
@@ -108,8 +109,8 @@
 <footer id="footer">
     <div class="footer-container">
         <div class="footer-brand">
-            <h3>Cade a Agua?</h3>
-            <p>Website para manter voce atualizado sobre agua em Patos e regiao.</p>
+            <h3>Cadê a Água?</h3>
+            <p>Website para manter você atualizado sobre água em Patos e região.</p>
             <div class="social-icons">
                 <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                 <a href="#" aria-label="Discord"><i class="fa-brands fa-discord"></i></a>
@@ -124,6 +125,7 @@
 <script>
     window.onload = function () {
         ajustarLinksAdmin();
+        configurarPesquisaRua();
         carregarNoticias();
     };
 
@@ -148,7 +150,7 @@
             const noticias = await response.json();
 
             if (noticias.length === 0) {
-                container.innerHTML = "<p style='text-align: center; grid-column: 1 / -1;'>Nenhuma noticia disponivel no momento.</p>";
+                container.innerHTML = "<p style='text-align: center; grid-column: 1 / -1;'>Nenhuma notícia disponível no momento.</p>";
                 return;
             }
 
@@ -161,9 +163,92 @@
             renderizarNoticias(noticias.slice().reverse(), imagensPadrao);
 
         } catch (error) {
-            console.error("Erro ao carregar noticias:", error);
-            container.innerHTML = "<p style='text-align: center; grid-column: 1 / -1; color: #65757d;'>Nao foi possivel carregar as noticias agora.</p>";
+            console.error("Erro ao carregar notícias:", error);
+            container.innerHTML = "<p style='text-align: center; grid-column: 1 / -1; color: #65757d;'>Não foi possível carregar as notícias agora.</p>";
         }
+    }
+
+    function configurarPesquisaRua() {
+        const form = document.getElementById("streetSearchForm");
+        form.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            await pesquisarRua();
+        });
+    }
+
+    async function pesquisarRua() {
+        const input = document.getElementById("streetSearchInput");
+        const resultados = document.getElementById("streetSearchResults");
+        const termo = input.value.trim();
+
+        resultados.hidden = false;
+
+        if (termo.length < 2) {
+            resultados.innerHTML = "<p class='street-message'>Digite pelo menos 2 caracteres para pesquisar.</p>";
+            return;
+        }
+
+        resultados.innerHTML = "<p class='street-message'>Buscando ruas...</p>";
+
+        try {
+            const response = await fetch(`${getApiBase()}/api/localizacoes/logradouros/buscar?termo=${encodeURIComponent(termo)}`);
+            const dados = response.headers.get("content-type")?.includes("application/json")
+                ? await response.json()
+                : await response.text();
+
+            if (!response.ok) {
+                throw new Error(typeof dados === "string" ? dados : "Não foi possível pesquisar ruas.");
+            }
+
+            renderizarResultadoRuas(dados);
+        } catch (error) {
+            resultados.innerHTML = `<p class='street-message error'>${escapeHtml(error.message || "Erro ao pesquisar ruas.")}</p>`;
+        }
+    }
+
+    function renderizarResultadoRuas(ruas) {
+        const resultados = document.getElementById("streetSearchResults");
+
+        if (!ruas.length) {
+            resultados.innerHTML = "<p class='street-message'>Nenhuma rua encontrada em Patos.</p>";
+            return;
+        }
+
+        resultados.innerHTML = "";
+        ruas.forEach((rua) => {
+            const status = rua.abastecimento?.status || "Normal";
+            const semAgua = !statusEhNormal(status);
+            const card = document.createElement("article");
+            card.className = `street-result ${semAgua ? "no-water" : "ok"}`;
+            card.innerHTML = `
+                <div>
+                    <strong>${escapeHtml(rua.nome)}</strong>
+                    <span>${escapeHtml(rua.bairroNome)} - ${escapeHtml(rua.cep || "Sem CEP")}</span>
+                </div>
+                <div class="street-status">
+                    <span>${escapeHtml(status)}</span>
+                    <p>${escapeHtml(mensagemStatus(rua.abastecimento))}</p>
+                </div>
+            `;
+            resultados.appendChild(card);
+        });
+    }
+
+    function mensagemStatus(abastecimento) {
+        const status = abastecimento?.status || "Normal";
+        if (statusEhNormal(status)) {
+            return "Água disponível no bairro agora.";
+        }
+
+        if (abastecimento?.descricao) {
+            return abastecimento.descricao;
+        }
+
+        return "Abastecimento afetado neste bairro.";
+    }
+
+    function statusEhNormal(status) {
+        return !status || String(status).trim().toLowerCase() === "normal";
     }
 
     function renderizarNoticias(noticias, imagensPadrao) {
@@ -176,17 +261,17 @@
 
             const id = noticia.id_notica || noticia.idNotica || noticia.id;
             const imagemCard = noticia.imagemUrl || noticia.imagem_url || imagensPadrao[index % imagensPadrao.length];
-            const titulo = noticia.titulo || "Sem titulo";
-            const descricao = noticia.descricao || "Confira os detalhes desta noticia.";
+            const titulo = noticia.titulo || "Sem título";
+            const descricao = noticia.descricao || "Confira os detalhes desta notícia.";
 
             article.href = `noticia.html?id=${encodeURIComponent(id)}`;
-            article.setAttribute("aria-label", `Abrir noticia: ${titulo}`);
+            article.setAttribute("aria-label", `Abrir notícia: ${titulo}`);
 
             article.innerHTML = `
                 <img src="${escapeHtml(imagemCard)}" alt="${escapeHtml(titulo)}">
                 <h3>${escapeHtml(titulo)}</h3>
                 <p>${escapeHtml(descricao)}</p>
-                <span class="news-read-more">Ler noticia</span>
+                <span class="news-read-more">Ler notícia</span>
             `;
 
             container.appendChild(article);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Cade a Agua?</title>
+    <title>Admin - Cadê a Água?</title>
     <link rel="icon" href="assets/peixe.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style/admin.css">
@@ -12,14 +12,14 @@
 
 <header class="navbar">
     <a href="hero.html" class="logo-link">
-        <img src="assets/logo-cade-a-agua(sem%20fundo).png" alt="Logo Cade a Agua?" class="logo-img">
+        <img src="assets/logo-cade-a-agua(sem%20fundo).png" alt="Logo Cadê a Água?" class="logo-img">
     </a>
 
     <nav>
-        <a href="hero.html#noticias">Noticias</a>
+        <a href="hero.html#noticias">Notícias</a>
         <a href="hero.html#vantagens">Vantagens</a>
         <a href="hero.html#avisos">Avisos</a>
-        <a href="hero.html#footer">Sobre nos</a>
+        <a href="hero.html#footer">Sobre nós</a>
         <a href="#localizacoes">Bairros e ruas</a>
         <a href="notificacao.html">Dashboard</a>
         <a href="admin.html" class="active">Admin</a>
@@ -35,7 +35,7 @@
     <section class="admin-hero">
         <div>
             <p class="eyebrow">Painel administrativo</p>
-            <h1>Controle de noticias, logs e operacao.</h1>
+            <h1>Controle de notícias, logs e operação.</h1>
         </div>
 
         <div class="admin-actions">
@@ -44,7 +44,7 @@
             </button>
             <a class="primary-action" href="#nova-noticia">
                 <i class="fa-solid fa-plus"></i>
-                Nova noticia
+                Nova notícia
             </a>
             <a class="primary-action" href="#localizacoes">
                 <i class="fa-solid fa-map-location-dot"></i>
@@ -58,7 +58,7 @@
             <span class="metric-icon news"><i class="fa-solid fa-newspaper"></i></span>
             <div>
                 <strong id="totalNoticias">0</strong>
-                <p>Noticias cadastradas</p>
+                <p>Notícias cadastradas</p>
             </div>
         </article>
 
@@ -99,21 +99,21 @@
         <article class="panel" id="nova-noticia">
             <div class="panel-heading">
                 <div>
-                    <p class="eyebrow">Publicacao</p>
-                    <h2>Criar noticia</h2>
+                    <p class="eyebrow">Publicação</p>
+                    <h2>Criar notícia</h2>
                 </div>
                 <i class="fa-solid fa-pen-to-square"></i>
             </div>
 
             <form id="newsForm" class="admin-form">
-                <label for="titulo">Titulo</label>
-                <input id="titulo" name="titulo" type="text" maxlength="300" placeholder="Ex: Manutencao altera abastecimento no Centro" required>
+                <label for="titulo">Título</label>
+                <input id="titulo" name="titulo" type="text" maxlength="300" placeholder="Ex: Manutenção altera abastecimento no Centro" required>
 
-                <label for="descricao">Descricao</label>
-                <textarea id="descricao" name="descricao" maxlength="500" rows="3" placeholder="Resumo curto para aparecer no card da pagina inicial." required></textarea>
+                <label for="descricao">Descrição</label>
+                <textarea id="descricao" name="descricao" maxlength="500" rows="3" placeholder="Resumo curto para aparecer no card da página inicial." required></textarea>
 
-                <label for="conteudo">Conteudo completo</label>
-                <textarea id="conteudo" name="conteudo" maxlength="10000" rows="9" placeholder="Escreva o conteudo completo da noticia. Separe paragrafos com Enter." required></textarea>
+                <label for="conteudo">Conteúdo completo</label>
+                <textarea id="conteudo" name="conteudo" maxlength="10000" rows="9" placeholder="Escreva o conteúdo completo da notícia. Separe parágrafos com Enter." required></textarea>
 
                 <div class="form-row">
                     <div>
@@ -130,7 +130,7 @@
 
                 <button class="primary-action submit-button" type="submit">
                     <i class="fa-solid fa-floppy-disk"></i>
-                    Publicar noticia
+                    Publicar notícia
                 </button>
             </form>
         </article>
@@ -138,16 +138,16 @@
         <article class="panel">
             <div class="panel-heading">
                 <div>
-                    <p class="eyebrow">Conteudo</p>
-                    <h2>Noticias recentes</h2>
+                    <p class="eyebrow">Conteúdo</p>
+                    <h2>Notícias recentes</h2>
                 </div>
-                <button class="icon-button small" type="button" title="Atualizar noticias" onclick="carregarNoticias()">
+                <button class="icon-button small" type="button" title="Atualizar notícias" onclick="carregarNoticias()">
                     <i class="fa-solid fa-rotate-right"></i>
                 </button>
             </div>
 
             <div id="newsList" class="news-list">
-                <p class="empty-state">Carregando noticias...</p>
+                <p class="empty-state">Carregando notícias...</p>
             </div>
         </article>
     </section>
@@ -155,10 +155,10 @@
     <section class="panel location-panel" id="localizacoes">
         <div class="panel-heading">
             <div>
-                <p class="eyebrow">Localizacao</p>
+                <p class="eyebrow">Localização</p>
                 <h2>Bairros, ruas e CEPs</h2>
             </div>
-            <button class="icon-button small" type="button" title="Atualizar localizacoes" onclick="carregarLocalizacoes()">
+            <button class="icon-button small" type="button" title="Atualizar localizações" onclick="carregarLocalizacoes()">
                 <i class="fa-solid fa-rotate-right"></i>
             </button>
         </div>
@@ -184,6 +184,32 @@
                         </button>
                         <button class="secondary-action" type="button" onclick="cancelarEdicaoBairro()">Cancelar</button>
                     </div>
+                </form>
+
+                <form id="statusBairroForm" class="admin-form compact-form status-form">
+                    <div class="form-row">
+                        <div>
+                            <label for="statusAbastecimento">Status do bairro selecionado</label>
+                            <select id="statusAbastecimento" name="statusAbastecimento" required>
+                                <option value="Normal">Normal</option>
+                                <option value="Falta de água">Falta de água</option>
+                                <option value="Manutenção">Manutenção</option>
+                                <option value="Intermitente">Intermitente</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="dataFimStatus">Válido até</label>
+                            <input id="dataFimStatus" name="dataFimStatus" type="date">
+                        </div>
+                    </div>
+
+                    <label for="descricaoStatus">Detalhe do aviso</label>
+                    <textarea id="descricaoStatus" name="descricaoStatus" maxlength="1000" rows="3" placeholder="Ex: manutenção emergencial na rede principal."></textarea>
+
+                    <button class="primary-action submit-button" type="submit">
+                        <i class="fa-solid fa-bell"></i>
+                        Atualizar status
+                    </button>
                 </form>
 
                 <div id="bairroList" class="location-list">
@@ -255,7 +281,7 @@
 </main>
 
 <div class="tab-bar">
-    <a href="hero.html" aria-label="Inicio"><i class="fa-solid fa-house"></i></a>
+    <a href="hero.html" aria-label="Início"><i class="fa-solid fa-house"></i></a>
     <a href="notificacao.html" aria-label="Dashboard"><i class="fa-solid fa-chart-simple"></i></a>
     <a href="admin.html" aria-label="Admin"><i class="fa-solid fa-screwdriver-wrench"></i></a>
     <a href="perfil.html" aria-label="Perfil"><i class="fa-solid fa-user"></i></a>
@@ -273,12 +299,13 @@
     const feedback = document.getElementById("formFeedback");
     const form = document.getElementById("newsForm");
     const bairroForm = document.getElementById("bairroForm");
+    const statusBairroForm = document.getElementById("statusBairroForm");
     const ruaForm = document.getElementById("ruaForm");
     const bairroList = document.getElementById("bairroList");
     const ruaList = document.getElementById("ruaList");
     const bairroDaRua = document.getElementById("bairroDaRua");
     const locationFeedback = document.getElementById("locationFeedback");
-    const API_BASE = "http://localhost:8080";
+    const API_BASE = getApiBase();
     let bairrosCache = [];
     let bairroSelecionadoId = null;
     let bairroEditandoId = null;
@@ -315,12 +342,12 @@
                 : await response.text();
 
             if (!response.ok) {
-                throw new Error(typeof resposta === "string" ? resposta : "Nao foi possivel criar a noticia.");
+                throw new Error(typeof resposta === "string" ? resposta : "Não foi possível criar a notícia.");
             }
 
             form.reset();
             document.getElementById("data_publicacao").valueAsDate = new Date();
-            feedback.textContent = "Noticia publicada com sucesso.";
+            feedback.textContent = "Notícia publicada com sucesso.";
             feedback.className = "feedback success";
             await carregarNoticias();
         } catch (error) {
@@ -357,7 +384,7 @@
             const resposta = await lerResposta(response);
 
             if (!response.ok) {
-                throw new Error(typeof resposta === "string" ? resposta : "Nao foi possivel salvar o bairro.");
+                throw new Error(typeof resposta === "string" ? resposta : "Não foi possível salvar o bairro.");
             }
 
             bairroSelecionadoId = resposta.id;
@@ -366,6 +393,44 @@
             await carregarLocalizacoes();
         } catch (error) {
             mostrarFeedbackLocalizacao(error.message || "Erro ao salvar bairro.", "error");
+        }
+    });
+
+    statusBairroForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        if (!bairroSelecionadoId) {
+            mostrarFeedbackLocalizacao("Selecione um bairro para alterar o status.", "error");
+            return;
+        }
+
+        const hoje = dataLocalHoje();
+        const dados = {
+            statusAbastecimento: statusBairroForm.statusAbastecimento.value,
+            descricao: statusBairroForm.descricaoStatus.value.trim(),
+            dataInicio: hoje,
+            dataFim: statusBairroForm.dataFimStatus.value || hoje
+        };
+
+        try {
+            const response = await fetch(`${API_BASE}/api/localizacoes/bairros/${bairroSelecionadoId}/status`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(dados)
+            });
+            const resposta = await lerResposta(response);
+
+            if (!response.ok) {
+                throw new Error(typeof resposta === "string" ? resposta : "Não foi possível atualizar o status.");
+            }
+
+            const notificacao = statusEhNormal(resposta.statusAbastecimento)
+                ? "Status atualizado e cronograma normal registrado."
+                : "Status atualizado, cronograma registrado e notificações lançadas.";
+            mostrarFeedbackLocalizacao(notificacao, "success");
+            await carregarLocalizacoes();
+        } catch (error) {
+            mostrarFeedbackLocalizacao(error.message || "Erro ao atualizar status do bairro.", "error");
         }
     });
 
@@ -402,7 +467,7 @@
             const resposta = await lerResposta(response);
 
             if (!response.ok) {
-                throw new Error(typeof resposta === "string" ? resposta : "Nao foi possivel salvar a rua.");
+                throw new Error(typeof resposta === "string" ? resposta : "Não foi possível salvar a rua.");
             }
 
             cancelarEdicaoRua(false);
@@ -434,13 +499,16 @@
 
             if (bairroSelecionadoId && bairrosCache.some((bairro) => String(bairro.id) === String(bairroSelecionadoId))) {
                 bairroDaRua.value = bairroSelecionadoId;
+                preencherFormularioStatusSelecionado();
                 await carregarRuas(bairroSelecionadoId);
             } else {
                 bairroSelecionadoId = bairrosCache[0]?.id || null;
                 bairroDaRua.value = bairroSelecionadoId || "";
                 if (bairroSelecionadoId) {
+                    preencherFormularioStatusSelecionado();
                     await carregarRuas(bairroSelecionadoId);
                 } else {
+                    preencherFormularioStatusSelecionado();
                     ruaList.innerHTML = "<p class='empty-state'>Nenhum bairro cadastrado.</p>";
                 }
             }
@@ -463,8 +531,14 @@
                 <button class="location-main" type="button" onclick="selecionarBairro(${bairro.id})">
                     <strong>${escapeHtml(bairro.nome)}</strong>
                     <span>${escapeHtml(bairro.faixaCep || "Sem faixa de CEP")} - ${bairro.totalLogradouros || 0} ruas</span>
+                    <span class="location-status ${statusEhNormal(bairro.statusAbastecimento) ? "normal" : "alert"}">
+                        ${escapeHtml(bairro.statusAbastecimento || "Normal")}
+                    </span>
                 </button>
                 <div class="item-actions">
+                <button class="icon-button small warning" type="button" title="Marcar falta de água" onclick="marcarFaltaAgua(${bairro.id})">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </button>
                     <button class="icon-button small" type="button" title="Editar bairro" onclick="editarBairro(${bairro.id})">
                         <i class="fa-solid fa-pen"></i>
                     </button>
@@ -488,6 +562,7 @@
         bairroSelecionadoId = id || null;
         bairroDaRua.value = bairroSelecionadoId || "";
         renderizarBairros();
+        preencherFormularioStatusSelecionado();
         cancelarEdicaoRua(false);
 
         if (!bairroSelecionadoId) {
@@ -551,6 +626,13 @@
         mostrarFeedbackLocalizacao("Editando bairro selecionado.", "success");
     }
 
+    async function marcarFaltaAgua(id) {
+        await selecionarBairro(id);
+        statusBairroForm.statusAbastecimento.value = "Falta de água";
+        statusBairroForm.descricaoStatus.focus();
+        mostrarFeedbackLocalizacao("Informe o detalhe do aviso e confirme a atualização.", "success");
+    }
+
     function cancelarEdicaoBairro(limparMensagem = true) {
         bairroEditandoId = null;
         bairroForm.reset();
@@ -561,14 +643,14 @@
 
     async function excluirBairro(id) {
         const bairro = bairrosCache.find((item) => String(item.id) === String(id));
-        if (!bairro || !confirm(`Excluir o bairro ${bairro.nome}? Todas as ruas cadastradas nele tambem serao apagadas.`)) {
+        if (!bairro || !confirm(`Excluir o bairro ${bairro.nome}? Todas as ruas cadastradas nele também serão apagadas.`)) {
             return;
         }
 
         try {
             const response = await fetch(`${API_BASE}/api/localizacoes/bairros/${id}`, { method: "DELETE" });
             if (!response.ok && response.status !== 204) {
-                throw new Error("Nao foi possivel excluir o bairro.");
+                throw new Error("Não foi possível excluir o bairro.");
             }
 
             if (String(bairroSelecionadoId) === String(id)) {
@@ -606,7 +688,7 @@
         try {
             const response = await fetch(`${API_BASE}/api/localizacoes/logradouros/${id}`, { method: "DELETE" });
             if (!response.ok && response.status !== 204) {
-                throw new Error("Nao foi possivel excluir a rua.");
+                throw new Error("Não foi possível excluir a rua.");
             }
 
             mostrarFeedbackLocalizacao("Rua removida com sucesso.", "success");
@@ -617,12 +699,12 @@
     }
 
     async function carregarNoticias() {
-        newsList.innerHTML = "<p class='empty-state'>Carregando noticias...</p>";
+        newsList.innerHTML = "<p class='empty-state'>Carregando notícias...</p>";
 
         try {
             const response = await fetch(`${API_BASE}/api/noticias`);
             if (!response.ok) {
-                throw new Error("Falha ao buscar noticias.");
+                throw new Error("Falha ao buscar notícias.");
             }
 
             const noticias = await response.json();
@@ -630,7 +712,7 @@
             document.getElementById("totalNoticias").textContent = noticias.length;
 
             if (!noticias.length) {
-                newsList.innerHTML = "<p class='empty-state'>Nenhuma noticia cadastrada ainda.</p>";
+                newsList.innerHTML = "<p class='empty-state'>Nenhuma notícia cadastrada ainda.</p>";
                 return;
             }
 
@@ -643,12 +725,12 @@
                     <img src="${noticia.imagem_url || noticia.imagemUrl || "/assets/hero-image.png"}" alt="">
                     <div>
                         <div class="item-title-row">
-                            <h3>${escapeHtml(noticia.titulo || "Sem titulo")}</h3>
+                            <h3>${escapeHtml(noticia.titulo || "Sem título")}</h3>
                             <span>${formatarData(noticia.data_publicacao)}</span>
                         </div>
                         <p>${escapeHtml(noticia.descricao || "")}</p>
                     </div>
-                    <button class="icon-button danger" type="button" title="Excluir noticia" onclick="excluirNoticia(${id})">
+                    <button class="icon-button danger" type="button" title="Excluir notícia" onclick="excluirNoticia(${id})">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 `;
@@ -661,14 +743,14 @@
     }
 
     async function excluirNoticia(id) {
-        if (!id || !confirm("Excluir esta noticia?")) {
+        if (!id || !confirm("Excluir esta notícia?")) {
             return;
         }
 
         try {
             const response = await fetch(`${API_BASE}/api/noticias/${id}`, { method: "DELETE" });
             if (!response.ok && response.status !== 204) {
-                throw new Error("Nao foi possivel excluir a noticia.");
+                throw new Error("Não foi possível excluir a notícia.");
             }
             await carregarNoticias();
         } catch (error) {
@@ -739,6 +821,39 @@
     function mostrarFeedbackLocalizacao(mensagem, tipo = "") {
         locationFeedback.textContent = mensagem;
         locationFeedback.className = `feedback ${tipo}`.trim();
+    }
+
+    function preencherFormularioStatusSelecionado() {
+        const bairro = bairrosCache.find((item) => String(item.id) === String(bairroSelecionadoId));
+        statusBairroForm.querySelectorAll("input, textarea, select, button").forEach((campo) => {
+            campo.disabled = !bairro;
+        });
+
+        if (!bairro) {
+            statusBairroForm.reset();
+            statusBairroForm.dataFimStatus.value = dataLocalHoje();
+            return;
+        }
+
+        statusBairroForm.statusAbastecimento.value = bairro.statusAbastecimento || "Normal";
+        statusBairroForm.descricaoStatus.value = bairro.descricaoStatus || "";
+        statusBairroForm.dataFimStatus.value = bairro.dataFimStatus || dataLocalHoje();
+    }
+
+    function statusEhNormal(status) {
+        return !status || String(status).trim().toLowerCase() === "normal";
+    }
+
+    function dataLocalHoje() {
+        const data = new Date();
+        data.setMinutes(data.getMinutes() - data.getTimezoneOffset());
+        return data.toISOString().slice(0, 10);
+    }
+
+    function getApiBase() {
+        return window.location.protocol.startsWith("http")
+            ? window.location.origin
+            : "http://localhost:8080";
     }
 
     function escapeHtml(valor) {

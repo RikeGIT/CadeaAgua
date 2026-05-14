@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Noticia - Cade a Agua?</title>
+    <title>Notícia - Cadê a Água?</title>
     <link rel="icon" href="assets/peixe.png" type="image/x-icon">
     <link rel="stylesheet" href="/style/noticia.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -12,14 +12,14 @@
 
 <header class="navbar">
     <a href="hero.html" class="logo-link">
-        <img src="assets/logo-cade-a-agua(sem%20fundo).png" alt="Logo Cade a Agua?" class="logo-img">
+        <img src="assets/logo-cade-a-agua(sem%20fundo).png" alt="Logo Cadê a Água?" class="logo-img">
     </a>
 
     <nav class="nav-links">
-        <a href="hero.html#noticias">Noticias</a>
+        <a href="hero.html#noticias">Notícias</a>
         <a href="hero.html#vantagens">Vantagens</a>
         <a href="hero.html#avisos">Avisos</a>
-        <a href="hero.html#footer">Sobre nos</a>
+        <a href="hero.html#footer">Sobre nós</a>
         <a href="notificacao.html">Dashboard</a>
         <a href="admin.html" data-admin-only>Admin</a>
     </nav>
@@ -33,18 +33,18 @@
 <main class="article-shell">
     <a class="back-link" href="hero.html#noticias">
         <i class="fa-solid fa-arrow-left"></i>
-        Voltar para noticias
+        Voltar para notícias
     </a>
 
-    <div id="article-state" class="state-message">Carregando noticia...</div>
+    <div id="article-state" class="state-message">Carregando notícia...</div>
 
     <div id="article-content" class="article-layout" hidden>
         <article class="article-main">
             <header class="article-header">
-                <p class="eyebrow">Cade a Agua?</p>
+                <p class="eyebrow">Cadê a Água?</p>
                 <h1 id="article-title"></h1>
                 <div class="article-meta">
-                    <span><i class="fa-regular fa-newspaper"></i> Redacao</span>
+                    <span><i class="fa-regular fa-newspaper"></i> Redação</span>
                     <span id="article-date"></span>
                 </div>
             </header>
@@ -59,7 +59,7 @@
         <aside class="related-panel">
             <div class="related-header">
                 <span class="related-icon"><i class="fa-solid fa-water"></i></span>
-                <h2>Mais noticias</h2>
+                <h2>Mais notícias</h2>
             </div>
             <div id="related-list" class="related-list"></div>
         </aside>
@@ -94,7 +94,7 @@
         const id = params.get("id");
 
         if (!id) {
-            mostrarEstado("Noticia nao encontrada.");
+            mostrarEstado("Notícia não encontrada.");
             return;
         }
 
@@ -105,12 +105,12 @@
             ]);
 
             if (noticiaResponse.status === 404) {
-                mostrarEstado("Noticia nao encontrada.");
+                mostrarEstado("Notícia não encontrada.");
                 return;
             }
 
             if (!noticiaResponse.ok) {
-                throw new Error("Nao foi possivel carregar a noticia.");
+                throw new Error("Não foi possível carregar a notícia.");
             }
 
             const noticia = await noticiaResponse.json();
@@ -119,17 +119,17 @@
             renderizarNoticia(noticia);
             renderizarRelacionadas(noticias, id);
         } catch (error) {
-            console.error("Erro ao carregar noticia:", error);
-            mostrarEstado(error.message || "Nao foi possivel carregar a noticia.");
+            console.error("Erro ao carregar notícia:", error);
+            mostrarEstado(error.message || "Não foi possível carregar a notícia.");
         }
     }
 
     function renderizarNoticia(noticia) {
-        const titulo = noticia.titulo || "Noticia sem titulo";
+        const titulo = noticia.titulo || "Notícia sem título";
         const imagem = noticia.imagemUrl || noticia.imagem_url || "/assets/hero-image.png";
-        const conteudo = noticia.conteudo || noticia.descricao || "Conteudo indisponivel no momento.";
+        const conteudo = noticia.conteudo || noticia.descricao || "Conteúdo indisponível no momento.";
 
-        document.title = `${titulo} - Cade a Agua?`;
+        document.title = `${titulo} - Cadê a Água?`;
         document.getElementById("article-title").textContent = titulo;
         document.getElementById("article-date").innerHTML = `<i class="fa-regular fa-calendar"></i> ${formatarData(noticia.data_publicacao)}`;
 
@@ -158,14 +158,14 @@
             .slice(0, 4);
 
         if (!relacionadas.length) {
-            lista.innerHTML = "<p class='related-empty'>Nenhuma outra noticia publicada.</p>";
+            lista.innerHTML = "<p class='related-empty'>Nenhuma outra notícia publicada.</p>";
             return;
         }
 
         lista.innerHTML = "";
         relacionadas.forEach((noticia, index) => {
             const id = getNoticiaId(noticia);
-            const titulo = noticia.titulo || "Sem titulo";
+            const titulo = noticia.titulo || "Sem título";
             const imagem = noticia.imagemUrl || noticia.imagem_url || imagensPadrao[index % imagensPadrao.length];
             const link = document.createElement("a");
             link.className = "related-item";
@@ -191,7 +191,7 @@
             .map((parte) => parte.trim())
             .filter(Boolean);
 
-        return paragrafos.length ? paragrafos : ["Conteudo indisponivel no momento."];
+        return paragrafos.length ? paragrafos : ["Conteúdo indisponível no momento."];
     }
 
     function getNoticiaId(noticia) {
@@ -200,7 +200,7 @@
 
     function formatarData(data) {
         if (!data) {
-            return "Data nao informada";
+            return "Data não informada";
         }
 
         const partes = String(data).split("-");

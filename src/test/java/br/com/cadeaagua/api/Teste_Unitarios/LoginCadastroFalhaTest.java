@@ -39,7 +39,7 @@ class LoginCadastroFalhaTest {
         ResponseEntity<?> response = authController.register(usuarioNovo);
 
         assertEquals(400, response.getStatusCode().value());
-        assertEquals("E-mail ja cadastrado!", response.getBody());
+        assertEquals("E-mail já cadastrado!", response.getBody());
     }
 
     @Test
@@ -57,7 +57,7 @@ class LoginCadastroFalhaTest {
         ResponseEntity<?> response = authController.login(dadosLogin);
 
         assertEquals(401, response.getStatusCode().value());
-        assertEquals("Senha invalida!", response.getBody());
+        assertEquals("Senha inválida!", response.getBody());
     }
 
     @Test
@@ -68,7 +68,7 @@ class LoginCadastroFalhaTest {
         ResponseEntity<?> response = authController.login(loginRequest);
 
         assertEquals(400, response.getStatusCode().value());
-        assertEquals("Email e senha sao obrigatorios.", response.getBody());
+        assertEquals("Email e senha são obrigatórios.", response.getBody());
     }
 
     @Test
@@ -82,7 +82,7 @@ class LoginCadastroFalhaTest {
         ResponseEntity<?> response = authController.login(loginRequest);
 
         assertEquals(404, response.getStatusCode().value());
-        assertEquals("Usuario nao encontrado!", response.getBody());
+        assertEquals("Usuário não encontrado!", response.getBody());
     }
 
     @Test
@@ -93,7 +93,7 @@ class LoginCadastroFalhaTest {
         ResponseEntity<?> response = authController.register(usuarioSemEndereco);
 
         assertEquals(400, response.getStatusCode().value());
-        assertEquals("Endereco completo e obrigatorio.", response.getBody());
+        assertEquals("Endereço completo é obrigatório.", response.getBody());
     }
 
     @Test
@@ -115,7 +115,7 @@ class LoginCadastroFalhaTest {
         ResponseEntity<?> response = authController.registerAdmin(request);
 
         assertEquals(403, response.getStatusCode().value());
-        assertEquals("Senha de administrador invalida.", response.getBody());
+        assertEquals("Senha de administrador inválida.", response.getBody());
         verify(userRepository, never()).save(any(Usuario.class));
     }
 

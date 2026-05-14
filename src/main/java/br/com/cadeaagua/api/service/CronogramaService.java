@@ -33,7 +33,8 @@ public class CronogramaService {
         Cronograma salvo = cronogramaRepository.save(cronograma);
 
         // 4. Dispara alertas baseados no bairro da região carregada [cite: 6, 10]
-        if (!salvo.getStatus_abastecimento().equalsIgnoreCase("Normal")) {
+        if (salvo.getStatus_abastecimento() != null
+                && !salvo.getStatus_abastecimento().equalsIgnoreCase(StatusAbastecimentoService.STATUS_NORMAL)) {
             notificacaoService.processarAlertasDeRodizio(
                     salvo.getRegiao().getBairro(),
                     salvo.getStatus_abastecimento()

@@ -44,6 +44,15 @@ public class CronogramaController {
         return ResponseEntity.ok(resultados);
     }
 
+    @GetMapping("/bairro")
+    public ResponseEntity<?> listarPorBairro(@RequestParam String bairro) {
+        if (bairro == null || bairro.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Bairro é obrigatório.");
+        }
+
+        return ResponseEntity.ok(cronogramaRepository.findHistoricoPorBairro(bairro.trim()));
+    }
+
     // Deletar cronograma
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Integer id) {

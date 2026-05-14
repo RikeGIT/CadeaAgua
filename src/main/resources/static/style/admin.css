@@ -191,6 +191,18 @@ a {
     color: #c34a3a;
 }
 
+.icon-button.warning {
+    color: #b97626;
+}
+
+.icon-button:disabled,
+.primary-action:disabled,
+.secondary-action:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+}
+
 .secondary-action {
     min-height: 42px;
     display: inline-flex;
@@ -394,6 +406,14 @@ a {
     background: rgba(255, 255, 255, 0.5);
 }
 
+.status-form {
+    margin-top: 12px;
+}
+
+.status-form textarea {
+    min-height: 86px;
+}
+
 .inline-actions {
     display: flex;
     align-items: center;
@@ -457,6 +477,25 @@ a {
     margin-top: 4px;
     font-size: 0.82rem;
     font-weight: 700;
+}
+
+.location-status {
+    width: fit-content;
+    max-width: 100%;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 0.76rem;
+    font-weight: 850;
+}
+
+.location-status.normal {
+    color: #11724a;
+    background: rgba(47, 196, 122, 0.14);
+}
+
+.location-status.alert {
+    color: #9d392c;
+    background: rgba(242, 143, 117, 0.18);
 }
 
 .item-actions {

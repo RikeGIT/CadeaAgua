@@ -28,6 +28,10 @@ public class NotificacaoService {
     // n8n url
     private final String N8N_URL = "https://webhook.testesamas.me/webhook/cadeaAgua";
 
+    public List<Notificacao> listarHistoricoPorUsuario(Integer usuarioId) {
+        return notificacaoRepository.findHistoricoPorUsuario(usuarioId);
+    }
+
     /**
      * Dispara alertas para todos os utilizadores vinculados ao bairro em rodízio.
      */

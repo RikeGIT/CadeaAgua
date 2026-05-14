@@ -17,11 +17,11 @@ public class NoticiaService {
 
     public Noticia salvarNoticia(Noticia noticia) {
         if (noticia.getTitulo() == null || noticia.getTitulo().trim().isEmpty()) {
-            throw new IllegalArgumentException("O titulo da noticia nao pode ficar em branco.");
+            throw new IllegalArgumentException("O título da notícia não pode ficar em branco.");
         }
 
         if (noticia.getDescricao() == null || noticia.getDescricao().trim().isEmpty()) {
-            throw new IllegalArgumentException("A descricao da noticia nao pode ficar em branco.");
+            throw new IllegalArgumentException("A descrição da notícia não pode ficar em branco.");
         }
 
         if (noticia.getConteudo() == null || noticia.getConteudo().trim().isEmpty()) {

@@ -46,7 +46,7 @@
 
         <footer>
             <button type="button" class="secondary-action" onclick="irCadastroComum()">Criar conta comum</button>
-            <p>Ja tem uma conta? <a href="#" onclick="irLogin()">Realizar login</a></p>
+            <p>Já tem uma conta? <a href="#" onclick="irLogin()">Realizar login</a></p>
         </footer>
     </main>
 </div>
@@ -62,7 +62,7 @@
         try {
             const response = await fetch(`${API_BASE}/api/localizacoes/bairros`);
             if (!response.ok) {
-                throw new Error("Nao foi possivel carregar os bairros.");
+                throw new Error("Não foi possível carregar os bairros.");
             }
 
             const bairros = await response.json();
@@ -74,7 +74,7 @@
                 bairroSelect.appendChild(option);
             });
         } catch (error) {
-            mostrarMensagem("Nao foi possivel carregar os bairros de Patos.", "error");
+            mostrarMensagem("Não foi possível carregar os bairros de Patos.", "error");
         }
     }
 
@@ -98,7 +98,7 @@
         try {
             const response = await fetch(`${API_BASE}/api/localizacoes/bairros/${bairroId}/logradouros`);
             if (!response.ok) {
-                throw new Error("Nao foi possivel carregar as ruas.");
+                throw new Error("Não foi possível carregar as ruas.");
             }
 
             const logradouros = await response.json();
@@ -119,7 +119,7 @@
         } catch (error) {
             ruaSelect.innerHTML = "";
             ruaSelect.add(new Option("Erro ao carregar ruas", ""));
-            mostrarMensagem("Nao foi possivel carregar as ruas do bairro.", "error");
+            mostrarMensagem("Não foi possível carregar as ruas do bairro.", "error");
         }
     }
 
@@ -155,22 +155,22 @@
         mostrarMensagem("");
 
         if (!usuario.nome || !usuario.email || !usuario.telefone || !usuario.senha.trim()) {
-            mostrarMensagem("Nome, email, telefone e senha sao obrigatorios.", "error");
+            mostrarMensagem("Nome, email, telefone e senha são obrigatórios.", "error");
             return;
         }
 
         if (!document.getElementById("email").checkValidity()) {
-            mostrarMensagem("Digite um email valido.", "error");
+            mostrarMensagem("Digite um email válido.", "error");
             return;
         }
 
         if (!usuario.endereco.rua || !usuario.endereco.bairro || !usuario.endereco.cidade || !usuario.endereco.cep) {
-            mostrarMensagem("Endereco completo e obrigatorio.", "error");
+            mostrarMensagem("Endereço completo é obrigatório.", "error");
             return;
         }
 
         if (!senhaAdministrador.trim()) {
-            mostrarMensagem("Senha administrativa obrigatoria.", "error");
+            mostrarMensagem("Senha administrativa obrigatória.", "error");
             return;
         }
 

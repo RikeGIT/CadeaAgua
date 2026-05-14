@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel de Controle - Cadê a Água?</title>
+    <title>Dashboard - Cadê a Água?</title>
     <link rel="icon" href="assets/peixe.png" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Link para o novo arquivo CSS -->
     <link rel="stylesheet" href="style/notificacao.css">
 </head>
 
@@ -22,7 +21,7 @@
         <a href="hero.html#vantagens">Vantagens</a>
         <a href="hero.html#avisos">Avisos</a>
         <a href="hero.html#footer">Sobre nós</a>
-        <a style="cursor: pointer">Dashboard</a>
+        <a href="notificacao.html" class="active">Dashboard</a>
         <a href="admin.html" data-admin-only>Admin</a>
     </nav>
 
@@ -33,70 +32,91 @@
 </header>
 
 <main class="container">
-
     <header class="dashboard-header">
-        <h1>Painel de Controle Hídrico: Sua residência</h1>
+        <div>
+            <p class="eyebrow">Dashboard pessoal</p>
+            <h1 id="dashboardTitle">Abastecimento da sua residência</h1>
+        </div>
+
         <div class="address-info">
-            <p>Endereço: <strong>Rua das Flores, 123, Bairro Centro</strong></p>
-            <a href="#">Alterar endereço</a>
+            <p id="addressLabel">Carregando endereço...</p>
+            <div class="address-actions">
+                <a href="perfil.html">Ver perfil</a>
+                <button class="icon-button" type="button" title="Atualizar dashboard" onclick="carregarDashboard()">
+                    <i class="fa-solid fa-rotate-right"></i>
+                </button>
+            </div>
         </div>
     </header>
 
-    <section class="status-grid">
-        <div class="card status-main">
-            <div class="status-circle"><i class="fa-solid fa-check"></i></div>
-            <h3>Sua Água está aberta agora</h3>
-            <p>08:00 - 22:00, hoje</p>
-        </div>
+    <section class="status-grid" aria-label="Situação atual">
+        <article class="card status-main is-loading" id="statusCard">
+            <div class="status-circle" id="statusIcon"><i class="fa-solid fa-spinner"></i></div>
+            <div class="status-copy">
+                <p class="eyebrow" id="statusEyebrow">Situação atual</p>
+                <h3 id="statusTitle">Carregando dados do bairro...</h3>
+                <p id="statusDescription">Estamos consultando o cadastro ligado ao seu perfil.</p>
+                <div class="status-meta" id="statusMeta"></div>
+            </div>
+        </article>
     </section>
 
     <section class="bottom-grid">
-        <div class="card table-container">
-            <h3>Detalhes do Cronograma</h3>
+        <article class="card table-container">
+            <div class="panel-title">
+                <div>
+                    <p class="eyebrow">Cronograma</p>
+                    <h3>Detalhes do abastecimento</h3>
+                </div>
+            </div>
+
             <table>
                 <thead>
                 <tr>
-                    <th>Dia</th>
-                    <th>Data</th>
+                    <th>Início</th>
+                    <th>Fim</th>
                     <th>Status</th>
-                    <th>Horário</th>
+                    <th>Detalhe</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="cronogramaBody">
                 <tr>
-                    <td>Segunda</td>
-                    <td><i class="fa-regular fa-calendar"></i> 16/03</td>
-                    <td class="text-success"><i class="fa-solid fa-circle" style="font-size: 0.6rem; vertical-align: middle;"></i> Normal</td>
-                    <td>05:00 - 23:00</td>
-                </tr>
-                <tr>
-                    <td>Quarta</td>
-                    <td><i class="fa-regular fa-calendar"></i> 18/03</td>
-                    <td class="text-danger"><i class="fa-solid fa-xmark"></i> Rodízio</td>
-                    <td>---</td>
+                    <td colspan="4">Carregando cronogramas...</td>
                 </tr>
                 </tbody>
             </table>
-        </div>
+        </article>
 
-        <aside class="shortcuts">
-            <div class="shortcut-card"><i class="fa-solid fa-lightbulb" style="color: #f1c40f; margin-right: 5px;"></i> Dica de economia</div>
-            <div class="shortcut-card"><i class="fa-solid fa-chart-line" style="color: #006080; margin-right: 5px;"></i> Consumo semanal</div>
-            <div class="shortcut-card"><i class="fa-solid fa-triangle-exclamation" style="color: #e74c3c; margin-right: 5px;"></i> Emergência</div>
+        <aside class="card notifications-panel">
+            <div class="panel-title">
+                <div>
+                    <p class="eyebrow">Alertas</p>
+                    <h3>Últimas notificações</h3>
+                </div>
+                <span class="counter" id="notificacoesTotal">0</span>
+            </div>
+
+            <div class="notification-list" id="notificacoesList">
+                <p class="empty-state">Carregando notificações...</p>
+            </div>
         </aside>
     </section>
-
 </main>
 
 <div class="tab-bar">
-    <span onclick="irHero()"><i class="fa-solid fa-house"></i></span>
-    <span><i class="fa-solid fa-chart-simple"></i></span>
-    <span onclick="irNotificacao()"><i class="fa-solid fa-bell"></i></span>
-    <span onclick="irAdmin()" data-admin-only><i class="fa-solid fa-screwdriver-wrench"></i></span>
+    <a href="hero.html" aria-label="Início"><i class="fa-solid fa-house"></i></a>
+    <a href="notificacao.html" aria-label="Dashboard" class="active"><i class="fa-solid fa-chart-simple"></i></a>
+    <a href="perfil.html" aria-label="Perfil"><i class="fa-solid fa-user"></i></a>
+    <a href="admin.html" aria-label="Admin" data-admin-only><i class="fa-solid fa-screwdriver-wrench"></i></a>
 </div>
 
 <script>
-    document.addEventListener("DOMContentLoaded", ajustarLinksAdmin);
+    const API_BASE = getApiBase();
+
+    document.addEventListener("DOMContentLoaded", () => {
+        ajustarLinksAdmin();
+        carregarDashboard();
+    });
 
     function ajustarLinksAdmin() {
         if (localStorage.getItem("usuarioPerfil") !== "ADMIN") {
@@ -106,22 +126,269 @@
         }
     }
 
-    function irHero() {
-        window.location.href = "hero.html";
-    }
+    async function carregarDashboard() {
+        const usuarioId = localStorage.getItem("usuarioId");
 
-    function irNotificacao() {
-        window.location.href = "notificacao.html";
-    }
-
-    function irAdmin() {
-        if (localStorage.getItem("usuarioPerfil") !== "ADMIN") {
-            localStorage.setItem("loginMensagem", "Acesso restrito. Entre com uma conta administradora.");
-            window.location.href = "login.html";
+        if (!usuarioId) {
+            localStorage.setItem("loginMensagem", "Entre na sua conta para ver o dashboard.");
+            window.location.replace("login.html");
             return;
         }
 
-        window.location.href = "admin.html";
+        definirCarregando();
+
+        try {
+            const [usuario, bairros, notificacoes] = await Promise.all([
+                buscarJson(`${API_BASE}/api/usuarios/${usuarioId}`),
+                buscarJson(`${API_BASE}/api/localizacoes/bairros`),
+                buscarJson(`${API_BASE}/api/notificacoes/usuarios/${usuarioId}`)
+            ]);
+
+            const endereco = usuario.endereco || {};
+            const bairroNome = endereco.bairro || "";
+            const bairroAtual = encontrarBairro(bairros, bairroNome, endereco.cidade);
+            const cronogramas = bairroNome
+                ? await buscarJson(`${API_BASE}/api/cronogramas/bairro?bairro=${encodeURIComponent(bairroNome)}`)
+                : [];
+
+            renderizarEndereco(usuario, endereco, bairroAtual);
+            renderizarStatus(bairroAtual, cronogramas, bairroNome);
+            renderizarCronogramas(cronogramas);
+            renderizarNotificacoes(notificacoes);
+        } catch (error) {
+            renderizarErro(error);
+        }
+    }
+
+    async function buscarJson(url) {
+        const response = await fetch(url);
+        const resposta = response.headers.get("content-type")?.includes("application/json")
+            ? await response.json()
+            : await response.text();
+
+        if (!response.ok) {
+            throw new Error(typeof resposta === "string" ? resposta : "Não foi possível carregar os dados.");
+        }
+
+        return resposta;
+    }
+
+    function definirCarregando() {
+        const statusCard = document.getElementById("statusCard");
+        statusCard.className = "card status-main is-loading";
+        document.getElementById("statusIcon").innerHTML = "<i class='fa-solid fa-spinner'></i>";
+        document.getElementById("statusTitle").textContent = "Carregando dados do bairro...";
+        document.getElementById("statusDescription").textContent = "Estamos consultando o cadastro ligado ao seu perfil.";
+        document.getElementById("statusMeta").textContent = "";
+        document.getElementById("cronogramaBody").innerHTML = "<tr><td colspan='4'>Carregando cronogramas...</td></tr>";
+        document.getElementById("notificacoesList").innerHTML = "<p class='empty-state'>Carregando notificações...</p>";
+        document.getElementById("notificacoesTotal").textContent = "0";
+    }
+
+    function renderizarEndereco(usuario, endereco, bairroAtual) {
+        document.getElementById("dashboardTitle").textContent = `Abastecimento de ${usuario.nome || "sua residência"}`;
+
+        const partes = [
+            endereco.rua,
+            endereco.bairro,
+            endereco.cidade,
+            endereco.cep
+        ].filter(Boolean);
+
+        document.getElementById("addressLabel").innerHTML = partes.length
+            ? `Endereço: <strong>${escapeHtml(partes.join(", "))}</strong>`
+            : "Endereço não informado no perfil.";
+
+    }
+
+    function renderizarStatus(bairroAtual, cronogramas, bairroNome) {
+        const ativo = cronogramas.find((cronograma) => cronogramaEstaAtivo(cronograma));
+        const status = bairroAtual?.statusAbastecimento || ativo?.status_abastecimento || "Normal";
+        const descricao = bairroAtual?.descricaoStatus || ativo?.descricao || "";
+        const semAgua = !statusEhNormal(status);
+        const statusCard = document.getElementById("statusCard");
+
+        statusCard.className = `card status-main ${semAgua ? "is-alert" : "is-ok"}`;
+        document.getElementById("statusIcon").innerHTML = semAgua
+            ? "<i class='fa-solid fa-triangle-exclamation'></i>"
+            : "<i class='fa-solid fa-check'></i>";
+        document.getElementById("statusEyebrow").textContent = semAgua ? "Atenção no seu bairro" : "Situação atual";
+        document.getElementById("statusTitle").textContent = semAgua
+            ? `Status: ${status}`
+            : "Sua água está disponível agora";
+        document.getElementById("statusDescription").textContent = descricao || (semAgua
+            ? "O abastecimento está afetado no endereço cadastrado."
+            : "Não há aviso de interrupção ativo para o seu bairro.");
+
+        const periodo = periodoStatus(bairroAtual, ativo);
+        const meta = [];
+        if (periodo) {
+            meta.push(`<span class="pill">${periodo}</span>`);
+        }
+        if (bairroAtual?.cronogramaAtivo || ativo) {
+            meta.push("<span class='pill'>Cronograma ativo</span>");
+        }
+        if (bairroAtual?.dataAtualizacaoStatus) {
+            meta.push(`<span class="pill">Atualizado em ${formatarDataHora(bairroAtual.dataAtualizacaoStatus)}</span>`);
+        }
+        if (!bairroAtual && bairroNome) {
+            meta.push(`<span class="pill warning">Bairro ${escapeHtml(bairroNome)} ainda não está na base operacional.</span>`);
+        }
+
+        document.getElementById("statusMeta").innerHTML = meta.join("");
+    }
+
+    function renderizarCronogramas(cronogramas) {
+        const tbody = document.getElementById("cronogramaBody");
+
+        if (!cronogramas.length) {
+            tbody.innerHTML = "<tr><td colspan='4'>Nenhum cronograma cadastrado para o bairro do seu endereço.</td></tr>";
+            return;
+        }
+
+        tbody.innerHTML = "";
+        cronogramas.slice(0, 8).forEach((cronograma) => {
+            const status = cronograma.status_abastecimento || "Normal";
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td><i class="fa-regular fa-calendar"></i> ${formatarData(cronograma.data_inicio)}</td>
+                <td>${formatarData(cronograma.data_fim)}</td>
+                <td class="${statusEhNormal(status) ? "text-success" : "text-danger"}">
+                    <i class="fa-solid ${statusEhNormal(status) ? "fa-circle" : "fa-triangle-exclamation"}"></i>
+                    ${escapeHtml(status)}
+                </td>
+                <td>${escapeHtml(cronograma.descricao || "Sem detalhe adicional.")}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function renderizarNotificacoes(notificacoes) {
+        const lista = document.getElementById("notificacoesList");
+        document.getElementById("notificacoesTotal").textContent = notificacoes.length;
+
+        if (!notificacoes.length) {
+            lista.innerHTML = "<p class='empty-state'>Nenhuma notificação foi enviada para seu endereço ainda.</p>";
+            return;
+        }
+
+        lista.innerHTML = "";
+        notificacoes.slice(0, 6).forEach((notificacao) => {
+            const item = document.createElement("article");
+            item.className = "notification-item";
+            item.innerHTML = `
+                <div class="notification-icon"><i class="fa-solid fa-bell"></i></div>
+                <div>
+                    <strong>${escapeHtml(notificacao.titulo || "Alerta Cadê a Água?")}</strong>
+                    <p>${escapeHtml(notificacao.mensagem || "")}</p>
+                    <span>${formatarDataHora(notificacao.dataEnvio)}</span>
+                </div>
+            `;
+            lista.appendChild(item);
+        });
+    }
+
+    function renderizarErro(error) {
+        const statusCard = document.getElementById("statusCard");
+        statusCard.className = "card status-main is-alert";
+        document.getElementById("statusIcon").innerHTML = "<i class='fa-solid fa-xmark'></i>";
+        document.getElementById("statusEyebrow").textContent = "Falha ao carregar";
+        document.getElementById("statusTitle").textContent = "Não foi possível abrir o dashboard";
+        document.getElementById("statusDescription").textContent = error.message || "Verifique se a API está rodando.";
+        document.getElementById("cronogramaBody").innerHTML = "<tr><td colspan='4'>Não foi possível carregar os cronogramas.</td></tr>";
+        document.getElementById("notificacoesList").innerHTML = "<p class='empty-state error-text'>Não foi possível carregar as notificações.</p>";
+    }
+
+    function encontrarBairro(bairros, nome, cidade) {
+        const nomeNormalizado = normalizarTexto(nome);
+        const cidadeNormalizada = normalizarTexto(cidade || "Patos");
+
+        return bairros.find((bairro) => {
+            const mesmoNome = normalizarTexto(bairro.nome) === nomeNormalizado;
+            const mesmaCidade = !bairro.cidade || normalizarTexto(bairro.cidade) === cidadeNormalizada;
+            return mesmoNome && mesmaCidade;
+        });
+    }
+
+    function periodoStatus(bairroAtual, cronogramaAtivo) {
+        const inicio = bairroAtual?.dataInicioStatus || cronogramaAtivo?.data_inicio;
+        const fim = bairroAtual?.dataFimStatus || cronogramaAtivo?.data_fim;
+
+        if (inicio && fim) {
+            return `${formatarData(inicio)} até ${formatarData(fim)}`;
+        }
+
+        if (inicio) {
+            return `Desde ${formatarData(inicio)}`;
+        }
+
+        return "";
+    }
+
+    function cronogramaEstaAtivo(cronograma) {
+        const hoje = dataLocalHoje();
+        return cronograma.data_inicio <= hoje && cronograma.data_fim >= hoje;
+    }
+
+    function statusEhNormal(status) {
+        return !status || normalizarTexto(status) === "normal";
+    }
+
+    function dataLocalHoje() {
+        const data = new Date();
+        data.setMinutes(data.getMinutes() - data.getTimezoneOffset());
+        return data.toISOString().slice(0, 10);
+    }
+
+    function formatarData(data) {
+        if (!data) {
+            return "-";
+        }
+
+        const [ano, mes, dia] = data.split("-");
+        return dia && mes && ano ? `${dia}/${mes}/${ano}` : data;
+    }
+
+    function formatarDataHora(data) {
+        if (!data) {
+            return "Sem data";
+        }
+
+        const parsed = new Date(data);
+        if (Number.isNaN(parsed.getTime())) {
+            return formatarData(String(data).slice(0, 10));
+        }
+
+        return parsed.toLocaleString("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+    }
+
+    function normalizarTexto(valor) {
+        return String(valor || "")
+            .trim()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase();
+    }
+
+    function getApiBase() {
+        return window.location.protocol.startsWith("http")
+            ? window.location.origin
+            : "http://localhost:8080";
+    }
+
+    function escapeHtml(valor) {
+        return String(valor)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
     }
 </script>
 

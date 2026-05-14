@@ -48,11 +48,11 @@ public class AuthController {
     @PostMapping("/register-admin")
     public ResponseEntity<?> registerAdmin(@RequestBody AdminRegisterRequest request) {
         if (request == null || request.usuario() == null) {
-            return ResponseEntity.badRequest().body("Dados do usuario sao obrigatorios.");
+            return ResponseEntity.badRequest().body("Dados do usuário são obrigatórios.");
         }
 
         if (isBlank(request.senhaAdministrador()) || !request.senhaAdministrador().equals(adminSecret)) {
-            return ResponseEntity.status(403).body("Senha de administrador invalida.");
+            return ResponseEntity.status(403).body("Senha de administrador inválida.");
         }
 
         return registrarUsuario(request.usuario(), PERFIL_ADMIN);
@@ -60,11 +60,11 @@ public class AuthController {
 
     private ResponseEntity<?> registrarUsuario(Usuario usuario, String perfil) {
         if (usuario == null) {
-            return ResponseEntity.badRequest().body("Dados do usuario sao obrigatorios.");
+            return ResponseEntity.badRequest().body("Dados do usuário são obrigatórios.");
         }
 
         if (isBlank(usuario.getNome()) || isBlank(usuario.getEmail()) || isBlank(usuario.getTelefone()) || isBlank(usuario.getSenha())) {
-            return ResponseEntity.badRequest().body("Nome, email, telefone e senha sao obrigatorios.");
+            return ResponseEntity.badRequest().body("Nome, email, telefone e senha são obrigatórios.");
         }
 
         if (usuario.getEndereco() == null
@@ -72,11 +72,11 @@ public class AuthController {
                 || isBlank(usuario.getEndereco().getBairro())
                 || isBlank(usuario.getEndereco().getCidade())
                 || isBlank(usuario.getEndereco().getCep())) {
-            return ResponseEntity.badRequest().body("Endereco completo e obrigatorio.");
+            return ResponseEntity.badRequest().body("Endereço completo é obrigatório.");
         }
 
         if (userRepository.findByEmail(usuario.getEmail()).isPresent()) {
-            return ResponseEntity.badRequest().body("E-mail ja cadastrado!");
+            return ResponseEntity.badRequest().body("E-mail já cadastrado!");
         }
 
         Endereco enderecoSalvo = enderecoRepository.save(usuario.getEndereco());
@@ -91,7 +91,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Usuario loginRequest) {
         if (loginRequest == null || isBlank(loginRequest.getEmail()) || isBlank(loginRequest.getSenha())) {
-            return ResponseEntity.badRequest().body("Email e senha sao obrigatorios.");
+            return ResponseEntity.badRequest().body("Email e senha são obrigatórios.");
         }
 
         return userRepository.findByEmail(loginRequest.getEmail())
@@ -99,9 +99,9 @@ public class AuthController {
                     if (passwordEncoder.matches(loginRequest.getSenha(), user.getSenha())) {
                         return ResponseEntity.ok(new AuthResponse(user));
                     }
-                    return ResponseEntity.status(401).body("Senha invalida!");
+                    return ResponseEntity.status(401).body("Senha inválida!");
                 })
-                .orElseGet(() -> ResponseEntity.status(404).body("Usuario nao encontrado!"));
+                .orElseGet(() -> ResponseEntity.status(404).body("Usuário não encontrado!"));
     }
 
     private boolean isBlank(String valor) {

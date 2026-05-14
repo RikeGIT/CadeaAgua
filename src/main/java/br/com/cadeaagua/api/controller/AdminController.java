@@ -35,7 +35,7 @@ public class AdminController {
         Path caminho = Path.of(nomeArquivo);
 
         if (!Files.exists(caminho)) {
-            return new LogFileResponse(nomeArquivo, caminho.toAbsolutePath().toString(), 0, 0, List.of("Arquivo ainda nao encontrado."));
+            return new LogFileResponse(nomeArquivo, caminho.toAbsolutePath().toString(), 0, 0, List.of("Arquivo ainda não encontrado."));
         }
 
         try {
